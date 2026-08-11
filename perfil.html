@@ -7,7 +7,7 @@
   <link rel="icon" href="assets/logo/iconoizc.png" type="image/png">
   <link rel="stylesheet" href="assets/css/index.css?v=29">
   <link rel="stylesheet" href="assets/css/auth.css?v=9">
-  <link rel="stylesheet" href="assets/css/perfil.css?v=3">
+  <link rel="stylesheet" href="assets/css/perfil.css?v=4">
   <script>
     if (location.protocol === 'file:') {
       location.replace('http://127.0.0.1:8080/perfil.html');
@@ -15,7 +15,7 @@
   </script>
   <script src="assets/js/auth.js?v=32" defer></script>
   <script src="assets/js/wishlist.js?v=4" defer></script>
-  <script src="assets/js/perfil.js?v=4" defer></script>
+  <script src="assets/js/perfil.js?v=5" defer></script>
   <script src="assets/js/index.js?v=3" defer></script>
 </head>
 <body>
@@ -198,7 +198,7 @@
     </div>
   </nav>
 
-  <main class="auth-page">
+  <main class="auth-page profile-page">
     <div class="auth-card">
       <h1 class="profile-greeting" id="profileGreeting">Hola</h1>
       <p class="profile-lead">Datos de tu sesión de cliente IZC.</p>
@@ -213,6 +213,37 @@
       <p id="authMessage" class="auth-message" role="status"></p>
       <button class="auth-submit" type="button" id="profileLogout">Cerrar sesión</button>
     </div>
+
+    <section class="auth-card profile-quotes-card" id="profileQuotesSection" hidden>
+      <h2 class="profile-quotes-title">Historial de cotizaciones</h2>
+      <p id="profileQuotesMessage" class="auth-message" role="status"></p>
+      <div class="profile-quotes-table-wrap">
+        <table class="profile-quotes-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Fecha</th>
+              <th>Productos</th>
+              <th>Total + IVA</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="profileQuotesBody">
+            <tr><td colspan="5" class="profile-quotes-empty">Cargando…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
   </main>
+
+  <div class="profile-modal" id="profileQuoteModal" hidden>
+    <div class="profile-modal-backdrop" data-modal-close></div>
+    <div class="profile-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="profileQuoteTitle">
+      <h3 id="profileQuoteTitle">Detalle de cotización</h3>
+      <p id="profileQuoteMeta" class="profile-quote-meta"></p>
+      <div id="profileQuoteBody" class="profile-quote-detail"></div>
+      <button type="button" class="profile-modal-close" data-modal-close>Cerrar</button>
+    </div>
+  </div>
 </body>
 </html>

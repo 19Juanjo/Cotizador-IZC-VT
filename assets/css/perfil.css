@@ -43,6 +43,7 @@
   flex-direction: column;
   align-items: center;
   gap: 24px;
+  padding-bottom: 48px;
 }
 
 .profile-admin-card {
@@ -53,4 +54,151 @@
   margin: 0 0 6px;
   font-size: 1.35rem;
   color: #16233f;
+}
+
+.profile-quotes-card {
+  width: min(720px, 100%);
+  max-width: 720px;
+}
+
+.profile-quotes-title {
+  margin: 0 0 6px;
+  font-size: 1.25rem;
+  color: #16233f;
+  text-align: center;
+}
+
+.profile-quotes-lead {
+  margin: 0 0 18px;
+  color: #5a6b85;
+  font-size: 0.92rem;
+  text-align: center;
+}
+
+.profile-quotes-table-wrap {
+  overflow-x: auto;
+}
+
+.profile-quotes-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.profile-quotes-table th,
+.profile-quotes-table td {
+  padding: 10px 8px;
+  text-align: left;
+  border-bottom: 1px solid #e4eaf3;
+  color: #16233f;
+}
+
+.profile-quotes-table th {
+  color: #5a6b85;
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.profile-quotes-empty {
+  text-align: center;
+  color: #5a6b85;
+  padding: 20px 8px !important;
+}
+
+.profile-view-quote {
+  border: 0;
+  background: #1653a0;
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.profile-view-quote:hover {
+  background: #0f3f7a;
+}
+
+.profile-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.profile-modal[hidden] {
+  display: none !important;
+}
+
+.profile-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 28, 50, 0.45);
+}
+
+.profile-modal-dialog {
+  position: relative;
+  z-index: 1;
+  width: min(640px, 100%);
+  max-height: min(80vh, 720px);
+  overflow: auto;
+  background: #fff;
+  border-radius: 8px;
+  padding: 22px 20px 18px;
+}
+
+.profile-modal-dialog h3 {
+  margin: 0 0 6px;
+  color: #16233f;
+  font-size: 1.15rem;
+}
+
+.profile-quote-meta {
+  margin: 0 0 14px;
+  color: #5a6b85;
+  font-size: 0.9rem;
+}
+
+.profile-quote-detail-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+  margin-bottom: 12px;
+}
+
+.profile-quote-detail-table th,
+.profile-quote-detail-table td {
+  padding: 8px 6px;
+  border-bottom: 1px solid #e4eaf3;
+  text-align: left;
+  color: #16233f;
+}
+
+.profile-quote-total {
+  margin: 0 0 16px;
+  color: #16233f;
+}
+
+.profile-modal-close {
+  border: 1px solid #c5d0e0;
+  background: #fff;
+  color: #16233f;
+  padding: 8px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.profile-modal-close:hover {
+  background: #f3f6fb;
+}
+
+@media (max-width: 640px) {
+  .profile-quotes-card {
+    width: 100%;
+  }
 }

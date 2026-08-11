@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="assets/css/index.css?v=29">
   <link rel="stylesheet" href="assets/css/auth.css?v=9">
   <link rel="stylesheet" href="assets/css/perfil.css?v=3">
-  <link rel="stylesheet" href="assets/css/admin.css?v=9">
+  <link rel="stylesheet" href="assets/css/admin.css?v=10">
   <script>
     if (location.protocol === 'file:') {
       location.replace('http://127.0.0.1:8080/admin.html');
@@ -16,7 +16,7 @@
   </script>
   <script src="assets/js/auth.js?v=32" defer></script>
   <script src="assets/js/wishlist.js?v=4" defer></script>
-  <script src="assets/js/admin.js?v=11" defer></script>
+  <script src="assets/js/admin.js?v=13" defer></script>
   <script src="assets/js/index.js?v=3" defer></script>
 </head>
 <body>
@@ -228,6 +228,10 @@
           <span class="admin-stat-label">Actualizar TRM de Cotizador</span>
           <strong id="adminTrmValue">—</strong>
         </button>
+        <button type="button" class="admin-stat is-tab" data-tab="bitrix" id="adminTabBitrix">
+          <span class="admin-stat-label">Bitrix24</span>
+          <strong id="adminBitrixStatus">Off</strong>
+        </button>
       </div>
 
       <p id="adminMessage" class="auth-message" role="status"></p>
@@ -259,7 +263,7 @@
                 <th>Nombre</th>
                 <th>NIT</th>
                 <th>Productos</th>
-                <th>Total COP + IVA</th>
+                <th>Total + IVA</th>
                 <th></th>
               </tr>
             </thead>
@@ -277,6 +281,30 @@
             <button type="button" class="admin-trm-save" id="adminTrmSave">Guardar TRM</button>
           </div>
           <p id="adminTrmMeta" class="admin-trm-meta"></p>
+        </div>
+      </div>
+
+      <div class="admin-panel" id="adminPanelBitrix" hidden>
+        <div class="admin-trm-box admin-bitrix-box">
+          <p class="admin-trm-lead">
+            Conecta el cotizador con Bitrix24 (<code>vits.bitrix24.com</code>).
+            Al terminar una cotización se crea una negociación en la etapa COTIZACION.
+          </p>
+          <label class="admin-bitrix-check">
+            <input type="checkbox" id="adminBitrixEnabled"> Activar envío a Bitrix
+          </label>
+          <label for="adminBitrixWebhook">Webhook entrante (URL completa)</label>
+          <input id="adminBitrixWebhook" type="url" placeholder="https://vits.bitrix24.com/rest/1/xxxxxxxx/">
+          <label for="adminBitrixStage">STAGE_ID de la columna COTIZACION</label>
+          <input id="adminBitrixStage" type="text" placeholder="Ej: C14:PREPARATION">
+          <label for="adminBitrixCategory">CATEGORY_ID del embudo (opcional)</label>
+          <input id="adminBitrixCategory" type="text" placeholder="Ej: 14">
+          <div class="admin-trm-row">
+            <button type="button" class="admin-trm-save" id="adminBitrixSave">Guardar Bitrix</button>
+            <button type="button" class="admin-bitrix-test" id="adminBitrixTest">Probar conexión</button>
+          </div>
+          <p id="adminBitrixMeta" class="admin-trm-meta"></p>
+          <pre id="adminBitrixStages" class="admin-bitrix-stages" hidden></pre>
         </div>
       </div>
     </div>

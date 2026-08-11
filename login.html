@@ -28,8 +28,8 @@
             return;
           }
           clearInterval(timer);
-          var dest = (IZCAuth.isAdmin && IZCAuth.isAdmin()) ? 'admin.html' : 'cotizador.html';
-          if (!/cotizador\.html$|admin\.html$/i.test(location.pathname)) {
+          var dest = (IZCAuth.isAdmin && IZCAuth.isAdmin()) ? 'admin.html' : 'index.html';
+          if (!/index\.html$|admin\.html$/i.test(location.pathname)) {
             location.replace(dest);
           }
         }, 100);

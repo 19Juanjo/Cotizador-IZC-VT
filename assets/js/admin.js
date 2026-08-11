@@ -38,6 +38,38 @@
     return '$ ' + Math.round(Number(value)).toLocaleString('es-CO') + ' COP';
   }
 
+  function formatUSD(value) {
+    return '$ ' + Number(value).toLocaleString('en-US', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    });
+  }
+
+  function lineTotalIva(line) {
+    if (!line) return '—';
+    if (String(line.currency || '').toUpperCase() === 'COP') {
+      return formatCOP(line.totalCopIva != null ? line.totalCopIva : line.copIva);
+    }
+    if (line.totalUsdIva != null || line.usdIva != null) {
+      return formatUSD(line.totalUsdIva != null ? line.totalUsdIva : line.usdIva);
+    }
+    return formatCOP(line.totalCopIva != null ? line.totalCopIva : line.copIva);
+  }
+
+  function quoteTotalIvaLabel(totals) {
+    totals = totals || {};
+    var parts = [];
+    if (totals.hasUsd) parts.push(formatUSD(totals.usdIva));
+    if (totals.hasCop) parts.push(formatCOP(totals.copIva));
+    if (parts.length) return parts.join(' · ');
+    if (totals.usdIva != null && Number(totals.usdIva) > 0 && !(totals.copIva != null && Number(totals.copIva) > 0)) {
+      return formatUSD(totals.usdIva);
+    }
+    if (totals.copIva != null) return formatCOP(totals.copIva);
+    if (totals.usdIva != null) return formatUSD(totals.usdIva);
+    return '—';
+  }
+
   function postAdminApi(payload) {
     var body = JSON.stringify(payload);
     var endpoints = [API_ORIGIN + '/api/auth', 'api/auth.php', 'api/auth'];
@@ -76,6 +108,7 @@
     var usersPanel = document.getElementById('adminPanelUsers');
     var quotesPanel = document.getElementById('adminPanelQuotes');
     var trmPanel = document.getElementById('adminPanelTrm');
+    var bitrixPanel = document.getElementById('adminPanelBitrix');
     var tabs = document.querySelectorAll('.admin-stat.is-tab');
 
     tabs.forEach(function (el) {
@@ -84,10 +117,19 @@
     if (usersPanel) usersPanel.hidden = tab !== 'users';
     if (quotesPanel) quotesPanel.hidden = tab !== 'quotes';
     if (trmPanel) trmPanel.hidden = tab !== 'trm';
+    if (bitrixPanel) bitrixPanel.hidden = tab !== 'bitrix';
 
     if (tab === 'users') loadUsers();
     else if (tab === 'quotes') loadQuotes();
     else if (tab === 'trm') loadTrmPanel();
+    else if (tab === 'bitrix') loadBitrixPanel();
+  }
+
+  function quoteItems(q) {
+    var items = q && q.items;
+    if (!items) return [];
+    // PowerShell ConvertTo-Json a veces manda 1 ítem como objeto, no como array
+    return Array.isArray(items) ? items : [items];
   }
 
   function renderQuotes(quotes) {
@@ -104,8 +146,9 @@
 
     body.innerHTML = quotesCache.map(function (q, idx) {
       var totals = q.totals || {};
-      var itemCount = (q.items && q.items.length) || 0;
-      var copIva = totals.copIva != null ? formatCOP(totals.copIva) : '—';
+      var items = quoteItems(q);
+      var itemCount = items.length;
+      var totalIva = quoteTotalIvaLabel(totals);
       return (
         '<tr>' +
           '<td class="admin-row-num">' + (idx + 1) + '</td>' +
@@ -113,7 +156,7 @@
           '<td>' + escapeHtml(q.nombre || '—') + '</td>' +
           '<td>' + escapeHtml(q.nit || '') + '</td>' +
           '<td>' + itemCount + '</td>' +
-          '<td>' + escapeHtml(copIva) + '</td>' +
+          '<td>' + escapeHtml(totalIva) + '</td>' +
           '<td class="admin-actions">' +
             '<button type="button" class="admin-view-quote" data-idx="' + idx + '">Ver</button>' +
           '</td>' +
@@ -211,6 +254,91 @@
     });
   }
 
+  function updateBitrixBadge(configured, enabled) {
+    var el = document.getElementById('adminBitrixStatus');
+    if (!el) return;
+    if (enabled && configured) el.textContent = 'On';
+    else if (configured) el.textContent = 'Off';
+    else el.textContent = '—';
+  }
+
+  function loadBitrixPanel() {
+    if (!window.IZCAuth || !IZCAuth.getSessionNit) return Promise.resolve();
+    return postAdminApi({
+      action: 'get_bitrix',
+      admin_nit: IZCAuth.getSessionNit()
+    }).then(function (data) {
+      if (!data || !data.ok) return;
+      var enabled = document.getElementById('adminBitrixEnabled');
+      var webhook = document.getElementById('adminBitrixWebhook');
+      var stage = document.getElementById('adminBitrixStage');
+      var category = document.getElementById('adminBitrixCategory');
+      var meta = document.getElementById('adminBitrixMeta');
+      if (enabled) enabled.checked = !!data.enabled;
+      if (webhook) webhook.value = data.webhook_base || '';
+      if (stage) stage.value = data.stage_id || '';
+      if (category) category.value = data.category_id || '';
+      updateBitrixBadge(!!data.configured, !!data.enabled);
+      if (meta) {
+        meta.textContent = data.updated_at
+          ? 'Última actualización: ' + formatDate(data.updated_at)
+          : 'Aún no hay configuración Bitrix guardada.';
+      }
+    }).catch(function () {
+      setMessage('adminMessage', 'No se pudo cargar Bitrix. Reinicia con tools\\ABRIR.bat.', 'error');
+    });
+  }
+
+  function bitrixFormPayload() {
+    return {
+      admin_nit: IZCAuth.getSessionNit(),
+      enabled: !!(document.getElementById('adminBitrixEnabled') || {}).checked,
+      webhook_base: (document.getElementById('adminBitrixWebhook') || {}).value || '',
+      stage_id: (document.getElementById('adminBitrixStage') || {}).value || '',
+      category_id: (document.getElementById('adminBitrixCategory') || {}).value || '',
+      currency_id: 'COP'
+    };
+  }
+
+  function saveBitrixAdmin() {
+    setMessage('adminMessage', 'Guardando Bitrix…', '');
+    postAdminApi(Object.assign({ action: 'set_bitrix' }, bitrixFormPayload())).then(function (data) {
+      if (!data || !data.ok) {
+        setMessage('adminMessage', (data && data.error) || 'No se pudo guardar Bitrix.', 'error');
+        return;
+      }
+      setMessage('adminMessage', data.message || 'Bitrix guardado.', 'ok');
+      loadBitrixPanel();
+    }).catch(function () {
+      setMessage('adminMessage', 'Error al guardar Bitrix. Reinicia el servidor.', 'error');
+    });
+  }
+
+  function testBitrixAdmin() {
+    var stagesEl = document.getElementById('adminBitrixStages');
+    if (stagesEl) {
+      stagesEl.hidden = true;
+      stagesEl.textContent = '';
+    }
+    setMessage('adminMessage', 'Probando Bitrix…', '');
+    postAdminApi(Object.assign({ action: 'test_bitrix' }, bitrixFormPayload())).then(function (data) {
+      if (!data || !data.ok) {
+        setMessage('adminMessage', (data && data.error) || 'Prueba Bitrix fallida.', 'error');
+        return;
+      }
+      setMessage('adminMessage', data.message || 'Bitrix OK.', 'ok');
+      if (stagesEl && data.stages && data.stages.length) {
+        var lines = data.stages.map(function (s) {
+          return (s.STATUS_ID || s.status_id || '') + '  →  ' + (s.NAME || s.name || '');
+        });
+        stagesEl.textContent = 'Etapas del embudo (copia el STATUS_ID de COTIZACION):\n' + lines.join('\n');
+        stagesEl.hidden = false;
+      }
+    }).catch(function () {
+      setMessage('adminMessage', 'No se pudo probar Bitrix. Revisa el webhook y reinicia el servidor.', 'error');
+    });
+  }
+
   function openQuoteDetail(idx) {
     var quote = quotesCache[idx];
     var modal = document.getElementById('quoteDetailModal');
@@ -224,13 +352,13 @@
         ' · ' + formatDate(quote.created_at);
     }
 
-    var rows = (quote.items || []).map(function (line) {
+    var rows = quoteItems(quote).map(function (line) {
       return (
         '<tr>' +
           '<td>' + escapeHtml(line.sku || '') + '</td>' +
           '<td>' + escapeHtml(line.name || '—') + '</td>' +
           '<td>' + (line.qty || 0) + '</td>' +
-          '<td>' + escapeHtml(formatCOP(line.totalCopIva != null ? line.totalCopIva : line.copIva)) + '</td>' +
+          '<td>' + escapeHtml(lineTotalIva(line)) + '</td>' +
         '</tr>'
       );
     }).join('');
@@ -238,11 +366,11 @@
     var totals = quote.totals || {};
     body.innerHTML =
       '<table class="admin-quote-detail-table">' +
-        '<thead><tr><th>SKU</th><th>Producto</th><th>Cant.</th><th>Total COP + IVA</th></tr></thead>' +
+        '<thead><tr><th>SKU</th><th>Producto</th><th>Cant.</th><th>Total + IVA</th></tr></thead>' +
         '<tbody>' + (rows || '<tr><td colspan="4">Sin productos</td></tr>') + '</tbody>' +
       '</table>' +
-      '<p class="admin-quote-total"><strong>Total COP + IVA:</strong> ' +
-        escapeHtml(formatCOP(totals.copIva)) + '</p>';
+      '<p class="admin-quote-total"><strong>Total + IVA:</strong> ' +
+        escapeHtml(quoteTotalIvaLabel(totals)) + '</p>';
 
     modal.hidden = false;
   }
@@ -273,6 +401,11 @@
 
     var trmSave = document.getElementById('adminTrmSave');
     if (trmSave) trmSave.addEventListener('click', saveTrmAdmin);
+
+    var bitrixSave = document.getElementById('adminBitrixSave');
+    if (bitrixSave) bitrixSave.addEventListener('click', saveBitrixAdmin);
+    var bitrixTest = document.getElementById('adminBitrixTest');
+    if (bitrixTest) bitrixTest.addEventListener('click', testBitrixAdmin);
   }
 
   function fillProfile() {
@@ -463,10 +596,12 @@
       setActiveTab('users');
       loadQuotes({ silent: true });
       loadTrmPanel();
+      loadBitrixPanel();
     }).catch(function () {
       if (!fillProfile()) return;
       setActiveTab('users');
       loadTrmPanel();
+      loadBitrixPanel();
     });
   }
 

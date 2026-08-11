@@ -1,0 +1,10 @@
+{
+  "enabled": false,
+  "webhook_base": "https://vits.bitrix24.com/rest/1/PEGAR_CODIGO_AQUI/",
+  "stage_id": "PEGAR_STAGE_ID_COTIZACION",
+  "category_id": "",
+  "currency_id": "COP",
+  "marca_field": "UF_CRM_1749499637",
+  "updated_at": "",
+  "updated_by_nit": ""
+}

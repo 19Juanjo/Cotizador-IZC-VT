@@ -209,9 +209,10 @@
 
   function unitsFromEntry(entry, trm) {
     if (!entry) return null;
+    var currency = entry.currency === 'COP' ? 'COP' : 'USD';
     var usd;
     var cop;
-    if (entry.currency === 'COP') {
+    if (currency === 'COP') {
       cop = entry.amount;
       usd = entry.amount / trm;
     } else {
@@ -219,11 +220,18 @@
       cop = entry.amount * trm;
     }
     return {
+      currency: currency,
       usd: usd,
       cop: cop,
       usdIva: usd * (1 + IVA),
       copIva: cop * (1 + IVA)
     };
+  }
+
+  function formatTotalIva(row) {
+    if (!row || !row.ok) return '—';
+    if (row.currency === 'COP') return formatCOP(row.totalCopIva);
+    return formatUSD(row.totalUsdIva);
   }
 
   function readItems() {
@@ -293,6 +301,7 @@
       sku: item.sku,
       name: nombre,
       qty: item.qty,
+      currency: units.currency,
       usd: units.usd,
       cop: units.cop,
       usdIva: units.usdIva,
@@ -310,20 +319,29 @@
     var totalCop = 0;
     var totalUsdIva = 0;
     var totalCopIva = 0;
+    var hasUsd = false;
+    var hasCop = false;
     rows.forEach(function (row) {
       if (!row.ok) return;
       qty += row.qty;
       totalUsd += row.totalUsd;
       totalCop += row.totalCop;
-      totalUsdIva += row.totalUsdIva;
-      totalCopIva += row.totalCopIva;
+      if (row.currency === 'COP') {
+        hasCop = true;
+        totalCopIva += row.totalCopIva;
+      } else {
+        hasUsd = true;
+        totalUsdIva += row.totalUsdIva;
+      }
     });
     return {
       qty: qty,
       usd: totalUsd,
       cop: totalCop,
       usdIva: totalUsdIva,
-      copIva: totalCopIva
+      copIva: totalCopIva,
+      hasUsd: hasUsd,
+      hasCop: hasCop
     };
   }
 
@@ -334,7 +352,7 @@
     var rows = items.map(function (item) { return lineCalc(item, trm); });
 
     if (!rows.length) {
-      body.innerHTML = '<tr class="cotizador-empty-row"><td colspan="10">Aún no hay productos en la cotización.</td></tr>';
+      body.innerHTML = '<tr class="cotizador-empty-row"><td colspan="9">Aún no hay productos en la cotización.</td></tr>';
     } else {
       body.innerHTML = rows.map(function (row, idx) {
         if (!row.ok) {
@@ -343,7 +361,7 @@
               '<td>' + escapeHtml(row.sku) + '</td>' +
               '<td>' + escapeHtml(row.name) + '</td>' +
               '<td class="cotizador-qty-cell">' + qtyInputHtml(idx, row.qty) + '</td>' +
-              '<td colspan="6">Sin precio en lista</td>' +
+              '<td colspan="5">Sin precio en lista</td>' +
               '<td><button type="button" class="cotizador-remove" data-idx="' + idx + '">Quitar</button></td>' +
             '</tr>'
           );
@@ -357,8 +375,7 @@
             '<td>' + formatCOP(row.cop) + '</td>' +
             '<td>' + formatUSD(row.totalUsd) + '</td>' +
             '<td>' + formatCOP(row.totalCop) + '</td>' +
-            '<td>' + formatUSD(row.totalUsdIva) + '</td>' +
-            '<td>' + formatCOP(row.totalCopIva) + '</td>' +
+            '<td>' + formatTotalIva(row) + '</td>' +
             '<td><button type="button" class="cotizador-remove" data-idx="' + idx + '">Quitar</button></td>' +
           '</tr>'
         );
@@ -371,11 +388,16 @@
     var elCop = document.getElementById('totalCop');
     var elUsdIva = document.getElementById('totalUsdIva');
     var elCopIva = document.getElementById('totalCopIva');
+    var cardUsdIva = elUsdIva ? elUsdIva.closest('.cotizador-total-card') : null;
+    var cardCopIva = elCopIva ? elCopIva.closest('.cotizador-total-card') : null;
     if (elQty) elQty.textContent = String(totals.qty);
     if (elUsd) elUsd.textContent = formatUSD(totals.usd);
     if (elCop) elCop.textContent = formatCOP(totals.cop);
     if (elUsdIva) elUsdIva.textContent = formatUSD(totals.usdIva);
     if (elCopIva) elCopIva.textContent = formatCOP(totals.copIva);
+    var anyPriced = rows.some(function (r) { return r.ok; });
+    if (cardUsdIva) cardUsdIva.hidden = anyPriced && !totals.hasUsd;
+    if (cardCopIva) cardCopIva.hidden = anyPriced && !totals.hasCop;
 
     var finishBtn = document.getElementById('cotizadorFinish');
     if (finishBtn) finishBtn.disabled = !rows.some(function (r) { return r.ok; }) || finishing;
@@ -455,6 +477,7 @@
           sku: row.sku,
           name: row.name,
           qty: row.qty,
+          currency: row.currency,
           usd: row.usd,
           cop: row.cop,
           usdIva: row.usdIva,
@@ -470,7 +493,9 @@
         usd: totals.usd,
         cop: totals.cop,
         usdIva: totals.usdIva,
-        copIva: totals.copIva
+        copIva: totals.copIva,
+        hasUsd: totals.hasUsd,
+        hasCop: totals.hasCop
       }
     };
   }

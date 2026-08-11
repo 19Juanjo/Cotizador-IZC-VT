@@ -921,7 +921,7 @@
       }
       if (data.ok) {
         setMessage(msg, data.message || 'Listo.', 'ok');
-        var dest = 'cotizador.html';
+        var dest = 'index.html';
         if (mode === 'register') {
           dest = 'login.html';
         } else if (isAdminNit(data.nit || nit)) {

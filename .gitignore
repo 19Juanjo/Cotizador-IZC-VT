@@ -1,6 +1,7 @@
 ﻿.vscode/
 public/
 data/session_bridge.json
+data/bitrix.json
 tools/.servidor_local.sig
 __pycache__/
 *.pyc

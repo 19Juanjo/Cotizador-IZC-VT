@@ -143,6 +143,55 @@
   background: #1d72db;
 }
 
+.admin-bitrix-box {
+  max-width: 640px;
+}
+
+.admin-bitrix-box input[type="url"],
+.admin-bitrix-box input[type="text"] {
+  width: 100%;
+  box-sizing: border-box;
+  margin-bottom: 14px;
+  padding: 10px 12px;
+  border: 1px solid #c2d1e5;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  color: #16233f;
+}
+
+.admin-bitrix-check {
+  display: flex !important;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+  font-weight: 600;
+}
+
+.admin-bitrix-test {
+  border: 1px solid #1653a0;
+  border-radius: 4px;
+  background: #fff;
+  color: #1653a0;
+  font-weight: 700;
+  padding: 11px 16px;
+  cursor: pointer;
+}
+
+.admin-bitrix-test:hover {
+  background: #eef5ff;
+}
+
+.admin-bitrix-stages {
+  margin-top: 14px;
+  padding: 12px;
+  background: #f4f7fb;
+  border: 1px solid #e3ebf5;
+  border-radius: 4px;
+  font-size: 0.82rem;
+  white-space: pre-wrap;
+  overflow-x: auto;
+}
+
 .admin-trm-meta {
   margin: 12px 0 0;
   color: #5a6b85;

@@ -10,6 +10,7 @@ $UsersFile = Join-Path $Root 'data\usuarios.json'
 $QuotesFile = Join-Path $Root 'data\cotizaciones.json'
 $TrmFile = Join-Path $Root 'data\trm.json'
 $SessionBridgeFile = Join-Path $Root 'data\session_bridge.json'
+$BitrixFile = Join-Path $Root 'data\bitrix.json'
 $Prefix = "http://127.0.0.1:$Port/"
 
 function Normalize-Nit([string]$nit) {
@@ -215,8 +216,611 @@ function Write-Trm([double]$value, [string]$adminNit, [string]$adminNombre) {
   return $entry
 }
 
+function Normalize-BitrixWebhook([string]$url) {
+  $u = ([string]$url).Trim()
+  if (-not $u) { return '' }
+  $u = $u -replace '\\', '/'
+  # Quitar metodo al final si pegaron .../crm.deal.add
+  $u = $u -replace '/crm\.[a-z0-9_.]+(\.json)?/?$', '/'
+  if (-not $u.EndsWith('/')) { $u = $u + '/' }
+  return $u
+}
+
+function Read-BitrixConfig {
+  $defaults = [ordered]@{
+    enabled = $false
+    webhook_base = ''
+    stage_id = ''
+    category_id = ''
+    currency_id = 'COP'
+    marca_field = 'UF_CRM_1749499637'
+    updated_at = ''
+    updated_by_nit = ''
+  }
+  if (-not (Test-Path $BitrixFile)) { return $defaults }
+  try {
+    $raw = Get-Content $BitrixFile -Raw -Encoding UTF8
+    if ([string]::IsNullOrWhiteSpace($raw)) { return $defaults }
+    $data = $raw | ConvertFrom-Json
+    $marcaField = ([string]$data.marca_field).Trim()
+    if (-not $marcaField) { $marcaField = 'UF_CRM_1749499637' }
+    return [ordered]@{
+      enabled = [bool]$data.enabled
+      webhook_base = Normalize-BitrixWebhook ([string]$data.webhook_base)
+      stage_id = ([string]$data.stage_id).Trim()
+      category_id = ([string]$data.category_id).Trim()
+      currency_id = $(if ([string]$data.currency_id) { ([string]$data.currency_id).Trim().ToUpperInvariant() } else { 'COP' })
+      marca_field = $marcaField
+      updated_at = [string]$data.updated_at
+      updated_by_nit = [string]$data.updated_by_nit
+    }
+  } catch {
+    return $defaults
+  }
+}
+
+function Write-BitrixConfig($cfg, [string]$adminNit) {
+  $marcaField = ([string]$cfg.marca_field).Trim()
+  if (-not $marcaField) { $marcaField = 'UF_CRM_1749499637' }
+  $entry = [ordered]@{
+    enabled = [bool]$cfg.enabled
+    webhook_base = Normalize-BitrixWebhook ([string]$cfg.webhook_base)
+    stage_id = ([string]$cfg.stage_id).Trim()
+    category_id = ([string]$cfg.category_id).Trim()
+    currency_id = $(if ([string]$cfg.currency_id) { ([string]$cfg.currency_id).Trim().ToUpperInvariant() } else { 'COP' })
+    marca_field = $marcaField
+    updated_at = (Get-Date).ToString('o')
+    updated_by_nit = $adminNit
+  }
+  $dir = Split-Path $BitrixFile -Parent
+  if (-not (Test-Path $dir)) { New-Item -ItemType Directory -Path $dir | Out-Null }
+  $json = ($entry | ConvertTo-Json -Depth 4 -Compress:$false)
+  [System.IO.File]::WriteAllText($BitrixFile, $json + "`n", [System.Text.UTF8Encoding]::new($false))
+  return $entry
+}
+
+function ConvertTo-BitrixForm($obj, [string]$prefix = '') {
+  $result = [ordered]@{}
+  if ($null -eq $obj) { return $result }
+
+  if ($obj -is [System.Collections.IDictionary]) {
+    foreach ($key in @($obj.Keys)) {
+      $path = if ($prefix) { "$prefix[$key]" } else { [string]$key }
+      $child = ConvertTo-BitrixForm $obj[$key] $path
+      foreach ($ck in @($child.Keys)) { $result[$ck] = $child[$ck] }
+    }
+    return $result
+  }
+
+  if (($obj -is [System.Collections.IEnumerable]) -and -not ($obj -is [string])) {
+    $i = 0
+    foreach ($item in @($obj)) {
+      $path = "$prefix[$i]"
+      $child = ConvertTo-BitrixForm $item $path
+      foreach ($ck in @($child.Keys)) { $result[$ck] = $child[$ck] }
+      $i++
+    }
+    return $result
+  }
+
+  if ($prefix) {
+    if ($obj -is [double] -or $obj -is [float] -or $obj -is [decimal] -or $obj -is [int] -or $obj -is [long]) {
+      $result[$prefix] = ([IFormattable]$obj).ToString($null, [System.Globalization.CultureInfo]::InvariantCulture)
+    } else {
+      $result[$prefix] = [string]$obj
+    }
+  }
+  return $result
+}
+
+function Invoke-BitrixRest([string]$webhookBase, [string]$method, $payload) {
+  $base = Normalize-BitrixWebhook $webhookBase
+  if (-not $base) { throw 'Webhook Bitrix vacio.' }
+  $url = $base + $method.TrimStart('/')
+  $form = ConvertTo-BitrixForm $payload
+  if ($null -eq $form -or $form.Count -eq 0) {
+    $response = Invoke-RestMethod -Method Post -Uri $url -TimeoutSec 25
+  } else {
+    $response = Invoke-RestMethod -Method Post -Uri $url -Body $form -ContentType 'application/x-www-form-urlencoded; charset=utf-8' -TimeoutSec 25
+  }
+  if ($null -ne $response.error -and [string]$response.error) {
+    $desc = [string]$response.error_description
+    if (-not $desc) { $desc = [string]$response.error }
+    throw ("Bitrix {0}: {1}" -f [string]$response.error, $desc)
+  }
+  return $response
+}
+
+function Get-BitrixOpportunity($quote, $currencyId) {
+  $currencyId = ([string]$currencyId).ToUpperInvariant()
+  if (-not $currencyId) { $currencyId = 'COP' }
+  $sum = 0.0
+  $hasItem = $false
+  foreach ($item in @($quote.items)) {
+    if ($null -eq $item) { continue }
+    $hasItem = $true
+    $v = $null
+    if ($currencyId -eq 'USD') {
+      $v = $item.totalUsdIva
+      if ($null -eq $v) { $v = $item.usdIva }
+    } else {
+      $v = $item.totalCopIva
+      if ($null -eq $v) { $v = $item.copIva }
+    }
+    try {
+      if ($null -ne $v) { $sum += [double]$v }
+    } catch {}
+  }
+  if ($hasItem -and $sum -gt 0) { return $sum }
+
+  $totals = $quote.totals
+  if ($null -eq $totals) { return 0.0 }
+  try {
+    if ($currencyId -eq 'USD' -and $null -ne $totals.usdIva) { return [double]$totals.usdIva }
+    if ($currencyId -ne 'USD' -and $null -ne $totals.copIva) { return [double]$totals.copIva }
+  } catch {}
+  return 0.0
+}
+
+function Get-BitrixDealCurrency($quote, $fallbackCurrency) {
+  $hasUsd = $false
+  $hasCop = $false
+  foreach ($item in @($quote.items)) {
+    if ($null -eq $item) { continue }
+    $c = ([string]$item.currency).ToUpperInvariant()
+    if ($c -eq 'COP') { $hasCop = $true } else { $hasUsd = $true }
+  }
+  if ($hasUsd -and -not $hasCop) { return 'USD' }
+  if ($hasCop -and -not $hasUsd) { return 'COP' }
+
+  $totals = $quote.totals
+  if ($null -ne $totals) {
+    try { if ($totals.hasUsd -eq $true -and $totals.hasCop -ne $true) { return 'USD' } } catch {}
+    try { if ($totals.hasCop -eq $true -and $totals.hasUsd -ne $true) { return 'COP' } } catch {}
+  }
+
+  $fallback = ([string]$fallbackCurrency).ToUpperInvariant()
+  if ($fallback) { return $fallback }
+  return 'COP'
+}
+
+function Format-BitrixQuoteComments($quote) {
+  $lines = New-Object System.Collections.Generic.List[string]
+  $lines.Add('Cotizacion IZC Mayorista')
+  $lines.Add('NIT: ' + [string]$quote.nit)
+  $lines.Add('Cliente: ' + [string]$quote.nombre)
+  $lines.Add('TRM: ' + [string]$quote.trm)
+  $lines.Add('Fecha: ' + [string]$quote.created_at)
+  $lines.Add('')
+  $lines.Add('Productos:')
+  foreach ($item in @($quote.items)) {
+    if ($null -eq $item) { continue }
+    $sku = [string]$item.sku
+    $name = [string]$item.name
+    $qty = [string]$item.qty
+    $currency = ([string]$item.currency).ToUpperInvariant()
+    if ($currency -eq 'USD') {
+      $total = $item.totalUsdIva
+      if ($null -eq $total) { $total = $item.usdIva }
+      $lines.Add("- [$sku] $name x$qty = $total USD + IVA")
+    } else {
+      $total = $item.totalCopIva
+      if ($null -eq $total) { $total = $item.copIva }
+      $lines.Add("- [$sku] $name x$qty = $total COP + IVA")
+    }
+  }
+  $totals = $quote.totals
+  if ($null -ne $totals) {
+    $lines.Add('')
+    $hasUsd = $false
+    $hasCop = $false
+    try { if ($totals.hasUsd -eq $true) { $hasUsd = $true } } catch {}
+    try { if ($totals.hasCop -eq $true) { $hasCop = $true } } catch {}
+    if (-not $hasUsd -and -not $hasCop) {
+      try { if ([double]$totals.usdIva -gt 0) { $hasUsd = $true } } catch {}
+      try { if ([double]$totals.copIva -gt 0) { $hasCop = $true } } catch {}
+    }
+    if ($hasUsd) { $lines.Add('Total USD + IVA: ' + [string]$totals.usdIva) }
+    if ($hasCop) { $lines.Add('Total COP + IVA: ' + [string]$totals.copIva) }
+  }
+  return ($lines -join "`n")
+}
+
+function Get-BitrixFirstId($response) {
+  if ($null -eq $response) { return $null }
+  $list = $response.result
+  if ($null -eq $list) { return $null }
+  if ($list -is [System.Collections.IEnumerable] -and -not ($list -is [string])) {
+    foreach ($row in @($list)) {
+      if ($null -eq $row) { continue }
+      try {
+        if ($null -ne $row.ID) { return [string]$row.ID }
+        if ($null -ne $row.id) { return [string]$row.id }
+      } catch {}
+    }
+  }
+  return $null
+}
+
+function Ensure-BitrixCompany([string]$webhookBase, [string]$nit, [string]$nombre) {
+  $nit = ([string]$nit).Trim()
+  if (-not $nit) { return $null }
+
+  $found = Invoke-BitrixRest $webhookBase 'crm.company.list.json' @{
+    filter = @{ TITLE = $nit }
+    select = @('ID', 'TITLE')
+  }
+  $existing = Get-BitrixFirstId $found
+  if ($existing) { return $existing }
+
+  # Igual que cotizaciones manuales: Compañía = NIT, tipo Client / IT
+  $fields = @{
+    TITLE = $nit
+    COMPANY_TYPE = 'CUSTOMER'
+    INDUSTRY = 'IT'
+    OPENED = 'Y'
+  }
+  if ($nombre) { $fields.COMMENTS = ('Cliente IZC: ' + $nombre) }
+  $created = Invoke-BitrixRest $webhookBase 'crm.company.add.json' @{
+    fields = $fields
+    params = @{ REGISTER_SONET_EVENT = 'N' }
+  }
+  if ($null -ne $created.result -and [string]$created.result) {
+    return [string]$created.result
+  }
+  throw 'Bitrix no devolvio ID de compania.'
+}
+
+function Ensure-BitrixContact([string]$webhookBase, [string]$nombre, $companyId, [string]$nit) {
+  $nombre = ([string]$nombre).Trim()
+  if (-not $nombre) { return $null }
+
+  # Contacto = nombre del cliente (como PROVEXPRESS en las otras cotizaciones)
+  $filter = @{ NAME = $nombre }
+  if ($companyId) { $filter.COMPANY_ID = $companyId }
+  $found = Invoke-BitrixRest $webhookBase 'crm.contact.list.json' @{
+    filter = $filter
+    select = @('ID', 'NAME', 'LAST_NAME', 'COMPANY_ID')
+  }
+  $existing = Get-BitrixFirstId $found
+  if ($existing) { return $existing }
+
+  $fields = @{
+    NAME = $nombre
+    LAST_NAME = ''
+    OPENED = 'Y'
+    TYPE_ID = 'CLIENT'
+  }
+  if ($companyId) { $fields.COMPANY_ID = $companyId }
+  if ($nit) { $fields.COMMENTS = ('NIT: ' + $nit) }
+
+  try {
+    $created = Invoke-BitrixRest $webhookBase 'crm.contact.add.json' @{
+      fields = $fields
+      params = @{ REGISTER_SONET_EVENT = 'N' }
+    }
+  } catch {
+    # Algunos portales exigen apellido
+    $fields.LAST_NAME = '-'
+    $created = Invoke-BitrixRest $webhookBase 'crm.contact.add.json' @{
+      fields = $fields
+      params = @{ REGISTER_SONET_EVENT = 'N' }
+    }
+  }
+
+  if ($null -ne $created.result -and [string]$created.result) {
+    return [string]$created.result
+  }
+  throw 'Bitrix no devolvio ID de contacto.'
+}
+
+function Get-BrandCatalogMap {
+  $path = Join-Path $Root 'assets\files\brand_products.json'
+  $map = @{}
+  if (-not (Test-Path $path)) { return $map }
+  try {
+    $data = Get-Content $path -Raw -Encoding UTF8 | ConvertFrom-Json
+    foreach ($prop in $data.PSObject.Properties) {
+      foreach ($p in @($prop.Value)) {
+        if ($null -eq $p) { continue }
+        $sku = [string]$p.sku
+        if (-not $sku) { continue }
+        $map[$sku] = @{
+          brand = [string]$p.brand
+          brandName = $(if ($p.brandName) { [string]$p.brandName } else { [string]$p.brand })
+          name = [string]$p.name
+          category = [string]$p.category
+          type = [string]$p.type
+        }
+        $noZeros = $sku -replace '^0+', ''
+        if ($noZeros -and -not $map.ContainsKey($noZeros)) { $map[$noZeros] = $map[$sku] }
+      }
+    }
+  } catch {}
+  return $map
+}
+
+function Get-BitrixMarcaItems([string]$webhookBase, [string]$fieldName) {
+  $resp = Invoke-BitrixRest $webhookBase 'crm.deal.fields.json' $null
+  if ($null -eq $resp -or $null -eq $resp.result) { return @() }
+  $prop = $resp.result.PSObject.Properties[[string]$fieldName]
+  if ($null -eq $prop -or $null -eq $prop.Value) { return @() }
+  return @($prop.Value.items)
+}
+
+function Resolve-BitrixMarcaId($marcaItems, [string]$brandKey, [string]$brandName, [string]$productHint) {
+  if (-not $marcaItems -or @($marcaItems).Count -eq 0) { return $null }
+  $brandU = ([string]$brandName).Trim().ToUpperInvariant()
+  $keyU = ([string]$brandKey).Trim().ToUpperInvariant()
+  if (-not $brandU) { $brandU = $keyU }
+  if (-not $brandU) { return $null }
+
+  $hint = ([string]$productHint).ToUpperInvariant()
+  $want = New-Object System.Collections.Generic.List[string]
+  if ($hint -match 'IMPRESORA|CABEZAL|RIBBON|ETIQUET|ZD\d|ZT\d|ZC\d|PRINT') {
+    [void]$want.Add('IMP')
+    [void]$want.Add('ESCR')
+  }
+  if ($hint -match 'LECTOR|SCAN|MAGELLAN|QUICKSCAN|DS\d') { [void]$want.Add('LECTOR') }
+  if ($hint -match 'MOVIL|MOBILE|TC\d|MC\d|TERMINAL') { [void]$want.Add('MOV') }
+  if ($hint -match 'CARNET|CARD|ZXP|ZC1|ZC3') { [void]$want.Add('CARNET') }
+  if ($hint -match 'SUMINIST|RIBBON') { [void]$want.Add('SUMINIST') }
+
+  $bestId = $null
+  $bestScore = -1
+  foreach ($it in @($marcaItems)) {
+    $val = [string]$it.VALUE
+    $valU = $val.ToUpperInvariant()
+    $matchBrand = ($valU.Contains($brandU)) -or ($keyU -and $valU.Contains($keyU))
+    if (-not $matchBrand) { continue }
+    $score = 1
+    if ($valU -eq $brandU) { $score += 5 }
+    foreach ($w in $want) {
+      if ($valU.Contains($w)) { $score += 3 }
+    }
+    if ($score -gt $bestScore) {
+      $bestScore = $score
+      $bestId = [string]$it.ID
+    }
+  }
+  return $bestId
+}
+
+function Get-QuoteMarcaId([string]$webhookBase, $cfg, $quote) {
+  $fieldName = [string]$cfg.marca_field
+  if (-not $fieldName) { $fieldName = 'UF_CRM_1749499637' }
+  $items = Get-BitrixMarcaItems $webhookBase $fieldName
+  $brandMap = Get-BrandCatalogMap
+  foreach ($item in @($quote.items)) {
+    if ($null -eq $item) { continue }
+    $sku = [string]$item.sku
+    $name = [string]$item.name
+    $meta = $null
+    if ($sku -and $brandMap.ContainsKey($sku)) { $meta = $brandMap[$sku] }
+    elseif ($sku) {
+      $nz = $sku -replace '^0+', ''
+      if ($nz -and $brandMap.ContainsKey($nz)) { $meta = $brandMap[$nz] }
+    }
+    $brandKey = ''
+    $brandName = ''
+    if ($meta) {
+      $brandKey = [string]$meta.brand
+      $brandName = [string]$meta.brandName
+      if (-not $name) { $name = [string]$meta.name }
+    }
+    if (-not $brandName -and $item.brandName) { $brandName = [string]$item.brandName }
+    if (-not $brandKey -and $item.brand) { $brandKey = [string]$item.brand }
+    $hint = ($name + ' ' + [string]$meta.category + ' ' + [string]$meta.type)
+    $id = Resolve-BitrixMarcaId $items $brandKey $brandName $hint
+    if ($id) { return $id }
+  }
+  return $null
+}
+
+function Build-BitrixProductRows($quote, [string]$dealCurrency) {
+  $rows = @()
+  $sort = 10
+  $dealCurrency = ([string]$dealCurrency).ToUpperInvariant()
+  foreach ($item in @($quote.items)) {
+    if ($null -eq $item) { continue }
+    $sku = [string]$item.sku
+    $name = [string]$item.name
+    if (-not $name) { $name = $sku }
+    $productName = if ($sku) { "$sku-$name" } else { $name }
+
+    $qty = 1
+    try {
+      $qty = [int]([math]::Floor([double]$item.qty))
+    } catch { $qty = 1 }
+    if ($qty -le 0) { $qty = 1 }
+
+    $unit = 0.0
+    $inv = [System.Globalization.CultureInfo]::InvariantCulture
+    try {
+      $raw = $null
+      if ($dealCurrency -eq 'USD') {
+        if ($null -ne $item.usdIva) { $raw = $item.usdIva }
+        elseif ($null -ne $item.usd) { $raw = $item.usd }
+      } else {
+        if ($null -ne $item.copIva) { $raw = $item.copIva }
+        elseif ($null -ne $item.cop) { $raw = $item.cop }
+      }
+      if ($null -ne $raw) {
+        if ($raw -is [double] -or $raw -is [decimal] -or $raw -is [int] -or $raw -is [long]) {
+          $unit = [double]$raw
+        } else {
+          [void][double]::TryParse(([string]$raw).Replace(',', '.'), [System.Globalization.NumberStyles]::Float, $inv, [ref]$unit)
+        }
+      }
+    } catch { $unit = 0.0 }
+
+    $priceStr = $unit.ToString('0.00', $inv)
+    $rows += @{
+      PRODUCT_ID = '0'
+      PRODUCT_NAME = $productName
+      PRICE = $priceStr
+      QUANTITY = ([string]$qty)
+      TAX_RATE = '19'
+      TAX_INCLUDED = 'Y'
+      MEASURE_CODE = '796'
+      MEASURE_NAME = 'pcs.'
+      SORT = ([string]$sort)
+    }
+    $sort += 10
+  }
+  return $rows
+}
+
+function Set-BitrixDealProducts([string]$webhookBase, [string]$dealId, $rows) {
+  if (-not $dealId) { return }
+  $list = @($rows)
+  if ($list.Count -eq 0) { return }
+
+  $inv = [System.Globalization.CultureInfo]::InvariantCulture
+  $base = Normalize-BitrixWebhook $webhookBase
+  $url = $base + 'crm.deal.productrows.set.json'
+  $payload = @{
+    id = [int]$dealId
+    rows = @($list | ForEach-Object {
+      $priceRaw = ([string]$_.PRICE).Replace(',', '.')
+      $qtyRaw = ([string]$_.QUANTITY).Replace(',', '.')
+      $price = 0.0
+      $qty = 1.0
+      [void][double]::TryParse($priceRaw, [System.Globalization.NumberStyles]::Float, $inv, [ref]$price)
+      [void][double]::TryParse($qtyRaw, [System.Globalization.NumberStyles]::Float, $inv, [ref]$qty)
+      if ($qty -le 0) { $qty = 1.0 }
+      @{
+        PRODUCT_ID = 0
+        PRODUCT_NAME = [string]$_.PRODUCT_NAME
+        PRICE = $price
+        QUANTITY = $qty
+        TAX_RATE = 19
+        TAX_INCLUDED = 'Y'
+        MEASURE_CODE = 796
+        MEASURE_NAME = 'pcs.'
+        SORT = [int]$_.SORT
+      }
+    })
+  }
+  $json = ConvertTo-Json -InputObject $payload -Depth 8 -Compress
+  $response = Invoke-RestMethod -Method Post -Uri $url -Body $json -ContentType 'application/json; charset=utf-8' -TimeoutSec 25
+  if ($null -ne $response.error -and [string]$response.error) {
+    throw ("Bitrix {0}: {1}" -f [string]$response.error, [string]$response.error_description)
+  }
+}
+
+function Send-BitrixDeal($quote) {
+  $cfg = Read-BitrixConfig
+  if (-not $cfg.enabled) {
+    return @{ ok = $false; skipped = $true; error = 'Bitrix desactivado.' }
+  }
+  if (-not $cfg.webhook_base -or -not $cfg.stage_id) {
+    return @{ ok = $false; skipped = $true; error = 'Falta webhook o STAGE_ID de Bitrix.' }
+  }
+
+  $dealCurrency = Get-BitrixDealCurrency $quote $cfg.currency_id
+  $opportunity = Get-BitrixOpportunity $quote $dealCurrency
+  $nit = [string]$quote.nit
+  $nombre = [string]$quote.nombre
+
+  $companyId = $null
+  $contactId = $null
+  try {
+    $companyId = Ensure-BitrixCompany $cfg.webhook_base $nit $nombre
+    $contactId = Ensure-BitrixContact $cfg.webhook_base $nombre $companyId $nit
+  } catch {
+    return @{
+      ok = $false
+      skipped = $false
+      error = ('No se pudo crear Compania/Contacto: ' + $_.Exception.Message)
+    }
+  }
+
+  $marcaId = $null
+  try { $marcaId = Get-QuoteMarcaId $cfg.webhook_base $cfg $quote } catch { $marcaId = $null }
+
+  $fields = @{
+    STAGE_ID = [string]$cfg.stage_id
+    OPPORTUNITY = $opportunity
+    CURRENCY_ID = $dealCurrency
+    COMMENTS = (Format-BitrixQuoteComments $quote)
+    OPENED = 'Y'
+  }
+  if ($cfg.category_id) {
+    try { $fields.CATEGORY_ID = [int]$cfg.category_id } catch { $fields.CATEGORY_ID = $cfg.category_id }
+  }
+  if ($companyId) { $fields.COMPANY_ID = $companyId }
+  if ($contactId) {
+    $fields.CONTACT_ID = $contactId
+    $fields.CONTACT_IDS = @($contactId)
+  }
+  if ($marcaId -and $cfg.marca_field) {
+    $fields[[string]$cfg.marca_field] = $marcaId
+  }
+
+  try {
+    $result = Invoke-BitrixRest $cfg.webhook_base 'crm.deal.add.json' @{ fields = $fields }
+    $dealId = $null
+    if ($null -ne $result.result) { $dealId = [string]$result.result }
+    if (-not $dealId) {
+      return @{ ok = $false; skipped = $false; error = 'Bitrix no devolvio ID de negociacion.'; raw = $result }
+    }
+
+    # Titulo en espanol sin acentos (evita mojibake en form-urlencoded)
+    try {
+      Invoke-BitrixRest $cfg.webhook_base 'crm.deal.update.json' @{
+        id = $dealId
+        fields = @{ TITLE = ('Negociacion #{0}' -f $dealId) }
+      } | Out-Null
+    } catch {}
+
+    if ($contactId) {
+      try {
+        Invoke-BitrixRest $cfg.webhook_base 'crm.deal.contact.add.json' @{
+          id = $dealId
+          fields = @{
+            CONTACT_ID = $contactId
+            IS_PRIMARY = 'Y'
+          }
+        } | Out-Null
+      } catch {}
+    }
+
+    $productRows = @()
+    $productsOk = $false
+    try {
+      $productRows = @(Build-BitrixProductRows $quote $dealCurrency)
+      Set-BitrixDealProducts $cfg.webhook_base $dealId $productRows
+      $productsOk = $true
+    } catch {
+      return @{
+        ok = $true
+        skipped = $false
+        deal_id = $dealId
+        company_id = $companyId
+        contact_id = $contactId
+        marca_id = $marcaId
+        products_ok = $false
+        error = ('Negocio creado, pero Productos fallo: ' + $_.Exception.Message)
+      }
+    }
+
+    return @{
+      ok = $true
+      skipped = $false
+      deal_id = $dealId
+      company_id = $companyId
+      contact_id = $contactId
+      marca_id = $marcaId
+      products_ok = $productsOk
+    }
+  } catch {
+    return @{ ok = $false; skipped = $false; error = $_.Exception.Message }
+  }
+}
+
 function Send-Json($response, $obj, [int]$code = 200) {
-  $bytes = [System.Text.Encoding]::UTF8.GetBytes(($obj | ConvertTo-Json -Compress -Depth 5))
+  $bytes = [System.Text.Encoding]::UTF8.GetBytes(($obj | ConvertTo-Json -Compress -Depth 8))
   $response.StatusCode = $code
   $response.ContentType = 'application/json; charset=utf-8'
   $response.Headers.Add('Cache-Control', 'no-store')
@@ -566,7 +1170,117 @@ function Handle-Auth($request, $response) {
     foreach ($q in (Read-Quotes)) { $quotes.Add($q) }
     $quotes.Add($quote)
     Write-Quotes $quotes.ToArray()
-    Send-Json $response @{ ok = $true; id = $quoteId; message = 'Cotizacion guardada.' }
+
+    $bitrix = Send-BitrixDeal $quote
+    $message = 'Cotizacion guardada.'
+    if ($bitrix.ok) {
+      $message = 'Cotizacion guardada y enviada a Bitrix (negocio #' + $bitrix.deal_id + ').'
+      if ($bitrix.PSObject.Properties.Name -contains 'products_ok' -and $bitrix.products_ok -eq $false -and $bitrix.error) {
+        $message = 'Cotizacion guardada en Bitrix (#' + $bitrix.deal_id + '), pero Productos/MARCA: ' + [string]$bitrix.error
+      }
+    } elseif (-not $bitrix.skipped) {
+      $message = 'Cotizacion guardada, pero Bitrix fallo: ' + [string]$bitrix.error
+    }
+
+    Send-Json $response @{
+      ok = $true
+      id = $quoteId
+      message = $message
+      bitrix = $bitrix
+    }
+    return
+  }
+
+  if ($action -eq 'get_bitrix') {
+    $adminNit = Normalize-Nit ([string]$body.admin_nit)
+    if ($adminNit -ne '03166122778') {
+      Send-Json $response @{ ok = $false; error = 'No autorizado.' } 403
+      return
+    }
+    $cfg = Read-BitrixConfig
+    $masked = [string]$cfg.webhook_base
+    if ($masked.Length -gt 40) {
+      $masked = $masked.Substring(0, 28) + '…' + $masked.Substring($masked.Length - 8)
+    }
+    Send-Json $response @{
+      ok = $true
+      enabled = [bool]$cfg.enabled
+      webhook_base = [string]$cfg.webhook_base
+      webhook_masked = $masked
+      stage_id = [string]$cfg.stage_id
+      category_id = [string]$cfg.category_id
+      currency_id = [string]$cfg.currency_id
+      updated_at = [string]$cfg.updated_at
+      configured = ([bool]$cfg.enabled -and [string]$cfg.webhook_base -and [string]$cfg.stage_id)
+    }
+    return
+  }
+
+  if ($action -eq 'set_bitrix') {
+    $adminNit = Normalize-Nit ([string]$body.admin_nit)
+    if ($adminNit -ne '03166122778') {
+      Send-Json $response @{ ok = $false; error = 'No autorizado.' } 403
+      return
+    }
+    $cfg = Read-BitrixConfig
+    if ($null -ne $body.enabled) { $cfg.enabled = [bool]$body.enabled }
+    if ($null -ne $body.webhook_base) { $cfg.webhook_base = [string]$body.webhook_base }
+    if ($null -ne $body.stage_id) { $cfg.stage_id = [string]$body.stage_id }
+    if ($null -ne $body.category_id) { $cfg.category_id = [string]$body.category_id }
+    if ($null -ne $body.currency_id) { $cfg.currency_id = [string]$body.currency_id }
+    if (-not $cfg.webhook_base -or -not $cfg.stage_id) {
+      Send-Json $response @{ ok = $false; error = 'Webhook y STAGE_ID son obligatorios.' } 400
+      return
+    }
+    $saved = Write-BitrixConfig $cfg $adminNit
+    Send-Json $response @{
+      ok = $true
+      message = 'Configuracion Bitrix guardada.'
+      enabled = [bool]$saved.enabled
+      stage_id = [string]$saved.stage_id
+      category_id = [string]$saved.category_id
+      currency_id = [string]$saved.currency_id
+      updated_at = [string]$saved.updated_at
+    }
+    return
+  }
+
+  if ($action -eq 'test_bitrix') {
+    $adminNit = Normalize-Nit ([string]$body.admin_nit)
+    if ($adminNit -ne '03166122778') {
+      Send-Json $response @{ ok = $false; error = 'No autorizado.' } 403
+      return
+    }
+    $cfg = Read-BitrixConfig
+    if ($null -ne $body.webhook_base -and [string]$body.webhook_base) {
+      $cfg.webhook_base = [string]$body.webhook_base
+    }
+    if ($null -ne $body.stage_id -and [string]$body.stage_id) {
+      $cfg.stage_id = [string]$body.stage_id
+    }
+    if ($null -ne $body.category_id) { $cfg.category_id = [string]$body.category_id }
+    if (-not $cfg.webhook_base) {
+      Send-Json $response @{ ok = $false; error = 'Falta webhook_base.' } 400
+      return
+    }
+    try {
+      $profile = Invoke-BitrixRest $cfg.webhook_base 'profile.json' @{}
+      $stages = $null
+      if ($cfg.category_id -ne '') {
+        try {
+          $stages = Invoke-BitrixRest $cfg.webhook_base 'crm.dealcategory.stage.list.json' @{ id = $cfg.category_id }
+        } catch { $stages = $null }
+      }
+      Send-Json $response @{
+        ok = $true
+        message = 'Webhook Bitrix responde correctamente.'
+        profile = $profile.result
+        stages = $(if ($null -ne $stages) { $stages.result } else { @() })
+        stage_id = [string]$cfg.stage_id
+      }
+    } catch {
+      Send-Json $response @{ ok = $false; error = 'No se pudo contactar Bitrix: ' + $_.Exception.Message } 502
+    }
     return
   }
 
@@ -580,6 +1294,30 @@ function Handle-Auth($request, $response) {
     $sorted = @(Read-Quotes) | Sort-Object { [string]$_.created_at } -Descending
     foreach ($q in $sorted) {
       if ($null -eq $q) { continue }
+      $safe += [ordered]@{
+        id = [string]$q.id
+        nit = [string]$q.nit
+        nombre = [string]$q.nombre
+        created_at = [string]$q.created_at
+        trm = $q.trm
+        items = $(if ($null -ne $q.items) { @($q.items) } else { @() })
+        totals = $(if ($null -ne $q.totals) { $q.totals } else { @{} })
+      }
+    }
+    Send-Json $response @{ ok = $true; quotes = $safe; count = $safe.Count }
+    return
+  }
+
+  if ($action -eq 'list_my_quotes') {
+    if (-not $nit -or $nit -notmatch '^\d{6,15}(-\d)?$') {
+      Send-Json $response @{ ok = $false; error = 'NIT invalido.' } 400
+      return
+    }
+    $safe = @()
+    $sorted = @(Read-Quotes) | Sort-Object { [string]$_.created_at } -Descending
+    foreach ($q in $sorted) {
+      if ($null -eq $q) { continue }
+      if ((Normalize-Nit ([string]$q.nit)) -ne $nit) { continue }
       $safe += [ordered]@{
         id = [string]$q.id
         nit = [string]$q.nit
@@ -632,7 +1370,7 @@ function Handle-Auth($request, $response) {
     return
   }
 
-  Send-Json $response @{ ok = $false; error = 'Accion no valida. Usa register, login, list, delete, upsert o sync.' } 400
+  Send-Json $response @{ ok = $false; error = 'Accion no valida.' } 400
 }
 
 function Handle-Static($request, $response) {

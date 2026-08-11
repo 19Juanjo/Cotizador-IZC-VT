@@ -61,17 +61,47 @@ function Test-PortIsIzcApi([int]$Port) {
   }
 }
 
-function Stop-PortProcess([int]$Port) {
+function Get-IzcServerPids([int]$Port) {
+  $pids = New-Object System.Collections.Generic.List[int]
   foreach ($procId in (Get-PortOwnerPids $Port)) {
-    # No matar System (PID 4) ni procesos criticos
+    if ($procId -and $procId -gt 8) { [void]$pids.Add([int]$procId) }
+  }
+  try {
+    $needle = 'servidor_local.ps1'
+    $portNeedle = "-Port $Port"
+    Get-CimInstance Win32_Process -Filter "Name = 'powershell.exe' OR Name = 'pwsh.exe'" -ErrorAction SilentlyContinue |
+      Where-Object {
+        $cmd = [string]$_.CommandLine
+        $cmd -and ($cmd -like "*$needle*") -and ($cmd -like "*$portNeedle*" -or $cmd -like "*-Port `"$Port`"*")
+      } |
+      ForEach-Object {
+        $id = [int]$_.ProcessId
+        if ($id -gt 8 -and -not $pids.Contains($id)) { [void]$pids.Add($id) }
+      }
+  } catch {}
+  return , @($pids)
+}
+
+function Stop-PortProcess([int]$Port) {
+  foreach ($procId in (Get-IzcServerPids $Port)) {
     if ($procId -le 8) { continue }
     $proc = Get-Process -Id $procId -ErrorAction SilentlyContinue
     if (-not $proc) { continue }
-    # Solo detener PowerShell del servidor IZC; si es Code/Live Server, no forzar
     if ($proc.ProcessName -match '^(powershell|pwsh)$') {
       Stop-Process -Id $procId -Force -ErrorAction SilentlyContinue
     }
   }
+  # Fallback: matar cualquier servidor_local.ps1 de este puerto por linea de comando
+  try {
+    Get-CimInstance Win32_Process -Filter "Name = 'powershell.exe' OR Name = 'pwsh.exe'" -ErrorAction SilentlyContinue |
+      Where-Object {
+        $cmd = [string]$_.CommandLine
+        $cmd -and ($cmd -like '*servidor_local.ps1*') -and ($cmd -like "*-Port $Port*")
+      } |
+      ForEach-Object {
+        Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue
+      }
+  } catch {}
 }
 
 function Start-ServerOnPort([int]$Port) {
@@ -110,12 +140,23 @@ function Ensure-Port([int]$Port) {
     if (Test-PortIsIzcApi $Port) {
       # API viva pero firma vieja: reiniciar solo procesos PowerShell IZC
       Stop-PortProcess $Port
-      Start-Sleep -Seconds 1
+      Start-Sleep -Seconds 2
     } else {
       # Puerto ocupado por otra app (p.ej. Live Server de VS Code): no lo matamos
       Write-Host "Puerto $Port ocupado por otra aplicacion; se omite el servidor IZC ahi."
       return $false
     }
+  }
+
+  # Si tras stop sigue escuchando un IZC huerfano, intentar stop otra vez
+  if ((Test-PortListening $Port) -and (Test-PortIsIzcApi $Port)) {
+    Stop-PortProcess $Port
+    Start-Sleep -Seconds 2
+  }
+
+  if ((Test-PortListening $Port) -and -not (Test-PortIsIzcApi $Port)) {
+    Write-Host "Puerto $Port ocupado por otra aplicacion; se omite el servidor IZC ahi."
+    return $false
   }
 
   Start-ServerOnPort $Port
@@ -134,6 +175,12 @@ function Stop-AllIzcPorts {
   foreach ($port in $Ports) {
     Stop-PortProcess $port
   }
+  # Limpieza global por si quedaron instancias duplicadas
+  try {
+    Get-CimInstance Win32_Process -Filter "Name = 'powershell.exe' OR Name = 'pwsh.exe'" -ErrorAction SilentlyContinue |
+      Where-Object { ([string]$_.CommandLine) -like '*servidor_local.ps1*' } |
+      ForEach-Object { Stop-Process -Id $_.ProcessId -Force -ErrorAction SilentlyContinue }
+  } catch {}
 }
 
 function Restart-AllPorts {
@@ -141,6 +188,16 @@ function Restart-AllPorts {
   Start-Sleep -Seconds 2
   $ok8080 = $false
   foreach ($port in $Ports) {
+    if (Test-PortListening $port) {
+      if (Test-PortIsIzcApi $port) {
+        # Todavia hay un IZC vivo: forzar stop otra vez
+        Stop-PortProcess $port
+        Start-Sleep -Seconds 2
+      } else {
+        Write-Host "Puerto $port ocupado por otra aplicacion; se omite."
+        continue
+      }
+    }
     if (-not (Test-PortListening $port)) {
       Start-ServerOnPort $port
       if (Wait-PortReady $port) {
@@ -148,8 +205,6 @@ function Restart-AllPorts {
       }
     } elseif (Test-PortIsIzcApi $port) {
       if ($port -eq 8080) { $ok8080 = $true }
-    } else {
-      Write-Host "Puerto $port ocupado por otra aplicacion; se omite."
     }
   }
   if ($ok8080) { Save-ServerSignature }

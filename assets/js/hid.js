@@ -1,4 +1,4 @@
-/* Interacciones UI de la página HID. */
+/* Inicializa el catalogo HID. */
 document.addEventListener('DOMContentLoaded', function () {
 
   // 1. Colapsables del Filtro Lateral

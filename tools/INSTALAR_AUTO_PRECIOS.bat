@@ -1,4 +1,5 @@
 @echo off
+REM Instala tarea automatica de actualizacion de precios.
 REM Instala el autoarranque del vigilante de precios al iniciar Windows.
 cd /d "%~dp0.."
 echo Instalando vigilancia automatica de precios al iniciar Windows...

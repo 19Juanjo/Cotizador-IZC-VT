@@ -1,7 +1,7 @@
 """Extrae precios por SKU (columna Stone / A) desde lista-precios-izc.xlsb.
 
-- Productos normales: USD (columna BM)
-- Etiquetas y cintas ribbon: COP (columna BL PESOS)
+- Productos normales: USD (columna BK, bloque CLIENTES)
+- Etiquetas y cintas ribbon: COP (columna BJ, bloque CLIENTES)
 
 Guarda assets/files/precios.json (+ precios.data.js).
 
@@ -30,8 +30,8 @@ JSON_KEY = "assets/files/precios.json"
 
 STONE_COL = 0
 NOMBRE_COL = 2  # Columna C
-PESOS_COL = 63  # Columna BL
-USD_COL = 64  # Columna BM
+PESOS_COL = 61  # Columna BJ (CLIENTES / COP)
+USD_COL = 62  # Columna BK (CLIENTES / USD)
 START_ROW = 3
 
 PriceEntry = float | dict[str, Any]

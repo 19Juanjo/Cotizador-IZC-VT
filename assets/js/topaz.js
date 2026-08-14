@@ -1,4 +1,4 @@
-/* Interacciones UI de la página Topaz. */
+/* Inicializa el catalogo Topaz. */
 document.addEventListener('DOMContentLoaded', function () {
 
   // 1. Colapsables del Filtro Lateral

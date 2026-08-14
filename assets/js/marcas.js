@@ -1,4 +1,4 @@
-/* Lógica de la página de marcas (flyer y carrusel). */
+/* Logica de la pagina de marcas. */
 document.addEventListener('DOMContentLoaded', function () {
 
   // ==========================================

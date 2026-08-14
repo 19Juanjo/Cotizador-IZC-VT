@@ -1,4 +1,5 @@
 @echo off
+REM Registra/abre el protocolo personalizado para lanzar el sitio.
 REM Protocolo izc: — inicia el servidor; solo abre el navegador si no es "ensure".
 cd /d "%~dp0"
 

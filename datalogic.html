@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
+<!-- Catalogo de productos de la marca Datalogic. -->
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -12,7 +13,7 @@
   <!-- Script principal de tu lógica -->
   <script src="assets/js/data-loader.js?v=2" defer></script>
   <script src="assets/js/prices.js?v=4" defer></script>
-  <script src="assets/js/search.js?v=3" defer></script>
+  <script src="assets/js/search.js?v=4" defer></script>
   <script src="assets/js/wishlist.js?v=4" defer></script>
   <script src="assets/js/auth.js?v=30" defer></script>
   <script src="assets/js/brand_catalog.js?v=8" defer></script>
@@ -27,27 +28,27 @@
       <a href="https://api.whatsapp.com/send?phone=573144355391" target="_blank">Soporte Técnico</a>
     </div>
   </div>
-
+  
   <!-- Main header -->
   <header class="main-header">
     <div class="main-header-inner">
       <a class="logo" href="index.html">
         <img src="assets/logo/logoizc.png" alt="IZC Mayorista" class="logo-img">
       </a>
-
-      <!-- Buscador principal redirigido a IZC -->
+      
+      <!-- Buscador principal redireccionado a IZC -->
       <form class="search-bar" id="searchForm" action="#" method="GET">
         <div class="cat-select"></div>
         <input type="text" name="q" id="searchInput" placeholder="Buscar en toda la tienda..." required>
         <button type="submit">🔍︎</button>
       </form>
+      
       <a href="favoritos.html" class="header-wishlist" id="headerWishlist" title="Mis favoritos" aria-label="Mis favoritos"><span class="header-wishlist-icon" aria-hidden="true">♥</span></a>
     </div>
   </header>
-
+  
   <!-- Navigation -->
-  <nav class="main-nav">
-    <div class="nav-inner">
+  <nav class="main-nav"> <div class="nav-inner">
       <ul>
         <li class="nav-item has-flyout">
           <a href="#">☰ Nuestros Productos</a>
@@ -61,7 +62,7 @@
                 <li class="flyout-cat" data-panel="movilidad">Movilidad</li>
               </ul>
             </div>
-
+            
             <div class="flyout-panel">
               <!-- Punto de Venta -->
               <div class="flyout-panel-content active" data-panel="pos">
@@ -100,7 +101,7 @@
                   </div>
                 </div>
               </div>
-
+              
               <!-- Marcación y Etiquetado -->
               <div class="flyout-panel-content" data-panel="marcacion">
                 <div class="flyout-col">
@@ -130,11 +131,11 @@
                     </ul>
                   </div>
                   <div class="flyout-group">
-                    <a href="buscar.html?q=impresoras" class="flyout-group-title"><span class="icon">▭</span>Flexografía</a>
+                    <a href="buscar.html?q=impresoras" class="flyout-group-title"><span class="icon">▭</span>Flexografia</a>
                   </div>
                 </div>
               </div>
-
+              
               <!-- Seguridad Electrónica -->
               <div class="flyout-panel-content" data-panel="seguridad">
                 <div class="flyout-col">
@@ -143,12 +144,12 @@
                     <ul>
                       <li><a href="buscar.html?q=control-acceso">Controles de Acceso y Asistencia</a></li>
                       <li><a href="buscar.html?q=accesorios-acceso">Accesorios de Control de Acceso</a></li>
-                      <li><a href="buscar.html?q=huella">Lectores de Huella Biométricos</a></li>
+                      <li><a href="buscar.html?q=huella">Lectores de Huella Biometricos</a></li>
                       <li><a href="buscar.html?q=seguridad">Alarmas</a></li>
                     </ul>
                   </div>
                   <div class="flyout-group">
-                    <a href="buscar.html?q=camaras" class="flyout-group-title"><span class="icon">📷</span>CÁMARAS CCTV</a>
+                    <a href="buscar.html?q=camaras" class="flyout-group-title"><span class="icon">📷</span>CAMARAS CCTV</a>
                     <ul>
                       <li><a href="buscar.html?q=camaras-ip">Cámaras IP</a></li>
                       <li><a href="buscar.html?q=camaras-wifi">Cámaras WIFI</a></li>
@@ -164,14 +165,14 @@
                     </ul>
                   </div>
                   <div class="flyout-group">
-                    <a href="buscar.html?q=accesorios-cctv" class="flyout-group-title"><span class="icon">🔌</span>Accesorios para CCTV</a>
+                    <a href="buscar.html?q=accesorios-cctv" class="flyout-group-title"><span class="icon"></span>Accesorios para CCTV</a>
                     <ul>
                       <li><a href="buscar.html?q=accesorios-cctv">Accesorios para CCTV</a></li>
                     </ul>
                   </div>
                 </div>
               </div>
-
+              
               <!-- Cables y conectividad -->
               <div class="flyout-panel-content" data-panel="conectividad">
                 <div class="flyout-col">
@@ -190,7 +191,7 @@
                   </div>
                 </div>
               </div>
-
+              
               <!-- Movilidad -->
               <div class="flyout-panel-content" data-panel="movilidad">
                 <div class="flyout-col">
@@ -203,14 +204,12 @@
                   </div>
                 </div>
               </div>
-
             </div>
           </div>
         </li>
-
+        
         <li class="nav-item active"><a href="marcas.html">Marcas</a></li>
         <li class="nav-item"><a href="cotizador.html">Cotizador</a></li>
-        <li class="nav-item"><a href="index.html">Lista de Precios</a></li>
       </ul>
     </div>
   </nav>
@@ -292,15 +291,15 @@
               <a href="datalogic.html" class="brand-item"><img src="assets/imgmarcas/Datalogic.png" alt="Datalogic"></a>
               <a href="elo.html" class="brand-item"><img src="assets/imgmarcas/Elo.png" alt="Elo"></a>
               <a href="hid.html" class="brand-item"><img src="assets/imgmarcas/HID.png" alt="HID"></a>
+              <a href="honeywell.html" class="brand-item"><img src="assets/imgmarcas/Honeywell.png" alt="Honeywell"></a> 
             </div>
             <div class="brand-column">
-              <a href="honeywell.html" class="brand-item"><img src="assets/imgmarcas/Honeywell.png" alt="Honeywell"></a>
               <a href="imou.html" class="brand-item"><img src="assets/imgmarcas/IMOU.png" alt="IMOU"></a>
               <a href="ruijie.html" class="brand-item"><img src="assets/imgmarcas/Ruijie.png" alt="Ruijie"></a>
-            </div>
-            <div class="brand-column">
               <a href="topaz.html" class="brand-item"><img src="assets/imgmarcas/Topaz.png" alt="Topaz Systems"></a>
               <a href="zebra.html" class="brand-item"><img src="assets/imgmarcas/Zebra.png" alt="Zebra"></a>
+            </div>
+            <div class="brand-column">
               <a href="zkteco.html" class="brand-item"><img src="assets/imgmarcas/ZKTeco.png" alt="ZKTeco"></a>
               <a href="sat.html" class="brand-item"><img src="assets/imgmarcas/SAT.png" alt="SAT"></a>
             </div>
@@ -330,7 +329,7 @@
       <section class="brand-description">
         <h2>IZC es un distribuidor mayorista autorizado de la marca Datalogic en Colombia</h2>
         <p><strong>Datalogic</strong> es un líder tecnológico global en los mercados de captura automática de datos, especializado en el diseño y fabricación de lectores de códigos de barras.</p>
-        <p>La cercanía y la rápida respuesta a las necesidades de cada cliente, junto con la continua innovación y la oferta de alta calidad, son los elementos distintivos en la base del éxito de <strong>Datalogic</strong> en más de 40 años. Sus soluciones de vanguardia ayudan a aumentar la eficiencia y la calidad de los procesos en las industrias Retail, Empresas Fabricacantes, Transporte &amp; Logística y Sanidad, a lo largo de toda la cadena de valor.</p>
+        <p>La cercanía y la rápida respuesta a las necesidades de cada cliente, junto con la continua innovación y la oferta de alta calidad, son los elementos distintivos en la base del éxito de <strong>Datalogic</strong> en más de 40 años. Sus soluciones de vanguardia ayudan a aumentar la eficiencia y la calidad de los procesos en las industrias Retail, Empresas Fabricantes, Transporte &amp; Logística y Sanidad, a lo largo de toda la cadena de valor.</p>
         <p>Datalogic hizo historia ese día al fabricar el primer escáner de código de barras comercial y el ahora famoso "pitido" de lectura correcta. Este primer "pitido" marcó el inicio de la industria de captura automática de datos. Desde su primera lectura, el código de barras revolucionó la industria retail y provocó una rápida adopción de la tecnología de códigos de barras para mejorar la productividad y avanzar en la gestión de inventario, al tiempo que permitió reducir los errores de gestión de precios y la tensión física en los cajeros.</p>
         <h2 class="slogan">¡POTENCIA TU VISIÓN!</h2>
       </section>

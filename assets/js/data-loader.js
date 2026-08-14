@@ -1,4 +1,4 @@
-/* Carga JSON también en file:// usando archivos .data.js. */
+/* Carga unificada de JSON/data.js del catalogo y precios. */
 (function () {
   'use strict';
 

@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- Inicio de sesion de clientes y administrador. -->
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -12,10 +13,10 @@
       location.replace('http://127.0.0.1:8080/login.html');
     }
   </script>
-  <script src="assets/js/auth.js?v=32" defer></script>
+  <script src="assets/js/auth.js?v=35" defer></script>
   <script src="assets/js/index.js?v=3" defer></script>
   <script>
-    // Refuerzo: tras login exitoso ir a cotizador (o admin)
+    // Refuerzo: tras login exitoso ir a cotizador (o admin/asesor)
     document.addEventListener('DOMContentLoaded', function () {
       var form = document.getElementById('loginForm');
       if (!form) return;
@@ -28,8 +29,10 @@
             return;
           }
           clearInterval(timer);
-          var dest = (IZCAuth.isAdmin && IZCAuth.isAdmin()) ? 'admin.html' : 'index.html';
-          if (!/index\.html$|admin\.html$/i.test(location.pathname)) {
+          var dest = 'marcas.html';
+          if (IZCAuth.isAdmin && IZCAuth.isAdmin()) dest = 'admin.html';
+          else if (IZCAuth.isAsesor && IZCAuth.isAsesor()) dest = 'asesor.html';
+          if (!/marcas\.html$|admin\.html$|asesor\.html$/i.test(location.pathname)) {
             location.replace(dest);
           }
         }, 100);
@@ -46,7 +49,7 @@
 
   <header class="main-header">
     <div class="main-header-inner">
-      <a class="logo" href="index.html">
+      <a class="logo" href="marcas.html">
         <img src="assets/logo/logoizc.png" alt="IZC Mayorista" class="logo-img">
       </a>
       <div style="flex:1"></div>
@@ -57,11 +60,11 @@
   <main class="auth-page">
     <div class="auth-card">
       <h1>Iniciar sesión</h1>
-      <p class="auth-lead">Ingresa con tu NIT y contraseña.</p>
+      <p class="auth-lead">Ingresa el usuario con tu NIT o código de vendedor si eres asesor</p>
       <form id="loginForm" autocomplete="off">
         <div class="auth-field">
-          <label for="loginNit">NIT</label>
-          <input id="loginNit" name="nit" type="text" inputmode="numeric" placeholder="Ej: 900123456-1" required autocomplete="off" value="">
+          <label for="loginNit">Usuario</label>
+          <input id="loginNit" name="nit" type="text" placeholder="-------------------------------------------------------------- " required autocomplete="off" value="">
         </div>
         <div class="auth-field">
           <label for="loginPassword">Contraseña</label>

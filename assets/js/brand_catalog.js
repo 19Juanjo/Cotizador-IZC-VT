@@ -1,4 +1,4 @@
-/* Carga el catálogo de cada marca y aplica filtros/categorías. */
+/* Logica compartida para pintar catalogos por marca. */
 (function () {
   'use strict';
 

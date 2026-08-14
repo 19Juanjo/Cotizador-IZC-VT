@@ -1,4 +1,5 @@
 @echo off
+REM Instala apertura automatica del sitio al iniciar.
 REM Instala el autoarranque de IZC al iniciar Windows + protocolo izc: para despertar el servidor.
 cd /d "%~dp0"
 

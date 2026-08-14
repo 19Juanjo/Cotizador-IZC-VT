@@ -1,4 +1,4 @@
-/* Interacciones UI de la página Zebra. */
+/* Inicializa el catalogo Zebra. */
 document.addEventListener('DOMContentLoaded', function () {
 
   // 1. Colapsables del Filtro Lateral

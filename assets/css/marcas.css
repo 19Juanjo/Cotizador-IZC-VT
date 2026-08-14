@@ -1,3 +1,5 @@
+/* Estilos de la pagina de marcas. */
+
 /* Estilos de la página de listado de marcas. */
 /* ==========================================
    1. VARIABLES GLOBALES Y RESET
@@ -517,6 +519,39 @@ nav.main-nav { background: var(--blue-deep); }
 
 @media (max-width: 600px) {
   .brand-card { flex: 0 0 calc(50% - 8px); }
+}
+
+/* CTA precios / cotizador (migrado desde index) */
+.hero {
+  max-width: 1280px;
+  margin: 24px auto 8px;
+  padding: 0 24px;
+}
+.hero-banner {
+  border-radius: 8px;
+  min-height: 280px;
+  background: linear-gradient(115deg, var(--blue-deep) 0%, var(--blue-mid) 55%, var(--blue-bright) 100%);
+  display: flex;
+  align-items: center;
+  padding: 40px 48px;
+}
+.hero-text { color: #fff; max-width: 440px; }
+.hero-text h1 { font-size: 36px; line-height: 1.2; margin-bottom: 20px; }
+.hero-text .btn-hero-cta {
+  display: inline-block;
+  background: #fff;
+  color: var(--blue-deep);
+  padding: 12px 24px;
+  border-radius: 4px;
+  font-weight: 700;
+  font-size: 14px;
+  transition: background .15s, color .15s;
+}
+.hero-text .btn-hero-cta:hover { background: var(--blue-deep); color: #fff; }
+
+@media (max-width: 700px) {
+  .hero-banner { min-height: 220px; padding: 28px 24px; }
+  .hero-text h1 { font-size: 28px; }
 }
 
 /* Franja de beneficios debajo del carrusel */

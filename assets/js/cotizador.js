@@ -1,4 +1,4 @@
-/* Cotizador: líneas por SKU con USD / COP / IVA, TRM del admin y guardado al historial */
+/* Logica del cotizador: carrito, totales, IVA, guardar cotizacion. */
 (function () {
   'use strict';
 

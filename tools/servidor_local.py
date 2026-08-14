@@ -482,7 +482,7 @@ def main():
         write_trm(3204.0, "", "")
 
     server = ThreadingHTTPServer(("127.0.0.1", PORT), Handler)
-    url = f"http://127.0.0.1:{PORT}/index.html"
+    url = f"http://127.0.0.1:{PORT}/marcas.html"
     print(f"IZC local en {url}")
     print(f"Usuarios: {USERS_FILE}")
     print(f"Cotizaciones: {QUOTES_FILE}")

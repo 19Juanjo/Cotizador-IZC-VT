@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- Cotizador B2B: armar cotizacion, IVA, moneda y envio a Bitrix. -->
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -14,7 +15,7 @@
     }
   </script>
   <script src="assets/js/data-loader.js?v=2" defer></script>
-  <script src="assets/js/search.js?v=3" defer></script>
+  <script src="assets/js/search.js?v=4" defer></script>
   <script src="assets/js/prices.js?v=5" defer></script>
   <script src="assets/js/wishlist.js?v=4" defer></script>
   <script src="assets/js/auth.js?v=32" defer></script>
@@ -204,7 +205,6 @@
         </li>
         <li class="nav-item"><a href="marcas.html">Marcas</a></li>
         <li class="nav-item"><a href="cotizador.html">Cotizador</a></li>
-        <li class="nav-item"><a href="index.html">Lista de Precios</a></li>
       </ul>
     </div>
   </nav>
@@ -218,7 +218,7 @@
         </div>
         <div class="cotizador-trm">
           <label for="cotizadorTrm">TRM (COP por 1 USD)</label>
-          <input id="cotizadorTrm" type="number" min="1" step="0.01" value="3204" readonly>
+          <input id="cotizadorTrm" type="number" min="1" step="0.01" value="00.00" readonly>
         </div>
       </header>
 

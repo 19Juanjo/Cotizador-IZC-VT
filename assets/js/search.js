@@ -1,4 +1,4 @@
-/* Buscador del header: sugiere y redirige resultados. */
+/* Buscador del header: sugerencias, tokens y redireccion a resultados. */
 (function () {
   'use strict';
 
@@ -29,6 +29,28 @@
       .replace(/[^a-z0-9\s-]/g, ' ')
       .replace(/\s+/g, ' ')
       .trim();
+  }
+
+  function isProductCode(word) {
+    var w = String(word || '');
+    return /[a-z]/.test(w) && /\d/.test(w);
+  }
+
+  function isPureDigits(word) {
+    return /^\d+$/.test(String(word || ''));
+  }
+
+  /** Desglosa nombre/SKU en piezas buscables (N150, zd421t, sat, 11608, etc.). */
+  function tokenize(text) {
+    var n = normalize(text);
+    if (!n) return [];
+    var tokens = [];
+    var re = /[a-z]+[0-9]+[a-z0-9]*|[0-9]+[a-z]+[a-z0-9]*|[a-z]{2,}|\d{2,}/g;
+    var m;
+    while ((m = re.exec(n)) !== null) {
+      if (tokens.indexOf(m[0]) === -1) tokens.push(m[0]);
+    }
+    return tokens;
   }
 
   function levenshtein(a, b) {
@@ -68,6 +90,11 @@
     var expanded = [word];
     var key;
 
+    // Códigos de producto (N150, ZD421…): sin sinónimos ni expansiones
+    if (isProductCode(word) || isPureDigits(word)) {
+      return expanded;
+    }
+
     for (key in SYNONYMS) {
       if (!Object.prototype.hasOwnProperty.call(SYNONYMS, key)) continue;
       var group = [key].concat(SYNONYMS[key]);
@@ -85,7 +112,7 @@
   }
 
   function expandQueryWords(query) {
-    var words = normalize(query).split(/\s+/).filter(function (w) {
+    var words = tokenize(query).filter(function (w) {
       return w.length >= 2;
     });
     var expanded = [];
@@ -106,12 +133,23 @@
     if (!queryWord || !targetWord) return false;
     if (queryWord === targetWord) return true;
 
-    if (queryWord.length >= 3 && targetWord.indexOf(queryWord) !== -1) return true;
-    if (targetWord.length >= 3 && queryWord.indexOf(targetWord) !== -1) return true;
+    // Referencias tipo N150 / N140: solo coincidencia exacta del token
+    if (isProductCode(queryWord) || isProductCode(targetWord)) {
+      return false;
+    }
 
-    if (queryWord.length >= 4 && targetWord.length >= 4) {
-      var maxDistance = queryWord.length <= 5 ? 1 : 2;
-      if (levenshtein(queryWord, targetWord) <= maxDistance) return true;
+    // Números puros: solo igualdad exacta (150 no entra en 3150)
+    if (isPureDigits(queryWord) || isPureDigits(targetWord)) {
+      return false;
+    }
+
+    // Prefijo razonable solo en palabras de letras
+    if (/^[a-z]+$/.test(queryWord) && /^[a-z]+$/.test(targetWord)) {
+      if (queryWord.length >= 4 && targetWord.indexOf(queryWord) === 0) return true;
+      if (targetWord.length >= 4 && queryWord.indexOf(targetWord) === 0) return true;
+      if (queryWord.length >= 6 && targetWord.length >= 6) {
+        if (levenshtein(queryWord, targetWord) <= 1) return true;
+      }
     }
 
     return false;
@@ -119,11 +157,10 @@
 
   function textMatchesWord(text, word) {
     if (!word) return false;
-    var normalizedText = normalize(text);
-    if (normalizedText.indexOf(word) !== -1) return true;
+    var tokens = tokenize(text);
+    if (tokens.indexOf(word) !== -1) return true;
 
-    var targetWords = normalizedText.split(/\s+/).filter(Boolean);
-    return targetWords.some(function (targetWord) {
+    return tokens.some(function (targetWord) {
       return isSimilarWord(word, targetWord);
     });
   }
@@ -132,42 +169,49 @@
     var queryData = expandQueryWords(query);
     var originalWords = queryData.original;
     var expandedWords = queryData.expanded;
-    var normalizedText = normalize(text);
+    var tokens = tokenize(text);
+    var tokenSet = {};
+    tokens.forEach(function (t) { tokenSet[t] = true; });
     var score = 0;
     var matchedOriginal = 0;
 
+    if (!originalWords.length) return 0;
+
     originalWords.forEach(function (word) {
       var variants = expandWord(word);
-      var wordMatched = variants.some(function (variant) {
-        return textMatchesWord(normalizedText, variant);
+      var exact = variants.some(function (variant) {
+        return !!tokenSet[variant];
+      });
+      var fuzzy = !exact && variants.some(function (variant) {
+        return textMatchesWord(text, variant);
       });
 
-      if (wordMatched) {
+      if (exact || fuzzy) {
         matchedOriginal++;
-        if (normalizedText.indexOf(word) !== -1) {
-          score += 20;
+        if (exact) {
+          score += isProductCode(word) || isPureDigits(word) ? 40 : 20;
         } else {
-          score += 12;
+          score += 10;
         }
       }
     });
 
-    if (!originalWords.length) return 0;
-
+    // Sinónimos solo suman extra si no son códigos
     expandedWords.forEach(function (word) {
-      if (normalizedText.indexOf(word) !== -1) {
-        score += 4;
-      }
+      if (isProductCode(word) || isPureDigits(word)) return;
+      if (tokenSet[word]) score += 3;
     });
 
     if (matchedOriginal === originalWords.length) {
       score += 30;
     } else if (matchedOriginal > 0) {
-      score += matchedOriginal * 8;
+      score += matchedOriginal * 6;
     }
 
-    if (normalizedText.indexOf(normalize(query)) !== -1) {
-      score += 25;
+    // Frase completa solo si todos los tokens de la query aparecen en orden de tokens
+    var qNorm = normalize(query);
+    if (qNorm && tokens.join(' ').indexOf(qNorm) !== -1) {
+      score += 20;
     }
 
     return score;
@@ -226,18 +270,30 @@
     return bestScore >= 50 ? bestBrand : null;
   }
 
+  function skuMatchScore(query, sku) {
+    var q = normalize(query);
+    var s = String(sku || '');
+    if (!q || !s) return 0;
+    if (s === q) return 50;
+    if (isPureDigits(q) && s === q) return 50;
+    // Código alfanumérico no se busca como subcadena del SKU numérico
+    if (isProductCode(q)) return 0;
+    if (isPureDigits(q) && s === q) return 50;
+    return 0;
+  }
+
   function findProductsByName(query) {
     if (!catalog || query.length < 2) return [];
 
     var scored = catalog.products.map(function (product) {
-      var nameScore = scoreTextMatch(query, product.name);
-      var skuScore = product.sku.indexOf(normalize(query).replace(/\D/g, '')) !== -1 ? 40 : 0;
+      var nameScore = scoreTextMatch(query, product.name + ' ' + (product.brandName || ''));
+      var skuScore = skuMatchScore(query, product.sku);
       return {
         product: product,
         score: Math.max(nameScore, skuScore)
       };
     }).filter(function (item) {
-      return item.score >= 16;
+      return item.score >= 20;
     }).sort(function (a, b) {
       return b.score - a.score;
     });
@@ -571,6 +627,7 @@
     resolveSearch: resolveSearch,
     applyUrlSearchFilter: applyUrlSearchFilter,
     filterProductGrid: filterProductGrid,
-    scoreTextMatch: scoreTextMatch
+    scoreTextMatch: scoreTextMatch,
+    tokenize: tokenize
   };
 })();

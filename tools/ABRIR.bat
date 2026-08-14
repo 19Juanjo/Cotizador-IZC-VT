@@ -1,4 +1,5 @@
 @echo off
+REM Abre el sitio local levantando el servidor en el puerto 8080.
 REM Abre IZC: inicia servidores en :8080 y :5500, luego el navegador.
 cd /d "%~dp0.."
 
@@ -19,4 +20,4 @@ timeout /t 1 /nobreak >nul
 goto :wait
 
 :open
-start "" "http://127.0.0.1:8080/index.html"
+start "" "http://127.0.0.1:8080/marcas.html"

@@ -2,7 +2,13 @@
 public/
 data/session_bridge.json
 data/bitrix.json
+data/cotizaciones.json
+data/cotizaciones.backup-*.json
+data/bitrix_companias.json
 tools/.servidor_local.sig
+tools/_probe_*.ps1
+tools/_reset_*.ps1
+tools/_test_*.ps1
 __pycache__/
 *.pyc
 assets/files/.precios-watch.lock
@@ -14,5 +20,3 @@ assets/files/_satpcs_url_cache.json
 src/__pycache__/
 src/probe_*.py
 src/test_sat_details.py
-data/cotizaciones.json
-tools/.servidor_local.sig

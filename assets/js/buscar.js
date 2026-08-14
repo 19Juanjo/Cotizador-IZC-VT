@@ -1,3 +1,4 @@
+/* Filtrado y render de resultados en buscar.html. */
 (function () {
   'use strict';
   
@@ -260,10 +261,13 @@
     }
     
     return catalog.products.filter(function (product) {
-      var combined = product.name + ' ' + product.brandName + ' ' + product.sku;
-      return textScore(query, combined) >= 16;
+      var nameScore = textScore(query, product.name + ' ' + (product.brandName || ''));
+      var skuExact = String(product.sku || '') === String(query || '').trim();
+      var score = skuExact ? Math.max(nameScore, 50) : nameScore;
+      return score >= 20;
     }).sort(function (a, b) {
-      return textScore(query, b.name) - textScore(query, a.name);
+      return textScore(query, b.name + ' ' + (b.brandName || '')) -
+        textScore(query, a.name + ' ' + (a.brandName || ''));
     });
   }
   

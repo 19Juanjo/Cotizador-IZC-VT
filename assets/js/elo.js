@@ -1,4 +1,4 @@
-/* Interacciones UI de la página Elo. */
+/* Inicializa el catalogo Elo. */
 document.addEventListener('DOMContentLoaded', function () {
 
   // 1. Colapsables del Filtro Lateral

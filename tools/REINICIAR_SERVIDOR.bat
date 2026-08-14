@@ -1,4 +1,5 @@
 @echo off
+REM Reinicia el servidor local (mata proceso y vuelve a abrir).
 REM Reinicia el servidor IZC en http://127.0.0.1:8080
 cd /d "%~dp0"
 

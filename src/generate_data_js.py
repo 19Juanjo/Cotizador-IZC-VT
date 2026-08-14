@@ -13,8 +13,7 @@ TARGETS = [
     "precios.json",
     "brand_filters.json",
     "product_details.json",
-    "categoria_skus.json",
-    "brand_products.json",
+    "productos.json",
 ]
 
 

@@ -1,3 +1,4 @@
+/* Autenticacion en el cliente: sesion, login, proteccion de paginas. */
 /* Sesión NIT/contraseña.
  * - En PC local (127.0.0.1): usa el servidor y data/usuarios.json
  * - En GitHub Pages / celular: usa almacenamiento del navegador (localStorage)
@@ -7,12 +8,32 @@
 
   var SESSION_KEY = 'izc_session_nit';
   var SESSION_NAME_KEY = 'izc_session_nombre';
+  var SESSION_ROLE_KEY = 'izc_session_role';
   var USERS_KEY = 'izc_users';
   var NIT_RE = /^\d{6,15}(-\d)?$/;
+  var ASESOR_RE = /^V\d{1,4}$/i;
   var LOCAL_ORIGIN = 'http://127.0.0.1:8080';
   // NITs con acceso a la página de administrador
   var ADMIN_NITS = ['03166122778'];
   var sessionReadyPromise = Promise.resolve();
+
+  function normalizeLoginId(id) {
+    var raw = String(id || '').replace(/[\s.]/g, '').trim();
+    var m = raw.match(/^v(\d{1,4})$/i);
+    if (m) return 'V' + String(parseInt(m[1], 10));
+    return raw;
+  }
+
+  function getSessionRole() {
+    try { return localStorage.getItem(SESSION_ROLE_KEY) || ''; } catch (e) { return ''; }
+  }
+
+  function setSessionRole(role) {
+    try {
+      if (role) localStorage.setItem(SESSION_ROLE_KEY, String(role));
+      else localStorage.removeItem(SESSION_ROLE_KEY);
+    } catch (e) { /* ignore */ }
+  }
 
   function isDevHost() {
     var h = location.hostname;
@@ -58,6 +79,11 @@
     } catch (e) { /* ignore */ }
     if (arguments.length > 1) setSessionNombre(nombre || '');
     else if (!nit) setSessionNombre('');
+    if (Object.prototype.hasOwnProperty.call(opts, 'role')) {
+      setSessionRole(opts.role || '');
+    } else if (!nit) {
+      setSessionRole('');
+    }
     renderHeaderAuth();
     applyGuestMode();
     if (!opts.skipBridge) {
@@ -65,14 +91,19 @@
     }
     try {
       document.dispatchEvent(new CustomEvent('izc:auth-changed', {
-        detail: { nit: nit || '', nombre: getSessionNombre(), loggedIn: !!nit }
+        detail: {
+          nit: nit || '',
+          nombre: getSessionNombre(),
+          role: getSessionRole(),
+          loggedIn: !!nit
+        }
       }));
     } catch (e) { /* ignore */ }
   }
 
   function logout() {
-    setSessionNit('', '');
-    window.location.href = 'index.html';
+    setSessionNit('', '', { role: '' });
+    window.location.href = 'marcas.html';
   }
 
   function isLoggedIn() {
@@ -86,6 +117,15 @@
 
   function isAdminNit(nit) {
     return ADMIN_NITS.indexOf(normalizeNit(nit)) !== -1;
+  }
+
+  function isAsesor() {
+    if (getSessionRole() === 'asesor') return true;
+    return ASESOR_RE.test(String(getSessionNit() || ''));
+  }
+
+  function isAsesorCodigo(codigo) {
+    return !!normalizeLoginId(codigo).match(/^V\d{1,4}$/);
   }
 
   function publicUserView(user) {
@@ -248,7 +288,7 @@
     }
 
     // Admin -> admin.html (su perfil); cliente -> perfil.html
-    link.href = isAdmin() ? 'admin.html' : 'perfil.html';
+    link.href = isAdmin() ? 'admin.html' : (isAsesor() ? 'asesor.html' : 'perfil.html');
   }
 
   function applyGuestMode() {
@@ -747,28 +787,49 @@
   }
 
   function login(nit, password) {
-    nit = normalizeNit(nit);
+    nit = normalizeLoginId(nit);
     password = String(password || '');
 
     if (!nit || !password) {
-      return Promise.resolve({ ok: false, error: 'Ingresa NIT y contraseña.' });
+      return Promise.resolve({ ok: false, error: 'Ingresa usuario y contraseña.' });
+    }
+
+    function applyLoginSession(data) {
+      var role = data.role || (isAdminNit(data.nit || nit) ? 'admin' : (isAsesorCodigo(data.nit || nit) ? 'asesor' : 'cliente'));
+      setSessionNit(data.nit || nit, data.nombre || '', { role: role });
+      data.role = role;
+      return data;
     }
 
     if (!isDevHost()) {
-      return loginLocal(nit, password);
+      return loginLocal(nit, password).then(function (data) {
+        if (data && data.ok) return applyLoginSession(data);
+        return data;
+      });
     }
 
     function tryLogin() {
       return postAuth({ action: 'login', nit: nit, password: password })
         .then(function (data) {
-          if (data.ok) {
-            setSessionNit(data.nit, data.nombre || '');
-            return data;
-          }
-          return loginLocal(nit, password);
+          if (data.ok) return applyLoginSession(data);
+          // Asesores solo existen en el API local; no caer a usuarios.json
+          if (isAsesorCodigo(nit)) return data;
+          return loginLocal(nit, password).then(function (localData) {
+            if (localData && localData.ok) return applyLoginSession(localData);
+            return data && data.error ? data : localData;
+          });
         })
         .catch(function () {
-          return loginLocal(nit, password);
+          if (isAsesorCodigo(nit)) {
+            return {
+              ok: false,
+              error: 'No se pudo conectar con el servidor. Abre tools\\ABRIR.bat e inténtalo de nuevo.'
+            };
+          }
+          return loginLocal(nit, password).then(function (localData) {
+            if (localData && localData.ok) return applyLoginSession(localData);
+            return localData;
+          });
         });
     }
 
@@ -791,7 +852,9 @@
       }
       if (nit) {
         topSlot.innerHTML =
-          '<span class="header-auth-nit">NIT ' + escapeHtml(nit) + '</span>';
+          '<span class="header-auth-nit">' +
+          escapeHtml(isAsesor() ? ('Asesor ' + nit) : ('NIT ' + nit)) +
+          '</span>';
         topSlot.hidden = false;
       } else {
         topSlot.innerHTML = '';
@@ -907,7 +970,7 @@
         return;
       }
     } else if (!nit || !password) {
-      setMessage(msg, 'Ingresa NIT y contraseña.', 'error');
+      setMessage(msg, 'Ingresa usuario y contraseña.', 'error');
       return;
     }
 
@@ -921,11 +984,13 @@
       }
       if (data.ok) {
         setMessage(msg, data.message || 'Listo.', 'ok');
-        var dest = 'index.html';
+        var dest = 'marcas.html';
         if (mode === 'register') {
           dest = 'login.html';
-        } else if (isAdminNit(data.nit || nit)) {
+        } else if (isAdminNit(data.nit || nit) || data.role === 'admin') {
           dest = 'admin.html';
+        } else if (data.role === 'asesor' || isAsesorCodigo(data.nit || nit)) {
+          dest = 'asesor.html';
         }
         window.location.replace(dest);
         return;
@@ -948,9 +1013,13 @@
   window.IZCAuth = {
     getSessionNit: getSessionNit,
     getSessionNombre: getSessionNombre,
+    getSessionRole: getSessionRole,
+    setSessionNit: setSessionNit,
     isLoggedIn: isLoggedIn,
     isAdmin: isAdmin,
     isAdminNit: isAdminNit,
+    isAsesor: isAsesor,
+    isAsesorCodigo: isAsesorCodigo,
     requireLogin: requireLogin,
     login: login,
     register: register,

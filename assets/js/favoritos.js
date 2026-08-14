@@ -1,4 +1,4 @@
-/* Lista los productos favoritos del usuario con sesión activa (por NIT). */
+/* Muestra y gestiona la pagina de favoritos. */
 (function () {
   'use strict';
 

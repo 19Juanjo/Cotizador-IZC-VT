@@ -1,4 +1,4 @@
-/* Favoritos por usuario (NIT). Cada sesión tiene su propia lista. */
+/* Favoritos compartidos (localStorage) usados en todo el sitio. */
 (function () {
   'use strict';
 

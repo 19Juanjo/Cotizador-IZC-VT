@@ -1,4 +1,5 @@
 @echo off
+REM Vigila cambios en el archivo de precios y regenera JSON.
 REM Inicia el vigilante automático de precios (consola visible).
 cd /d "%~dp0.."
 title IZC - Vigilancia de precios

@@ -1,3 +1,4 @@
+# Control del servidor: iniciar, detener, reiniciar por puerto/proceso.
 # Control del servidor local IZC (inicio, reinicio y comprobacion de API).
 # Mantiene API + archivos en :8080 y :5500 (misma carpeta / mismos JSON).
 param(

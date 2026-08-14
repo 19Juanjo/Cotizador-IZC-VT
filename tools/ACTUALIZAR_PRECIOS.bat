@@ -1,4 +1,5 @@
 @echo off
+REM Actualiza la lista de precios desde el Excel/fuente configurada.
 REM Ejecuta la extracción de precios desde el Excel de lista de precios.
 cd /d "%~dp0.."
 title IZC - Actualizar precios ahora

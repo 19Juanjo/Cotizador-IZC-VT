@@ -1,0 +1,14 @@
+[
+  {
+    "codigo": "V1",
+    "nombre": "IZC Jonathan Ramos",
+    "password_hash": "pbkdf2$100000$UP8OavJdnm0btdFd0fVM9A==$4Bws1L/27OgBENivzpASL+SSxz4JaPLRmK2+cpCl3aM=",
+    "created_at": "2026-08-13T11:03:02.7527993-05:00"
+  },
+  {
+    "codigo": "V2",
+    "nombre": "IZC Yaqueline",
+    "password_hash": "pbkdf2$100000$erUmZ425YN3VENaN4mXzPA==$RNMmFmWBCBHPKvcuYwJ7GLo9qoHge42ZfXdyjD5Ckxg=",
+    "created_at": "2026-08-14T11:50:04.9405153-05:00"
+  }
+]

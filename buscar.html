@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
+<!-- Pagina de resultados de busqueda de productos del catalogo. -->
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -11,11 +12,11 @@
   <link rel="stylesheet" href="assets/css/auth.css?v=9">
   <link rel="stylesheet" href="assets/css/buscar.css?v=12">
   <script src="assets/js/data-loader.js?v=2" defer></script>
-  <script src="assets/js/search.js?v=3" defer></script>
+  <script src="assets/js/search.js?v=4" defer></script>
   <script src="assets/js/wishlist.js?v=4" defer></script>
   <script src="assets/js/auth.js?v=30" defer></script>
   <script src="assets/js/prices.js?v=4" defer></script>
-  <script src="assets/js/buscar.js?v=11" defer></script>
+  <script src="assets/js/buscar.js?v=12" defer></script>
   <script src="assets/js/index.js?v=3" defer></script>
 </head>
 <body>
@@ -26,28 +27,27 @@
       <a href="https://api.whatsapp.com/send?phone=573144355391" target="_blank">Soporte Técnico</a>
     </div>
   </div>
-
+  
   <!-- Main header -->
   <header class="main-header">
     <div class="main-header-inner">
       <a class="logo" href="index.html">
         <img src="assets/logo/logoizc.png" alt="IZC Mayorista" class="logo-img">
       </a>
-
+      
       <!-- Buscador principal redireccionado a IZC -->
       <form class="search-bar" id="searchForm" action="#" method="GET">
         <div class="cat-select"></div>
         <input type="text" name="q" id="searchInput" placeholder="Buscar en toda la tienda..." required>
         <button type="submit">🔍︎</button>
       </form>
-
+      
       <a href="favoritos.html" class="header-wishlist" id="headerWishlist" title="Mis favoritos" aria-label="Mis favoritos"><span class="header-wishlist-icon" aria-hidden="true">♥</span></a>
     </div>
   </header>
-
+  
   <!-- Navigation -->
-  <nav class="main-nav">
-    <div class="nav-inner">
+  <nav class="main-nav"> <div class="nav-inner">
       <ul>
         <li class="nav-item has-flyout">
           <a href="#">☰ Nuestros Productos</a>
@@ -61,7 +61,7 @@
                 <li class="flyout-cat" data-panel="movilidad">Movilidad</li>
               </ul>
             </div>
-
+            
             <div class="flyout-panel">
               <!-- Punto de Venta -->
               <div class="flyout-panel-content active" data-panel="pos">
@@ -100,7 +100,7 @@
                   </div>
                 </div>
               </div>
-
+              
               <!-- Marcación y Etiquetado -->
               <div class="flyout-panel-content" data-panel="marcacion">
                 <div class="flyout-col">
@@ -134,7 +134,7 @@
                   </div>
                 </div>
               </div>
-
+              
               <!-- Seguridad Electrónica -->
               <div class="flyout-panel-content" data-panel="seguridad">
                 <div class="flyout-col">
@@ -171,7 +171,7 @@
                   </div>
                 </div>
               </div>
-
+              
               <!-- Cables y conectividad -->
               <div class="flyout-panel-content" data-panel="conectividad">
                 <div class="flyout-col">
@@ -190,7 +190,7 @@
                   </div>
                 </div>
               </div>
-
+              
               <!-- Movilidad -->
               <div class="flyout-panel-content" data-panel="movilidad">
                 <div class="flyout-col">
@@ -206,10 +206,9 @@
             </div>
           </div>
         </li>
-
+        
         <li class="nav-item"><a href="marcas.html">Marcas</a></li>
         <li class="nav-item"><a href="cotizador.html">Cotizador</a></li>
-        <li class="nav-item"><a href="index.html">Lista de Precios</a></li>
       </ul>
     </div>
   </nav>

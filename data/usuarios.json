@@ -6,16 +6,28 @@
     "created_at": "2026-08-03T14:50:26.7286061-05:00"
   },
   {
-    "nit": "1109843363",
-    "nombre": "Juan",
-    "password_hash": "pbkdf2$100000$hHvKh15axJVOTNIA0mcY8A==$uNL+x6ZmYE2M/VP/bNGXO/iHqdlg4iv81KLBfM04cE0=",
-    "created_at": "2026-08-05T16:59:56.202560+00:00"
-  },
-  {
     "nit": "03187195533",
     "nombre": "Julian",
     "password_hash": "pbkdf2$100000$/W4UoEEe0rGwts4sT/Cr8g==$kXzwcTjXkiK1WV0kev/bLcsdmCkmuw63WAMuwfS7Rsg=",
     "created_at": "2026-08-05T18:40:35.083047+00:00"
+  },
+  {
+    "nit": "900655292",
+    "nombre": "Tony",
+    "password_hash": "pbkdf2$100000$YjkgbjDu9nlkJc20BBpa5g==$Bbx+JtWueI+reCz4Zz2oqWbdNYQGXToYK/irS2TNlMQ=",
+    "created_at": "2026-08-12T16:40:11.6771454-05:00"
+  },
+  {
+    "nit": "800098622",
+    "nombre": "Jhon",
+    "password_hash": "pbkdf2$100000$E8pkGri4+3Zs1EFVoazjEA==$KXj7gZ3KFJ36BBBZM90WdtfksQV8VvQxe7v7gRT4erY=",
+    "created_at": "2026-08-12T16:54:14.1816377-05:00"
+  },
+  {
+    "nit": "1109843363",
+    "nombre": "Carlos",
+    "password_hash": "pbkdf2$100000$ilB5QukI69GgpYGWZR0N5w==$PzaQ/9Vvde2PMuYK80bpqm5yxQ+bEWVHHuBGKOIa+tE=",
+    "created_at": "2026-08-04T18:45:25.308Z"
   },
   {
     "nit": "3187195533",

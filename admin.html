@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
+<!-- Panel de administracion: usuarios, cotizaciones, Bitrix y herramientas internas. -->
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -8,15 +9,15 @@
   <link rel="stylesheet" href="assets/css/index.css?v=29">
   <link rel="stylesheet" href="assets/css/auth.css?v=9">
   <link rel="stylesheet" href="assets/css/perfil.css?v=3">
-  <link rel="stylesheet" href="assets/css/admin.css?v=10">
+  <link rel="stylesheet" href="assets/css/admin.css?v=15">
   <script>
     if (location.protocol === 'file:') {
       location.replace('http://127.0.0.1:8080/admin.html');
     }
   </script>
-  <script src="assets/js/auth.js?v=32" defer></script>
+  <script src="assets/js/auth.js?v=34" defer></script>
   <script src="assets/js/wishlist.js?v=4" defer></script>
-  <script src="assets/js/admin.js?v=13" defer></script>
+  <script src="assets/js/admin.js?v=20" defer></script>
   <script src="assets/js/index.js?v=3" defer></script>
 </head>
 <body>
@@ -194,7 +195,6 @@
 
         <li class="nav-item"><a href="marcas.html">Marcas</a></li>
         <li class="nav-item"><a href="cotizador.html">Cotizador</a></li>
-        <li class="nav-item"><a href="index.html">Lista de Precios</a></li>
       </ul>
     </div>
   </nav>
@@ -211,7 +211,7 @@
       <div class="admin-card-head">
         <div>
           <h2>Panel de administración</h2>
-          <p class="admin-lead">Gestión de clientes registrados (solo administrador).</p>
+          <p class="admin-lead">Gestión de clientes registrados y cotizaciones.</p>
         </div>
       </div>
 
@@ -227,6 +227,10 @@
         <button type="button" class="admin-stat is-tab" data-tab="trm" id="adminTabTrm">
           <span class="admin-stat-label">Actualizar TRM de Cotizador</span>
           <strong id="adminTrmValue">—</strong>
+        </button>
+        <button type="button" class="admin-stat is-tab" data-tab="asesores" id="adminTabAsesores">
+          <span class="admin-stat-label">Asesores / Vendedores</span>
+          <strong id="adminAsesorCount">0</strong>
         </button>
         <button type="button" class="admin-stat is-tab" data-tab="bitrix" id="adminTabBitrix">
           <span class="admin-stat-label">Bitrix24</span>
@@ -253,6 +257,38 @@
         </div>
       </div>
 
+      <div class="admin-panel" id="adminPanelAsesores" hidden>
+        <div class="admin-trm-box">
+          <p class="admin-trm-lead">Registra asesores con su código (V1, V2, V5, V31…) y una contraseña para iniciar sesión.</p>
+          <form id="adminAsesorForm" class="admin-asesor-form" autocomplete="off" data-lpignore="true" data-1p-ignore="true">
+            <!-- Señuelos para que el navegador no meta el login del admin aquí -->
+            <input type="text" name="prevent_autofill_user" autocomplete="username" tabindex="-1" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0" value="">
+            <input type="password" name="prevent_autofill_pass" autocomplete="current-password" tabindex="-1" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0" value="">
+            <label for="adminAsesorCodigo">Vendedor</label>
+            <input id="adminAsesorCodigo" name="asesor_codigo_nuevo" type="text" inputmode="text" placeholder="Ej: V1, V2, V31" required autocomplete="off" autocapitalize="characters" spellcheck="false" data-lpignore="true">
+            <label for="adminAsesorPassword">Contraseña</label>
+            <input id="adminAsesorPassword" name="asesor_password_nuevo" type="password" placeholder="Contraseña del asesor" required minlength="4" autocomplete="new-password" data-lpignore="true">
+            <label for="adminAsesorNombre">Nombre (opcional)</label>
+            <input id="adminAsesorNombre" name="asesor_nombre_nuevo" type="text" placeholder="Ej: IZC V1 Jonathan Ramos" autocomplete="off" data-lpignore="true">
+            <button type="submit" class="admin-trm-save" id="adminAsesorSave">Registrar asesor</button>
+          </form>
+        </div>
+        <div class="admin-table-wrap" style="margin-top:16px">
+          <table class="admin-table" id="adminAsesoresTable">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Código</th>
+                <th>Nombre</th>
+                <th>Registro</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="adminAsesoresBody"></tbody>
+          </table>
+        </div>
+      </div>
+
       <div class="admin-panel" id="adminPanelQuotes" hidden>
         <div class="admin-table-wrap">
           <table class="admin-table" id="adminQuotesTable">
@@ -263,7 +299,7 @@
                 <th>Nombre</th>
                 <th>NIT</th>
                 <th>Productos</th>
-                <th>Total + IVA</th>
+                <th>Total</th>
                 <th></th>
               </tr>
             </thead>
@@ -274,7 +310,7 @@
 
       <div class="admin-panel" id="adminPanelTrm" hidden>
         <div class="admin-trm-box">
-          <p class="admin-trm-lead">Define la TRM del día (COP por 1 USD). Todos los clientes la verán en el cotizador.</p>
+          <p class="admin-trm-lead">Define la TRM del día (COP por 1 USD).</p>
           <label for="adminTrmInput">TRM (COP por 1 USD)</label>
           <div class="admin-trm-row">
             <input id="adminTrmInput" type="number" min="1" step="0.01" placeholder="Ej: 4200">
@@ -288,7 +324,6 @@
         <div class="admin-trm-box admin-bitrix-box">
           <p class="admin-trm-lead">
             Conecta el cotizador con Bitrix24 (<code>vits.bitrix24.com</code>).
-            Al terminar una cotización se crea una negociación en la etapa COTIZACION.
           </p>
           <label class="admin-bitrix-check">
             <input type="checkbox" id="adminBitrixEnabled"> Activar envío a Bitrix

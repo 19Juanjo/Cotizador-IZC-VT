@@ -1,0 +1,17 @@
+# Para que sirve cada JSON (no admiten comentarios dentro del archivo)
+
+assets/files/brand_filters.json - Filtros por marca/categoria usados en catalogos.
+assets/files/brand_products.json - Mapa marca -> productos/SKUs (tambien usado para MARCA en Bitrix).
+assets/files/catalogo.json - Catalogo principal de productos y marcas.
+assets/files/precios.json - Lista de precios vigente (generada/actualizada por tools).
+assets/files/productos.json - Listado auxiliar de productos.
+assets/files/product_details.json - Detalles adicionales por producto/SKU.
+assets/files/_satpcs_url_cache.json - Cache local de URLs SAT (uso interno).
+data/bitrix.example.json - Plantilla de configuracion Bitrix (sin secretos).
+data/bitrix.json - Config real Bitrix (webhook, stage, campos) - local/secreto.
+data/cotizaciones.json - Cotizaciones guardadas por el servidor local.
+data/session_bridge.json - Puente de sesion entre paginas/servidor local.
+data/trm.json - TRM / tasa de cambio usada en cotizaciones.
+data/usuarios.json - Usuarios/clientes registrados (local/secreto).
+.vscode/launch.json - Configuracion de depuracion VS Code/Cursor.
+.vscode/tasks.json - Tareas de VS Code/Cursor para el proyecto.

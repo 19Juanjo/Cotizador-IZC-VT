@@ -1,4 +1,4 @@
-/* Interacciones UI de la página ZKTeco. */
+/* Inicializa el catalogo ZKTeco. */
 document.addEventListener('DOMContentLoaded', function () {
 
   // 1. Colapsables del Filtro Lateral

@@ -1,4 +1,4 @@
-/* Perfil del administrador: datos de sesión + panel de clientes */
+/* Logica del panel admin: cotizaciones, usuarios, Bitrix, TRM. */
 (function () {
   'use strict';
 
@@ -45,29 +45,88 @@
     });
   }
 
-  function lineTotalIva(line) {
+  function lineTotal(line) {
     if (!line) return '—';
     if (String(line.currency || '').toUpperCase() === 'COP') {
-      return formatCOP(line.totalCopIva != null ? line.totalCopIva : line.copIva);
+      return formatCOP(line.totalCop != null ? line.totalCop : line.cop);
     }
-    if (line.totalUsdIva != null || line.usdIva != null) {
-      return formatUSD(line.totalUsdIva != null ? line.totalUsdIva : line.usdIva);
+    if (String(line.currency || '').toUpperCase() === 'USD') {
+      return formatUSD(line.totalUsd != null ? line.totalUsd : line.usd);
     }
-    return formatCOP(line.totalCopIva != null ? line.totalCopIva : line.copIva);
+    if (line.totalUsd != null || line.usd != null) {
+      return formatUSD(line.totalUsd != null ? line.totalUsd : line.usd);
+    }
+    return formatCOP(line.totalCop != null ? line.totalCop : line.cop);
   }
 
-  function quoteTotalIvaLabel(totals) {
-    totals = totals || {};
-    var parts = [];
-    if (totals.hasUsd) parts.push(formatUSD(totals.usdIva));
-    if (totals.hasCop) parts.push(formatCOP(totals.copIva));
-    if (parts.length) return parts.join(' · ');
-    if (totals.usdIva != null && Number(totals.usdIva) > 0 && !(totals.copIva != null && Number(totals.copIva) > 0)) {
-      return formatUSD(totals.usdIva);
+  function quoteCurrencyFlags(quote) {
+    var totals = (quote && quote.totals) || {};
+    var items = quoteItems(quote);
+    var hasUsd = totals.hasUsd === true;
+    var hasCop = totals.hasCop === true;
+    if (!hasUsd && !hasCop) {
+      items.forEach(function (line) {
+        var c = String(line.currency || '').toUpperCase();
+        if (c === 'COP') hasCop = true;
+        else if (c === 'USD') hasUsd = true;
+      });
     }
-    if (totals.copIva != null) return formatCOP(totals.copIva);
-    if (totals.usdIva != null) return formatUSD(totals.usdIva);
-    return '—';
+    if (!hasUsd && !hasCop) {
+      hasUsd = Number(totals.usdIva) > 0;
+      hasCop = Number(totals.copIva) > 0;
+    }
+    if (!hasUsd && !hasCop) {
+      hasUsd = Number(totals.usd) > 0;
+      hasCop = Number(totals.cop) > 0 && !hasUsd;
+    }
+    return { hasUsd: hasUsd, hasCop: hasCop };
+  }
+
+  function quoteNativeSums(quote) {
+    var totals = (quote && quote.totals) || {};
+    var items = quoteItems(quote);
+    var flags = quoteCurrencyFlags(quote);
+    var sumUsd = 0;
+    var sumCop = 0;
+    var fromItems = false;
+
+    items.forEach(function (line) {
+      var c = String(line.currency || '').toUpperCase();
+      if (c === 'COP') {
+        fromItems = true;
+        sumCop += Number(line.totalCop != null ? line.totalCop : line.cop) || 0;
+      } else if (c === 'USD') {
+        fromItems = true;
+        sumUsd += Number(line.totalUsd != null ? line.totalUsd : line.usd) || 0;
+      }
+    });
+
+    if (!fromItems) {
+      if (flags.hasUsd && !flags.hasCop) sumUsd = Number(totals.usd) || 0;
+      else if (flags.hasCop && !flags.hasUsd) sumCop = Number(totals.cop) || 0;
+      else {
+        if (flags.hasUsd) sumUsd = Number(totals.usdIva) > 0 ? Number(totals.usdIva) / 1.19 : (Number(totals.usd) || 0);
+        if (flags.hasCop) sumCop = Number(totals.copIva) > 0 ? Number(totals.copIva) / 1.19 : (Number(totals.cop) || 0);
+      }
+    }
+
+    return { hasUsd: flags.hasUsd, hasCop: flags.hasCop, usd: sumUsd, cop: sumCop };
+  }
+
+  function quoteTotalLabel(quote) {
+    var sums = quoteNativeSums(quote);
+    var parts = [];
+    if (sums.hasUsd) parts.push(formatUSD(sums.usd));
+    if (sums.hasCop) parts.push(formatCOP(sums.cop));
+    return parts.length ? parts.join(' · ') : '—';
+  }
+
+  function quoteTotalTitle(quote) {
+    var flags = quoteCurrencyFlags(quote);
+    if (flags.hasUsd && flags.hasCop) return 'Total';
+    if (flags.hasCop) return 'Total COP';
+    if (flags.hasUsd) return 'Total USD';
+    return 'Total';
   }
 
   function postAdminApi(payload) {
@@ -103,9 +162,19 @@
     return run();
   }
 
+  function clearAsesorForm() {
+    var codigoEl = document.getElementById('adminAsesorCodigo');
+    var passEl = document.getElementById('adminAsesorPassword');
+    var nombreEl = document.getElementById('adminAsesorNombre');
+    if (codigoEl) codigoEl.value = '';
+    if (passEl) passEl.value = '';
+    if (nombreEl) nombreEl.value = '';
+  }
+
   function setActiveTab(tab) {
     activeTab = tab;
     var usersPanel = document.getElementById('adminPanelUsers');
+    var asesoresPanel = document.getElementById('adminPanelAsesores');
     var quotesPanel = document.getElementById('adminPanelQuotes');
     var trmPanel = document.getElementById('adminPanelTrm');
     var bitrixPanel = document.getElementById('adminPanelBitrix');
@@ -115,11 +184,18 @@
       el.classList.toggle('is-active', el.getAttribute('data-tab') === tab);
     });
     if (usersPanel) usersPanel.hidden = tab !== 'users';
+    if (asesoresPanel) asesoresPanel.hidden = tab !== 'asesores';
     if (quotesPanel) quotesPanel.hidden = tab !== 'quotes';
     if (trmPanel) trmPanel.hidden = tab !== 'trm';
     if (bitrixPanel) bitrixPanel.hidden = tab !== 'bitrix';
 
     if (tab === 'users') loadUsers();
+    else if (tab === 'asesores') {
+      clearAsesorForm();
+      window.setTimeout(clearAsesorForm, 50);
+      window.setTimeout(clearAsesorForm, 400);
+      loadAsesores();
+    }
     else if (tab === 'quotes') loadQuotes();
     else if (tab === 'trm') loadTrmPanel();
     else if (tab === 'bitrix') loadBitrixPanel();
@@ -130,6 +206,30 @@
     if (!items) return [];
     // PowerShell ConvertTo-Json a veces manda 1 ítem como objeto, no como array
     return Array.isArray(items) ? items : [items];
+  }
+
+  function quoteEstado(q) {
+    var e = String((q && q.asesor_estado) || '').trim().toLowerCase();
+    if (e === 'nueva' || e === 'nuevo' || e === 'new') return 'nueva';
+    if (e === 'seguimiento' || e === 'follow' || e === 'followup') return 'seguimiento';
+    if (e === 'vendido' || e === 'venta' || e === 'sold') return 'vendido';
+    if (e === 'cotizado' || e === 'cotizada') return 'cotizado';
+    return 'cotizado';
+  }
+
+  function quoteEstadoLabel(estado) {
+    if (estado === 'nueva') return 'Nueva';
+    if (estado === 'seguimiento') return 'Seguimiento';
+    if (estado === 'vendido') return 'Vendido';
+    return 'Cotizado';
+  }
+
+  function estadoBadgeHtml(estado) {
+    return (
+      '<span class="quote-estado-badge is-' + estado + '">' +
+        escapeHtml(quoteEstadoLabel(estado)) +
+      '</span>'
+    );
   }
 
   function renderQuotes(quotes) {
@@ -145,18 +245,23 @@
     }
 
     body.innerHTML = quotesCache.map(function (q, idx) {
-      var totals = q.totals || {};
       var items = quoteItems(q);
       var itemCount = items.length;
-      var totalIva = quoteTotalIvaLabel(totals);
+      var totalLabel = quoteTotalLabel(q);
+      var estado = quoteEstado(q);
+      var numCell =
+        '<td class="admin-row-num has-estado">' +
+          estadoBadgeHtml(estado) +
+          '<span class="admin-row-num-value">' + (idx + 1) + '</span>' +
+        '</td>';
       return (
         '<tr>' +
-          '<td class="admin-row-num">' + (idx + 1) + '</td>' +
+          numCell +
           '<td>' + escapeHtml(formatDate(q.created_at)) + '</td>' +
           '<td>' + escapeHtml(q.nombre || '—') + '</td>' +
           '<td>' + escapeHtml(q.nit || '') + '</td>' +
           '<td>' + itemCount + '</td>' +
-          '<td>' + escapeHtml(totalIva) + '</td>' +
+          '<td>' + escapeHtml(totalLabel) + '</td>' +
           '<td class="admin-actions">' +
             '<button type="button" class="admin-view-quote" data-idx="' + idx + '">Ver</button>' +
           '</td>' +
@@ -347,9 +452,16 @@
     if (!quote || !modal || !body) return;
 
     if (meta) {
+      var seller =
+        quote.seller_label ||
+        quote.seller_name ||
+        quote.seller_codigo ||
+        '';
       meta.textContent =
         (quote.nombre || '—') + ' · NIT ' + (quote.nit || '') +
-        ' · ' + formatDate(quote.created_at);
+        ' · ' + formatDate(quote.created_at) +
+        ' · Vendedor: ' + (seller || 'Sin vendedor asignado') +
+        ' · Estado: ' + quoteEstadoLabel(quoteEstado(quote));
     }
 
     var rows = quoteItems(quote).map(function (line) {
@@ -358,19 +470,18 @@
           '<td>' + escapeHtml(line.sku || '') + '</td>' +
           '<td>' + escapeHtml(line.name || '—') + '</td>' +
           '<td>' + (line.qty || 0) + '</td>' +
-          '<td>' + escapeHtml(lineTotalIva(line)) + '</td>' +
+          '<td>' + escapeHtml(lineTotal(line)) + '</td>' +
         '</tr>'
       );
     }).join('');
 
-    var totals = quote.totals || {};
     body.innerHTML =
       '<table class="admin-quote-detail-table">' +
-        '<thead><tr><th>SKU</th><th>Producto</th><th>Cant.</th><th>Total + IVA</th></tr></thead>' +
+        '<thead><tr><th>SKU</th><th>Producto</th><th>Cant.</th><th>Total</th></tr></thead>' +
         '<tbody>' + (rows || '<tr><td colspan="4">Sin productos</td></tr>') + '</tbody>' +
       '</table>' +
-      '<p class="admin-quote-total"><strong>Total + IVA:</strong> ' +
-        escapeHtml(quoteTotalIvaLabel(totals)) + '</p>';
+      '<p class="admin-quote-total"><strong>' + escapeHtml(quoteTotalTitle(quote)) + ':</strong> ' +
+        escapeHtml(quoteTotalLabel(quote)) + '</p>';
 
     modal.hidden = false;
   }
@@ -406,6 +517,129 @@
     if (bitrixSave) bitrixSave.addEventListener('click', saveBitrixAdmin);
     var bitrixTest = document.getElementById('adminBitrixTest');
     if (bitrixTest) bitrixTest.addEventListener('click', testBitrixAdmin);
+
+    var asesorForm = document.getElementById('adminAsesorForm');
+    if (asesorForm) {
+      asesorForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        saveAsesorAdmin();
+      });
+    }
+    var asesoresBody = document.getElementById('adminAsesoresBody');
+    if (asesoresBody) {
+      asesoresBody.addEventListener('click', function (e) {
+        var btn = e.target.closest('.admin-delete-asesor');
+        if (!btn) return;
+        var codigo = btn.getAttribute('data-codigo') || '';
+        if (!codigo) return;
+        if (!window.confirm('¿Eliminar asesor ' + codigo + '?')) return;
+        deleteAsesorAdmin(codigo);
+      });
+    }
+  }
+
+  function renderAsesores(asesores) {
+    var body = document.getElementById('adminAsesoresBody');
+    var count = document.getElementById('adminAsesorCount');
+    if (count) count.textContent = String((asesores && asesores.length) || 0);
+    if (!body) return;
+    if (!asesores || !asesores.length) {
+      body.innerHTML = '<tr><td colspan="5" class="admin-empty">Aún no hay asesores registrados.</td></tr>';
+      return;
+    }
+    body.innerHTML = asesores.map(function (a, idx) {
+      var codigo = a.codigo || '';
+      return (
+        '<tr>' +
+          '<td class="admin-row-num">' + (idx + 1) + '</td>' +
+          '<td>' + escapeHtml(codigo) + '</td>' +
+          '<td>' + escapeHtml(a.nombre || '—') + '</td>' +
+          '<td>' + escapeHtml(formatDate(a.created_at)) + '</td>' +
+          '<td class="admin-actions">' +
+            '<button type="button" class="admin-delete admin-delete-asesor" data-codigo="' + escapeHtml(codigo) + '">Eliminar</button>' +
+          '</td>' +
+        '</tr>'
+      );
+    }).join('');
+  }
+
+  function loadAsesores(options) {
+    options = options || {};
+    if (!window.IZCAuth || !IZCAuth.getSessionNit) return Promise.resolve();
+    if (!options.silent && !options.keepMessage) {
+      setMessage('adminMessage', 'Cargando asesores…', '');
+    }
+    return postAdminApi({
+      action: 'list_asesores',
+      admin_nit: IZCAuth.getSessionNit()
+    }).then(function (data) {
+      if (!data.ok) {
+        if (!options.silent) {
+          setMessage('adminMessage', data.error || 'No se pudo cargar asesores.', 'error');
+        }
+        renderAsesores([]);
+        return;
+      }
+      renderAsesores(data.asesores || []);
+      if (!options.silent && !options.keepMessage) {
+        setMessage('adminMessage', '', '');
+      }
+    }).catch(function () {
+      if (!options.silent) {
+        setMessage('adminMessage', 'No se pudo cargar asesores. Ejecuta tools\\ABRIR.bat.', 'error');
+      }
+      renderAsesores([]);
+    });
+  }
+
+  function saveAsesorAdmin() {
+    var codigoEl = document.getElementById('adminAsesorCodigo');
+    var passEl = document.getElementById('adminAsesorPassword');
+    var nombreEl = document.getElementById('adminAsesorNombre');
+    var codigo = codigoEl ? codigoEl.value.trim() : '';
+    var password = passEl ? passEl.value : '';
+    var nombre = nombreEl ? nombreEl.value.trim() : '';
+    if (!codigo || !password) {
+      setMessage('adminMessage', 'Ingresa código de vendedor y contraseña.', 'error');
+      return;
+    }
+    setMessage('adminMessage', 'Registrando asesor…', '');
+    postAdminApi({
+      action: 'register_asesor',
+      admin_nit: IZCAuth.getSessionNit(),
+      codigo: codigo,
+      password: password,
+      nombre: nombre
+    }).then(function (data) {
+      if (!data.ok) {
+        setMessage('adminMessage', data.error || 'No se pudo registrar.', 'error');
+        return;
+      }
+      if (codigoEl) codigoEl.value = '';
+      if (passEl) passEl.value = '';
+      if (nombreEl) nombreEl.value = '';
+      setMessage('adminMessage', data.message || ('Asesor ' + (data.codigo || codigo) + ' registrado.'), 'ok');
+      return loadAsesores({ keepMessage: true });
+    }).catch(function () {
+      setMessage('adminMessage', 'Error al registrar asesor. Reinicia tools\\ABRIR.bat.', 'error');
+    });
+  }
+
+  function deleteAsesorAdmin(codigo) {
+    postAdminApi({
+      action: 'delete_asesor',
+      admin_nit: IZCAuth.getSessionNit(),
+      codigo: codigo
+    }).then(function (data) {
+      if (!data.ok) {
+        setMessage('adminMessage', data.error || 'No se pudo eliminar.', 'error');
+        return;
+      }
+      setMessage('adminMessage', data.message || 'Asesor eliminado.', 'ok');
+      loadAsesores({ keepMessage: true });
+    }).catch(function () {
+      setMessage('adminMessage', 'Error al eliminar asesor.', 'error');
+    });
   }
 
   function fillProfile() {
@@ -429,7 +663,11 @@
     }
 
     if (!IZCAuth.isAdmin || !IZCAuth.isAdmin()) {
-      window.location.replace('perfil.html');
+      if (IZCAuth.isAsesor && IZCAuth.isAsesor()) {
+        window.location.replace('asesor.html');
+      } else {
+        window.location.replace('perfil.html');
+      }
       return false;
     }
 
@@ -563,7 +801,7 @@
     if (!btn) return;
     btn.addEventListener('click', function () {
       if (window.IZCAuth && IZCAuth.logout) IZCAuth.logout();
-      else window.location.href = 'index.html';
+      else window.location.href = 'marcas.html';
     });
   }
 
@@ -574,14 +812,17 @@
     var refresh = document.getElementById('adminRefresh');
     if (refresh) refresh.addEventListener('click', function () {
       if (activeTab === 'quotes') loadQuotes();
+      else if (activeTab === 'asesores') loadAsesores();
       else {
         loadUsers();
+        loadAsesores({ silent: true });
         loadQuotes({ silent: true });
       }
     });
     document.addEventListener('izc:auth-changed', function () {
       if (fillProfile()) {
         setActiveTab(activeTab);
+        loadAsesores({ silent: true });
         loadQuotes({ silent: true });
         loadTrmPanel();
       }
@@ -593,13 +834,18 @@
 
     ready.then(function () {
       if (!fillProfile()) return;
+      clearAsesorForm();
+      window.setTimeout(clearAsesorForm, 100);
+      window.setTimeout(clearAsesorForm, 500);
       setActiveTab('users');
+      loadAsesores({ silent: true });
       loadQuotes({ silent: true });
       loadTrmPanel();
       loadBitrixPanel();
     }).catch(function () {
       if (!fillProfile()) return;
       setActiveTab('users');
+      loadAsesores({ silent: true });
       loadTrmPanel();
       loadBitrixPanel();
     });

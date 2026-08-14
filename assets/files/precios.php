@@ -1,8 +1,9 @@
 <?php
+/* Endpoint PHP para servir/actualizar precios en hosting. */
 /**
  * Si lista-precios-izc.xlsb es más nuevo que precios.json, regenera el JSON
  * con python src/extraer_precios.py
- * (Stone/A = SKU; BM = USD; BL PESOS = COP solo etiquetas/ribbons) y lo sirve.
+ * (Stone/A = SKU; BK = USD; BJ = COP solo etiquetas/ribbons) y lo sirve.
  */
 header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-store, no-cache, must-revalidate');

@@ -1,4 +1,4 @@
-/* Aplica precios a las tarjetas: USD por defecto; COP para etiquetas/ribbons. */
+/* Utilidades de precios, moneda y formato. */
 (function () {
   'use strict';
 

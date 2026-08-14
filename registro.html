@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- Registro de nuevos clientes (NIT, datos de empresa). -->
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -35,7 +36,7 @@
   <main class="auth-page">
     <div class="auth-card">
       <h1>Registrarse</h1>
-      <p class="auth-lead">Crea tu cuenta con nombre, NIT y contraseña. Se guarda en usuarios.json del servidor local.</p>
+      <p class="auth-lead">Crea tu cuenta con nombre, NIT y contraseña.</p>
       <form id="registroForm" autocomplete="on" novalidate>
         <div class="auth-field">
           <label for="regNombre">Nombre</label>
@@ -43,7 +44,7 @@
         </div>
         <div class="auth-field">
           <label for="regNit">NIT</label>
-          <input id="regNit" name="nit" type="text" inputmode="numeric" placeholder="Ej: 900123456-1" required autocomplete="off">
+          <input id="regNit" name="nit" type="text" inputmode="numeric" placeholder="Ej: 900123456" required autocomplete="off">
         </div>
         <div class="auth-field">
           <label for="regPassword">Contraseña</label>

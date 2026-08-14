@@ -1,4 +1,4 @@
-/* Lógica de la página Mi perfil (clientes) + historial de cotizaciones */
+/* Logica del perfil e historial de cotizaciones del cliente. */
 (function () {
   'use strict';
 
@@ -44,29 +44,88 @@
     return Array.isArray(items) ? items : [items];
   }
 
-  function lineTotalIva(line) {
+  function lineTotal(line) {
     if (!line) return '—';
     if (String(line.currency || '').toUpperCase() === 'COP') {
-      return formatCOP(line.totalCopIva != null ? line.totalCopIva : line.copIva);
+      return formatCOP(line.totalCop != null ? line.totalCop : line.cop);
     }
-    if (line.totalUsdIva != null || line.usdIva != null) {
-      return formatUSD(line.totalUsdIva != null ? line.totalUsdIva : line.usdIva);
+    if (String(line.currency || '').toUpperCase() === 'USD') {
+      return formatUSD(line.totalUsd != null ? line.totalUsd : line.usd);
     }
-    return formatCOP(line.totalCopIva != null ? line.totalCopIva : line.copIva);
+    if (line.totalUsd != null || line.usd != null) {
+      return formatUSD(line.totalUsd != null ? line.totalUsd : line.usd);
+    }
+    return formatCOP(line.totalCop != null ? line.totalCop : line.cop);
   }
 
-  function quoteTotalIvaLabel(totals) {
-    totals = totals || {};
-    var parts = [];
-    if (totals.hasUsd) parts.push(formatUSD(totals.usdIva));
-    if (totals.hasCop) parts.push(formatCOP(totals.copIva));
-    if (parts.length) return parts.join(' · ');
-    if (totals.usdIva != null && Number(totals.usdIva) > 0 && !(totals.copIva != null && Number(totals.copIva) > 0)) {
-      return formatUSD(totals.usdIva);
+  function quoteCurrencyFlags(quote) {
+    var totals = (quote && quote.totals) || {};
+    var items = quoteItems(quote);
+    var hasUsd = totals.hasUsd === true;
+    var hasCop = totals.hasCop === true;
+    if (!hasUsd && !hasCop) {
+      items.forEach(function (line) {
+        var c = String(line.currency || '').toUpperCase();
+        if (c === 'COP') hasCop = true;
+        else if (c === 'USD') hasUsd = true;
+      });
     }
-    if (totals.copIva != null) return formatCOP(totals.copIva);
-    if (totals.usdIva != null) return formatUSD(totals.usdIva);
-    return '—';
+    if (!hasUsd && !hasCop) {
+      hasUsd = Number(totals.usdIva) > 0;
+      hasCop = Number(totals.copIva) > 0;
+    }
+    if (!hasUsd && !hasCop) {
+      hasUsd = Number(totals.usd) > 0;
+      hasCop = Number(totals.cop) > 0 && !hasUsd;
+    }
+    return { hasUsd: hasUsd, hasCop: hasCop };
+  }
+
+  function quoteNativeSums(quote) {
+    var totals = (quote && quote.totals) || {};
+    var items = quoteItems(quote);
+    var flags = quoteCurrencyFlags(quote);
+    var sumUsd = 0;
+    var sumCop = 0;
+    var fromItems = false;
+
+    items.forEach(function (line) {
+      var c = String(line.currency || '').toUpperCase();
+      if (c === 'COP') {
+        fromItems = true;
+        sumCop += Number(line.totalCop != null ? line.totalCop : line.cop) || 0;
+      } else if (c === 'USD') {
+        fromItems = true;
+        sumUsd += Number(line.totalUsd != null ? line.totalUsd : line.usd) || 0;
+      }
+    });
+
+    if (!fromItems) {
+      if (flags.hasUsd && !flags.hasCop) sumUsd = Number(totals.usd) || 0;
+      else if (flags.hasCop && !flags.hasUsd) sumCop = Number(totals.cop) || 0;
+      else {
+        if (flags.hasUsd) sumUsd = Number(totals.usdIva) > 0 ? Number(totals.usdIva) / 1.19 : (Number(totals.usd) || 0);
+        if (flags.hasCop) sumCop = Number(totals.copIva) > 0 ? Number(totals.copIva) / 1.19 : (Number(totals.cop) || 0);
+      }
+    }
+
+    return { hasUsd: flags.hasUsd, hasCop: flags.hasCop, usd: sumUsd, cop: sumCop };
+  }
+
+  function quoteTotalLabel(quote) {
+    var sums = quoteNativeSums(quote);
+    var parts = [];
+    if (sums.hasUsd) parts.push(formatUSD(sums.usd));
+    if (sums.hasCop) parts.push(formatCOP(sums.cop));
+    return parts.length ? parts.join(' · ') : '—';
+  }
+
+  function quoteTotalTitle(quote) {
+    var flags = quoteCurrencyFlags(quote);
+    if (flags.hasUsd && flags.hasCop) return 'Total';
+    if (flags.hasCop) return 'Total COP';
+    if (flags.hasUsd) return 'Total USD';
+    return 'Total';
   }
 
   function setQuotesMessage(text, type) {
@@ -133,7 +192,7 @@
           '<td>' + (idx + 1) + '</td>' +
           '<td>' + escapeHtml(formatDate(q.created_at)) + '</td>' +
           '<td>' + items.length + '</td>' +
-          '<td>' + escapeHtml(quoteTotalIvaLabel(q.totals || {})) + '</td>' +
+          '<td>' + escapeHtml(quoteTotalLabel(q)) + '</td>' +
           '<td><button type="button" class="profile-view-quote" data-idx="' + idx + '">Ver</button></td>' +
         '</tr>'
       );
@@ -158,18 +217,18 @@
           '<td>' + escapeHtml(line.sku || '') + '</td>' +
           '<td>' + escapeHtml(line.name || '—') + '</td>' +
           '<td>' + (line.qty || 0) + '</td>' +
-          '<td>' + escapeHtml(lineTotalIva(line)) + '</td>' +
+          '<td>' + escapeHtml(lineTotal(line)) + '</td>' +
         '</tr>'
       );
     }).join('');
 
     body.innerHTML =
       '<table class="profile-quote-detail-table">' +
-        '<thead><tr><th>SKU</th><th>Producto</th><th>Cant.</th><th>Total + IVA</th></tr></thead>' +
+        '<thead><tr><th>SKU</th><th>Producto</th><th>Cant.</th><th>Total</th></tr></thead>' +
         '<tbody>' + (rows || '<tr><td colspan="4">Sin productos</td></tr>') + '</tbody>' +
       '</table>' +
-      '<p class="profile-quote-total"><strong>Total + IVA:</strong> ' +
-        escapeHtml(quoteTotalIvaLabel(quote.totals || {})) + '</p>';
+      '<p class="profile-quote-total"><strong>' + escapeHtml(quoteTotalTitle(quote)) + ':</strong> ' +
+        escapeHtml(quoteTotalLabel(quote)) + '</p>';
 
     modal.hidden = false;
   }
@@ -241,6 +300,10 @@
       window.location.replace('admin.html');
       return;
     }
+    if (window.IZCAuth && IZCAuth.isAsesor && IZCAuth.isAsesor()) {
+      window.location.replace('asesor.html');
+      return;
+    }
 
     if (input) input.value = nit;
     if (nombreInput) {
@@ -260,7 +323,7 @@
     if (!btn) return;
     btn.addEventListener('click', function () {
       if (window.IZCAuth && IZCAuth.logout) IZCAuth.logout();
-      else window.location.href = 'index.html';
+      else window.location.href = 'marcas.html';
     });
   }
 

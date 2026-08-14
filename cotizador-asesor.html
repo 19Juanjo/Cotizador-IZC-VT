@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cotizador asesor - IZC MAYORISTA</title>
+  <link rel="icon" href="assets/logo/iconoizc.png" type="image/png">
+  <link rel="stylesheet" href="assets/css/index.css?v=29">
+  <link rel="stylesheet" href="assets/css/auth.css?v=9">
+  <link rel="stylesheet" href="assets/css/admin.css?v=12">
+  <link rel="stylesheet" href="assets/css/cotizador.css?v=4">
+  <script>
+    if (location.protocol === 'file:') {
+      location.replace('http://127.0.0.1:8080/cotizador-asesor.html' + location.search);
+    }
+  </script>
+  <script src="assets/js/data-loader.js?v=2" defer></script>
+  <script src="assets/js/auth.js?v=32" defer></script>
+  <script src="assets/js/cotizador-asesor.js?v=2" defer></script>
+</head>
+<body>
+  <header class="main-header">
+    <div class="main-header-inner">
+      <a class="logo" href="asesor.html">
+        <img src="assets/logo/logoizc.png" alt="IZC Mayorista" class="logo-img">
+      </a>
+      <a class="admin-refresh" href="asesor.html">← Volver al panel</a>
+    </div>
+  </header>
+
+  <main class="cotizador-page">
+    <div class="cotizador-wrap">
+      <header class="cotizador-head">
+        <div>
+          <h1>Cotizador del asesor</h1>
+        </div>
+        <div class="cotizador-trm">
+          <label for="cotizadorTrm">TRM (COP por 1 USD)</label>
+          <input id="cotizadorTrm" type="number" min="1" step="0.01" value="3204" readonly>
+        </div>
+      </header>
+
+      <div class="cotizador-client-card" id="cotizadorClientCard">
+        <div>
+          <span class="cotizador-client-label">Cliente</span>
+          <strong id="cotizadorClientNombre">—</strong>
+        </div>
+        <div>
+          <span class="cotizador-client-label">NIT</span>
+          <strong id="cotizadorClientNit">—</strong>
+        </div>
+      </div>
+
+      <p id="cotizadorGate" class="cotizador-gate" hidden>
+        Debes iniciar sesión como asesor.
+        <a href="login.html">Iniciar sesión</a>
+      </p>
+
+      <section id="cotizadorPanel" class="cotizador-panel" hidden>
+        <form id="cotizadorAddForm" class="cotizador-add">
+          <div class="cotizador-field">
+            <label for="cotizadorSku">Código de producto (SKU)</label>
+            <input id="cotizadorSku" name="sku" type="text" inputmode="numeric" placeholder="Ej: 4031" required autocomplete="off">
+            <p id="cotizadorSkuName" class="cotizador-sku-name is-empty" aria-live="polite"></p>
+          </div>
+          <div class="cotizador-field cotizador-field-qty">
+            <label for="cotizadorQty">Cantidad</label>
+            <input id="cotizadorQty" name="qty" type="number" min="1" step="1" value="1" required>
+          </div>
+          <button type="submit" class="cotizador-add-btn">Agregar</button>
+        </form>
+        <p id="cotizadorMessage" class="cotizador-message" role="status"></p>
+
+        <div class="cotizador-table-wrap">
+          <table class="cotizador-table">
+            <thead>
+              <tr>
+                <th>Código</th>
+                <th>Nombre</th>
+                <th>Cant.</th>
+                <th>USD und.</th>
+                <th>COP und.</th>
+                <th>Total USD</th>
+                <th>Total COP</th>
+                <th>Total + IVA</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="cotizadorBody">
+              <tr class="cotizador-empty-row"><td colspan="9">Aún no hay productos en la cotización.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="cotizador-totals">
+          <div class="cotizador-total-card">
+            <span>Cantidad total</span>
+            <strong id="totalQty">0</strong>
+          </div>
+          <div class="cotizador-total-card">
+            <span>Total USD</span>
+            <strong id="totalUsd">$ 0.00</strong>
+          </div>
+          <div class="cotizador-total-card">
+            <span>Total COP</span>
+            <strong id="totalCop">$ 0 COP</strong>
+          </div>
+          <div class="cotizador-total-card is-iva">
+            <span>Total USD + IVA</span>
+            <strong id="totalUsdIva">$ 0.00</strong>
+          </div>
+          <div class="cotizador-total-card is-iva">
+            <span>Total COP + IVA</span>
+            <strong id="totalCopIva">$ 0 COP</strong>
+          </div>
+        </div>
+
+        <div class="cotizador-actions">
+          <button type="button" class="cotizador-finish" id="cotizadorFinish">Terminar cotización</button>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <div class="cotizador-modal" id="cotizadorRemoveModal" hidden>
+    <div class="cotizador-modal-backdrop" data-modal-close></div>
+    <div class="cotizador-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="cotizadorRemoveTitle">
+      <h3 id="cotizadorRemoveTitle">Quitar producto</h3>
+      <p id="cotizadorRemoveText">¿Quieres quitar este producto de la cotización?</p>
+      <div class="cotizador-modal-actions">
+        <button type="button" class="cotizador-modal-cancel" data-modal-close>No, cancelar</button>
+        <button type="button" class="cotizador-modal-confirm" id="cotizadorRemoveConfirm">Sí, quitar</button>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,4 +1,4 @@
-/* Interacciones UI de la página IMOU. */
+/* Inicializa el catalogo Imou. */
 document.addEventListener('DOMContentLoaded', function () {
 
   const filterHeaders = document.querySelectorAll('.filter-header');

@@ -13,16 +13,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
       if (list.style.display === 'none') {
         list.style.display = 'block';
-        if (arrow) arrow.textContent = '▲';
+        if (arrow) arrow.textContent = '\u25B2';
       } else {
         list.style.display = 'none';
-        if (arrow) arrow.textContent = '▼';
+        if (arrow) arrow.textContent = '\u25BC';
       }
     });
   });
 
   // 3. Carrusel de Marcas Destacadas
-  const track = document.getElementById('brandsTrack');
+  const track = (function(){ var t=document.getElementById('brandsTrack'); if (t && t.closest && t.closest('.featured-brands-box[data-brands-carousel]')) return null; return t; })();
   const prevBtn = document.getElementById('prevBrand');
   const nextBtn = document.getElementById('nextBrand');
 
@@ -301,6 +301,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         var amount = typeof entry === 'object' ? entry.amount : entry;
         if (amount == null) return null;
+        if (window.IZCMoney) return IZCMoney.formatUsd(amount);
         return '$ ' + Number(amount).toLocaleString('en-US', {
           minimumFractionDigits: 2,
           maximumFractionDigits: 2

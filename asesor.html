@@ -3,29 +3,38 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Panel asesor - IZC MAYORISTA</title>
   <link rel="icon" href="assets/logo/iconoizc.png" type="image/png">
-  <link rel="stylesheet" href="assets/css/index.css?v=29">
-  <link rel="stylesheet" href="assets/css/auth.css?v=9">
-  <link rel="stylesheet" href="assets/css/perfil.css?v=3">
-  <link rel="stylesheet" href="assets/css/admin.css?v=15">
+  <link rel="stylesheet" href="assets/css/index.css?v=36">
+  <link rel="stylesheet" href="assets/css/auth.css?v=15">
+  <link rel="stylesheet" href="assets/css/perfil.css?v=6">
+  <link rel="stylesheet" href="assets/css/admin.css?v=42">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <script src="assets/js/file-boot.js?v=2"></script>
   <script>
-    if (location.protocol === 'file:') {
-      location.replace('http://127.0.0.1:8080/asesor.html');
-    }
+    window.IZC_ASESOR_ASSET_BUILD = 122;
   </script>
-  <script src="assets/js/auth.js?v=34" defer></script>
-  <script src="assets/js/wishlist.js?v=4" defer></script>
-  <script src="assets/js/asesor.js?v=7" defer></script>
+  <script src="assets/js/data-loader.js?v=18" defer></script>
+  <script src="assets/js/auth.js?v=90" defer></script>
+  <script src="assets/js/live-sync.js?v=1" defer></script>
+  <script src="assets/js/wishlist.js?v=6" defer></script>
+  <script src="assets/js/money.js?v=2" defer></script>
+  <script src="assets/js/vendor/jspdf.umd.min.js"></script>
+  <script src="assets/js/vendor/jspdf.plugin.autotable.min.js"></script>
+  <script src="assets/js/cotizacion-pdf.js?v=105" defer></script>
+  <script src="assets/js/asesor.js?v=171" defer></script>
   <script src="assets/js/index.js?v=3" defer></script>
 </head>
 <body>
   <div class="top-bar">
     <div class="top-bar-inner">
-      <a href="https://api.whatsapp.com/send?phone=573144355391" target="_blank">Soporte Técnico</a>
+      <a href="https://api.whatsapp.com/send?phone=573144355391" target="_blank">Soporte T&#233;cnico</a>
     </div>
-  </div>
+  </div>          
 
   <header class="main-header">
     <div class="main-header-inner">
@@ -37,17 +46,17 @@
     </div>
   </header>
 
-   <!-- Navigation -->
+    <!-- Navigation -->
   <nav class="main-nav"> <div class="nav-inner">
       <ul>
         <li class="nav-item has-flyout">
-          <a href="#">☰ Nuestros Productos</a>
+          <a href="#">&#9776; Nuestros Productos</a>
           <div class="flyout">
             <div class="flyout-sidebar">
               <ul>
                 <li class="flyout-cat active" data-panel="pos">Punto de Venta</li>
-                <li class="flyout-cat" data-panel="marcacion">Marcación y Etiquetado</li>
-                <li class="flyout-cat" data-panel="seguridad">Seguridad Electrónica</li>
+                <li class="flyout-cat" data-panel="marcacion">Marcaci&#243;n y Etiquetado</li>
+                <li class="flyout-cat" data-panel="seguridad">Seguridad Electr&#243;nica</li>
                 <li class="flyout-cat" data-panel="conectividad">Cables y conectividad</li>
                 <li class="flyout-cat" data-panel="movilidad">Movilidad</li>
               </ul>
@@ -58,16 +67,16 @@
               <div class="flyout-panel-content active" data-panel="pos">
                 <div class="flyout-col">
                   <div class="flyout-group">
-                    <a href="buscar.html?q=lectores" class="flyout-group-title"><span class="icon">▤</span>Lectores de Códigos de Barras</a>
+                    <a href="buscar.html?q=lectores" class="flyout-group-title"><span class="icon">?</span>Lectores de C&#243;digos de Barras</a>
                     <ul>
                       <li><a href="buscar.html?q=lectores-de-mano">De Mano</a></li>
-                      <li><a href="buscar.html?q=lectores-inalambricos">Inalámbricos</a></li>
+                      <li><a href="buscar.html?q=lectores-inalambricos">Inal&#225;mbricos</a></li>
                       <li><a href="buscar.html?q=lectores-de-mesa">De Mesa</a></li>
                       <li><a href="buscar.html?q=lectores-empotrables">Empotrables</a></li>
                     </ul>
                   </div>
                   <div class="flyout-group">
-                    <a href="buscar.html?q=digitalizadores" class="flyout-group-title"><span class="icon">▭</span>Periféricos POS</a>
+                    <a href="buscar.html?q=digitalizadores" class="flyout-group-title"><span class="icon">?</span>Perif&#233;ricos POS</a>
                     <ul>
                       <li><a href="buscar.html?q=digitalizadores">Digitalizadoras de Firmas</a></li>
                     </ul>
@@ -75,28 +84,28 @@
                 </div>
                 <div class="flyout-col">
                   <div class="flyout-group">
-                    <a href="buscar.html?q=equipos-pos" class="flyout-group-title"><span class="icon">🖳</span>Equipos para Punto de Venta</a>
+                    <a href="buscar.html?q=equipos-pos" class="flyout-group-title"><span class="icon">??</span>Equipos para Punto de Venta</a>
                   </div>
                   <div class="flyout-group">
-                    <a href="buscar.html?q=monitores-touch" class="flyout-group-title"><span class="icon">🖥</span>Monitores Touch</a>
+                    <a href="buscar.html?q=monitores-touch" class="flyout-group-title"><span class="icon">??</span>Monitores Touch</a>
                   </div>
                   <div class="flyout-group">
-                    <a href="buscar.html?q=mini-pc" class="flyout-group-title"><span class="icon">🖨</span>Mini PC</a>
+                    <a href="buscar.html?q=mini-pc" class="flyout-group-title"><span class="icon">??</span>Mini PC</a>
                   </div>
                   <div class="flyout-group">
-                    <a href="buscar.html?q=balanzas" class="flyout-group-title"><span class="icon">⚖</span>Balanzas</a>
+                    <a href="buscar.html?q=balanzas" class="flyout-group-title"><span class="icon">?</span>Balanzas</a>
                   </div>
                   <div class="flyout-group">
-                    <a href="buscar.html?q=cajones" class="flyout-group-title"><span class="icon">🏷</span>Cajones monederos</a>
+                    <a href="buscar.html?q=cajones" class="flyout-group-title"><span class="icon">??</span>Cajones monederos</a>
                   </div>
                 </div>
               </div>
 
-              <!-- Marcación y Etiquetado -->
+              <!-- Marcaci&#243;n y Etiquetado -->
               <div class="flyout-panel-content" data-panel="marcacion">
                 <div class="flyout-col">
                   <div class="flyout-group">
-                    <a href="buscar.html?q=impresoras" class="flyout-group-title"><span class="icon">🏷</span>Impresoras de Etiquetas</a>
+                    <a href="buscar.html?q=impresoras" class="flyout-group-title"><span class="icon">??</span>Impresoras de Etiquetas</a>
                     <ul>
                       <li><a href="buscar.html?q=impresoras-escritorio">De escritorio</a></li>
                       <li><a href="buscar.html?q=impresoras-semi-industriales">Semi industriales</a></li>
@@ -104,33 +113,33 @@
                     </ul>
                   </div>
                   <div class="flyout-group">
-                    <a href="buscar.html?q=impresoras-carnet" class="flyout-group-title"><span class="icon">▭</span>Impresoras de carnet</a>
+                    <a href="buscar.html?q=impresoras-carnet" class="flyout-group-title"><span class="icon">?</span>Impresoras de carnet</a>
                   </div>
                   <div class="flyout-group">
-                    <a href="buscar.html?q=impresoras-manillas" class="flyout-group-title"><span class="icon">▭</span>Impresoras de manillas</a>
+                    <a href="buscar.html?q=impresoras-manillas" class="flyout-group-title"><span class="icon">?</span>Impresoras de manillas</a>
                   </div>
                 </div>
                 <div class="flyout-col">
                   <div class="flyout-group">
-                    <a href="buscar.html?q=consumibles" class="flyout-group-title"><span class="icon">▭</span>Consumibles</a>
+                    <a href="buscar.html?q=consumibles" class="flyout-group-title"><span class="icon">?</span>Consumibles</a>
                     <ul>
                       <li><a href="buscar.html?q=consumibles-etiquetas">Etiquetas adhesivas</a></li>
                       <li><a href="buscar.html?q=consumibles-ribbons">Ribbons o Cintas</a></li>
-                      <li><a href="buscar.html?q=consumibles">Manillas para identificación</a></li>
+                      <li><a href="buscar.html?q=consumibles">Manillas para identificaci&#243;n</a></li>
                       <li><a href="buscar.html?q=consumibles-kits">Kits de limpieza</a></li>
                     </ul>
                   </div>
                   <div class="flyout-group">
-                    <a href="buscar.html?q=impresoras" class="flyout-group-title"><span class="icon">▭</span>Flexografia</a>
+                    <a href="buscar.html?q=impresoras" class="flyout-group-title"><span class="icon">?</span>Flexografia</a>
                   </div>
                 </div>
               </div>
 
-              <!-- Seguridad Electrónica -->
+              <!-- Seguridad Electr&#243;nica -->
               <div class="flyout-panel-content" data-panel="seguridad">
                 <div class="flyout-col">
                   <div class="flyout-group">
-                    <a href="buscar.html?q=control-acceso" class="flyout-group-title"><span class="icon">📷</span>CONTROL Y VIGILANCIA</a>
+                    <a href="buscar.html?q=control-acceso" class="flyout-group-title"><span class="icon">??</span>CONTROL Y VIGILANCIA</a>
                     <ul>
                       <li><a href="buscar.html?q=control-acceso">Controles de Acceso y Asistencia</a></li>
                       <li><a href="buscar.html?q=accesorios-acceso">Accesorios de Control de Acceso</a></li>
@@ -139,18 +148,18 @@
                     </ul>
                   </div>
                   <div class="flyout-group">
-                    <a href="buscar.html?q=camaras" class="flyout-group-title"><span class="icon">📷</span>CAMARAS CCTV</a>
+                    <a href="buscar.html?q=camaras" class="flyout-group-title"><span class="icon">??</span>CAMARAS CCTV</a>
                     <ul>
-                      <li><a href="buscar.html?q=camaras-ip">Cámaras IP</a></li>
-                      <li><a href="buscar.html?q=camaras-wifi">Cámaras WIFI</a></li>
+                      <li><a href="buscar.html?q=camaras-ip">C&#225;maras IP</a></li>
+                      <li><a href="buscar.html?q=camaras-wifi">C&#225;maras WIFI</a></li>
                     </ul>
                   </div>
                 </div>
                 <div class="flyout-col">
                   <div class="flyout-group">
-                    <a href="buscar.html?q=grabadores" class="flyout-group-title"><span class="icon">🔒</span>GRABADORES CCTV</a>
+                    <a href="buscar.html?q=grabadores" class="flyout-group-title"><span class="icon">??</span>GRABADORES CCTV</a>
                     <ul>
-                      <li><a href="buscar.html?q=grabadores-analogo">Grabadores Análogos</a></li>
+                      <li><a href="buscar.html?q=grabadores-analogo">Grabadores An&#225;logos</a></li>
                       <li><a href="buscar.html?q=grabadores-ip">Grabadores IP</a></li>
                     </ul>
                   </div>
@@ -167,7 +176,7 @@
               <div class="flyout-panel-content" data-panel="conectividad">
                 <div class="flyout-col">
                   <div class="flyout-group">
-                    <a href="buscar.html?q=red" class="flyout-group-title"><span class="icon">📡</span>CONECTIVIDAD INALÁMBRICA</a>
+                    <a href="buscar.html?q=red" class="flyout-group-title"><span class="icon">??</span>CONECTIVIDAD INAL&#193;MBRICA</a>
                     <ul>
                       <li><a href="buscar.html?q=access-point">Access Point</a></li>
                       <li><a href="buscar.html?q=radio-enlaces">Radio Enlaces</a></li>
@@ -177,7 +186,7 @@
                 </div>
                 <div class="flyout-col">
                   <div class="flyout-group">
-                    <a href="buscar.html?q=switch-poe" class="flyout-group-title"><span class="icon">🔌</span>SWITCH POE</a>
+                    <a href="buscar.html?q=switch-poe" class="flyout-group-title"><span class="icon">??</span>SWITCH POE</a>
                   </div>
                 </div>
               </div>
@@ -186,10 +195,10 @@
               <div class="flyout-panel-content" data-panel="movilidad">
                 <div class="flyout-col">
                   <div class="flyout-group">
-                    <a href="buscar.html?q=terminales-moviles" class="flyout-group-title"><span class="icon">📱</span>MOVILIDAD</a>
+                    <a href="buscar.html?q=terminales-moviles" class="flyout-group-title"><span class="icon">??</span>MOVILIDAD</a>
                     <ul>
-                      <li><a href="buscar.html?q=impresoras-portatiles">Impresoras Portátiles</a></li>
-                      <li><a href="buscar.html?q=terminales-moviles">Terminales Móviles</a></li>
+                      <li><a href="buscar.html?q=impresoras-portatiles">Impresoras Port&#225;tiles</a></li>
+                      <li><a href="buscar.html?q=terminales-moviles">Terminales M&#243;viles</a></li>
                     </ul>
                   </div>
                 </div>
@@ -198,15 +207,34 @@
           </div>
         </li>
         <li class="nav-item"><a href="marcas.html">Marcas</a></li>
-        <li class="nav-item"><a href="cotizador.html">Cotizador</a></li>
+        <li class="nav-item"><a href="cotizador-asesor.html">Cotizador</a></li>
       </ul>
     </div>
   </nav>
   <main class="admin-page profile-page">
-    <div class="auth-card">
+    <div class="auth-card profile-name-card">
+      <button type="button" class="profile-name-pencil" id="asesorNombreToggle" title="Editar nombre" aria-label="Editar nombre" aria-pressed="false">
+        <svg class="profile-name-icon is-pencil" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 20h9"></path>
+          <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"></path>
+        </svg>
+        <svg class="profile-name-icon is-check" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" hidden>
+          <path d="M20 6 9 17l-5-5"></path>
+        </svg>
+      </button>
       <h1 class="profile-greeting" id="asesorGreeting">Hola</h1>
+      <input
+        type="text"
+        id="asesorNombreInput"
+        class="profile-name-inline"
+        maxlength="80"
+        autocomplete="name"
+        placeholder="Nombre"
+        hidden
+      >
       <p class="profile-lead">Panel del asesor comercial</p>
-      <button class="auth-submit" type="button" id="asesorLogout">Cerrar sesión</button>
+      <p id="asesorNombreStatus" class="auth-message profile-name-status" role="status"></p>
+      <button class="auth-submit" type="button" id="asesorLogout">Cerrar sesi&#243;n</button>
     </div>
 
     <div class="admin-card profile-admin-card" id="asesorContent">
@@ -223,12 +251,20 @@
           <strong id="asesorClientCount">0</strong>
         </button>
         <button type="button" class="admin-stat is-tab" data-tab="nuevas" id="asesorTabNuevas">
-          <span class="admin-stat-label">Nuevas cotizaciones</span>
+          <span class="admin-stat-label">Cotizaciones Cliente</span>
           <strong id="asesorNuevasCount">0</strong>
         </button>
         <button type="button" class="admin-stat is-tab" data-tab="quotes" id="asesorTabQuotes">
           <span class="admin-stat-label">Historial de cotizaciones</span>
           <strong id="asesorQuoteCount">0</strong>
+        </button>
+        <button type="button" class="admin-stat is-tab" data-tab="gp" id="asesorTabGp">
+          <span class="admin-stat-label">Cotizaciones GP</span>
+          <strong id="asesorGpCount">0</strong>
+        </button>
+        <button type="button" class="admin-stat is-tab" data-tab="duplicadas" id="asesorTabDuplicadas">
+          <span class="admin-stat-label">Cotizaciones Duplicadas</span>
+          <strong id="asesorDuplicadasCount">0</strong>
         </button>
       </div>
 
@@ -236,15 +272,16 @@
 
       <div class="admin-panel" id="asesorPanelClientes">
         <div class="admin-toolbar">
-          <label class="admin-search-label" for="asesorClientNitSearch">Buscar por NIT</label>
+          <label class="admin-search-label" for="asesorClientNitSearch">Buscar por nombre o NIT</label>
           <input
             id="asesorClientNitSearch"
             class="admin-search-input"
             type="search"
-            inputmode="numeric"
             autocomplete="off"
-            placeholder="Escribe el NIT…"
+            placeholder="Nombre o NIT"
           >
+          <button type="button" class="admin-toolbar-btn" id="asesorClienteRegisterBtn">Registrar cliente</button>
+          <button type="button" class="admin-toolbar-btn is-secondary" id="asesorClienteRefreshBitrixBtn" title="Consulta Bitrix ahora">Actualizar desde Bitrix</button>
         </div>
         <div class="admin-table-wrap">
           <table class="admin-table" id="asesorClientesTable">
@@ -252,8 +289,9 @@
               <tr>
                 <th>#</th>
                 <th>NIT</th>
-                <th>Cliente / Razón social</th>
-                <th>Teléfono</th>
+                <th>Cliente / Raz&#243;n social</th>
+                <th>Nombre contacto</th>
+                <th>Tel&#233;fono</th>
                 <th></th>
               </tr>
             </thead>
@@ -269,8 +307,10 @@
               <tr>
                 <th>#</th>
                 <th>Fecha</th>
+                <th>Fecha cierre<br>venta</th>
                 <th>Nombre</th>
                 <th>NIT</th>
+                <th>Empresa</th>
                 <th>Productos</th>
                 <th>Total</th>
                 <th></th>
@@ -282,36 +322,300 @@
       </div>
 
       <div class="admin-panel" id="asesorPanelQuotes" hidden>
+        <p id="asesorQuotesFilterMeta" class="admin-filter-meta" hidden></p>
         <div class="admin-table-wrap">
-          <table class="admin-table" id="asesorQuotesTable">
+          <table class="admin-table admin-table-quotes" id="asesorQuotesTable">
             <thead>
               <tr>
-                <th>#</th>
+                <th>Estado</th>
                 <th>Fecha</th>
+                <th class="th-fecha-cierre-venta">Fecha cierre<br>venta</th>
                 <th>Nombre</th>
                 <th>NIT</th>
+                <th>Empresa</th>
                 <th>Productos</th>
                 <th>Total</th>
                 <th></th>
+              </tr>
+              <tr class="admin-table-filter-row">
+                <th>
+                  <label class="admin-sr-only" for="asesorQuoteFilterEstado">Filtrar por estado</label>
+                  <select id="asesorQuoteFilterEstado" class="admin-filter-select" aria-label="Filtrar por estado">
+                    <option value="">Todos</option>
+                    <option value="cotizado">Cotizado</option>
+                    <option value="pendiente">Pendiente</option>
+                    <option value="seguimiento">Seguimiento</option>
+                    <option value="vendido">Vendido</option>
+                    <option value="perdida">Perdida</option>
+                    <option value="cerrado_modificado">Cerrado Modificado</option>
+                  </select>
+                </th>
+                <th>
+                  <label class="admin-sr-only" for="asesorQuoteFilterFecha">Filtrar por fecha</label>
+                  <input id="asesorQuoteFilterFecha" class="admin-filter-date" type="date" aria-label="Filtrar por fecha">
+                </th>
+                <th></th>
+                <th></th>
+                <th>
+                  <label class="admin-sr-only" for="asesorQuoteFilterNit">Filtrar por NIT</label>
+                  <input id="asesorQuoteFilterNit" class="admin-filter-input" type="search" inputmode="numeric" placeholder="Buscar NIT" aria-label="Filtrar por NIT">
+                </th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th>
+                  <button type="button" id="asesorQuoteFilterClear" class="admin-filter-clear">Limpiar</button>
+                </th>
               </tr>
             </thead>
             <tbody id="asesorQuotesBody"></tbody>
           </table>
         </div>
       </div>
+
+      <div class="admin-panel" id="asesorPanelGp" hidden>
+        <p class="admin-panel-hint">Cotizaciones hechas por un Gerente de Producto y asignadas a ti.</p>
+        <div class="admin-table-wrap">
+          <table class="admin-table" id="asesorGpTable">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Fecha</th>
+                <th>Fecha cierre<br>venta</th>
+                <th>Cliente</th>
+                <th>NIT</th>
+                <th>GP</th>
+                <th>Productos</th>
+                <th>Total</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="asesorGpBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="admin-panel" id="asesorPanelDuplicadas" hidden>
+        <p id="asesorDuplicadasFilterMeta" class="admin-filter-meta" hidden></p>
+        <div class="admin-table-wrap">
+          <table class="admin-table admin-table-quotes" id="asesorDuplicadasTable">
+            <thead>
+              <tr>
+                <th>Estado</th>
+                <th>Fecha</th>
+                <th class="th-fecha-cierre-venta">Fecha cierre<br>venta</th>
+                <th>Nombre</th>
+                <th>NIT</th>
+                <th>Empresa</th>
+                <th>Productos</th>
+                <th>Total</th>
+                <th></th>
+              </tr>
+              <tr class="admin-table-filter-row">
+                <th>
+                  <label class="admin-sr-only" for="asesorDupFilterEstado">Filtrar por estado</label>
+                  <select id="asesorDupFilterEstado" class="admin-filter-select" aria-label="Filtrar por estado">
+                    <option value="">Todos</option>
+                    <option value="cotizado">Cotizado</option>
+                    <option value="pendiente">Pendiente</option>
+                    <option value="seguimiento">Seguimiento</option>
+                    <option value="vendido">Vendido</option>
+                    <option value="perdida">Perdida</option>
+                  </select>
+                </th>
+                <th>
+                  <label class="admin-sr-only" for="asesorDupFilterFecha">Filtrar por fecha</label>
+                  <input id="asesorDupFilterFecha" class="admin-filter-date" type="date" aria-label="Filtrar por fecha">
+                </th>
+                <th></th>
+                <th></th>
+                <th>
+                  <label class="admin-sr-only" for="asesorDupFilterNit">Filtrar por NIT</label>
+                  <input id="asesorDupFilterNit" class="admin-filter-input" type="search" inputmode="numeric" placeholder="Buscar NIT" aria-label="Filtrar por NIT">
+                </th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th>
+                  <button type="button" id="asesorDupFilterClear" class="admin-filter-clear">Limpiar</button>
+                </th>
+              </tr>
+            </thead>
+            <tbody id="asesorDuplicadasBody"></tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </main>
+
+  <div class="admin-modal" id="asesorClienteModal" hidden>
+    <div class="admin-modal-backdrop" data-cliente-modal-close></div>
+    <div class="admin-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="asesorClienteModalTitle">
+      <h3 id="asesorClienteModalTitle">Registrar cliente</h3>
+      <p class="admin-quote-meta">Si el cliente no aparece asignado, reg&#237;stralo con NIT y nombre para poder cotizarle.</p>
+      <form id="asesorClienteForm" class="asesor-cliente-form">
+        <label for="asesorClienteNitInput">NIT</label>
+        <input
+          type="text"
+          id="asesorClienteNitInput"
+          inputmode="numeric"
+          autocomplete="off"
+          placeholder="Ej. 900639921"
+          required
+        >
+        <label for="asesorClienteNombreInput">Nombre / Raz&#243;n social</label>
+        <input
+          type="text"
+          id="asesorClienteNombreInput"
+          autocomplete="organization"
+          placeholder="Nombre del cliente"
+          maxlength="120"
+          required
+        >
+        <p id="asesorClienteFormStatus" class="auth-message" role="status"></p>
+        <div class="admin-modal-actions">
+          <button type="submit" class="admin-view-quote" id="asesorClienteFormSave">Guardar y cotizar</button>
+          <button type="button" class="admin-modal-cancel" data-cliente-modal-close>Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
   <div class="admin-modal" id="asesorQuoteModal" hidden>
     <div class="admin-modal-backdrop" data-modal-close></div>
     <div class="admin-modal-dialog admin-modal-dialog-wide" role="dialog" aria-modal="true" aria-labelledby="asesorQuoteTitle">
-      <h3 id="asesorQuoteTitle">Detalle de cotización</h3>
+      <h3 id="asesorQuoteTitle">Detalle de cotizaci&#243;n</h3>
       <p id="asesorQuoteMeta" class="admin-quote-meta"></p>
       <div class="admin-quote-detail-wrap" id="asesorQuoteBody"></div>
       <div class="admin-modal-actions">
+        <button type="button" class="admin-quote-pdf admin-quote-pdf-modal" data-currency="USD">PDF USD</button>
+              <button type="button" class="admin-quote-pdf admin-quote-pdf-modal" data-currency="COP">PDF COP</button>
         <button type="button" class="admin-modal-cancel" data-modal-close>Cerrar</button>
       </div>
     </div>
   </div>
+
+  <script>
+  /* Garantiza botones PDF en historial/duplicadas aunque asesor.js esté cacheado viejo. */
+  (function () {
+    function ensureWrap(cell) {
+      var wrap = cell.querySelector('.admin-actions-btns');
+      if (wrap) return wrap;
+      wrap = document.createElement('div');
+      wrap.className = 'admin-actions-btns';
+      while (cell.firstChild) wrap.appendChild(cell.firstChild);
+      cell.appendChild(wrap);
+      return wrap;
+    }
+
+    function makePdfBtn(mode, idx, currency) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'admin-quote-pdf-row';
+      btn.setAttribute('data-mode', mode);
+      btn.setAttribute('data-idx', String(idx));
+      btn.setAttribute('data-currency', currency);
+      btn.textContent = currency === 'USD' ? 'PDF USD' : 'PDF COP';
+      return btn;
+    }
+
+    function patchTable(tbodyId, defaultMode) {
+      var body = document.getElementById(tbodyId);
+      if (!body) return;
+      var vers = body.querySelectorAll('.admin-view-quote:not(.admin-cotizar-btn):not(.admin-cotizar-cliente)');
+      for (var i = 0; i < vers.length; i++) {
+        var ver = vers[i];
+        var cell = ver.closest ? ver.closest('td') : ver.parentNode;
+        if (!cell) continue;
+        if (cell.querySelector('.admin-quote-pdf-row')) continue;
+        var mode = ver.getAttribute('data-mode') || defaultMode;
+        var idx = ver.getAttribute('data-idx');
+        if (idx == null || idx === '') continue;
+        var wrap = ensureWrap(cell);
+        wrap.appendChild(document.createTextNode(' '));
+        wrap.appendChild(makePdfBtn(mode, idx, 'USD'));
+        wrap.appendChild(document.createTextNode(' '));
+        wrap.appendChild(makePdfBtn(mode, idx, 'COP'));
+      }
+    }
+
+    function patchAll() {
+      patchTable('asesorQuotesBody', 'historial');
+      patchTable('asesorDuplicadasBody', 'duplicadas');
+    }
+
+    function start() {
+      patchAll();
+      var root = document.body;
+      if (!root || typeof MutationObserver === 'undefined') {
+        setInterval(patchAll, 1000);
+        return;
+      }
+      var obs = new MutationObserver(function () { patchAll(); });
+      obs.observe(root, { childList: true, subtree: true });
+    }
+
+    document.addEventListener('click', function (e) {
+      var t = e.target;
+      if (!t || !t.closest) return;
+      var btn = t.closest('.admin-quote-pdf-row');
+      if (!btn) return;
+      e.preventDefault();
+      e.stopPropagation();
+      var mode = btn.getAttribute('data-mode') || 'historial';
+      var idx = Number(btn.getAttribute('data-idx'));
+      var currency = btn.getAttribute('data-currency') || 'COP';
+
+      function runDownload() {
+        if (window.IZCAsesorPanel && typeof window.IZCAsesorPanel.downloadQuotePdfAt === 'function') {
+          window.IZCAsesorPanel.downloadQuotePdfAt(mode, idx, currency);
+          return true;
+        }
+        return false;
+      }
+
+      if (runDownload()) return;
+
+      // Abrir ya (gesto del usuario) por si el panel aún está cargando.
+      var pendingWin = null;
+      try {
+        pendingWin = window.open('about:blank', '_blank');
+      } catch (eOpen) {
+        pendingWin = null;
+      }
+      if (pendingWin) {
+        try {
+          pendingWin.document.write(
+            '<!doctype html><html><head><meta charset="utf-8"><title>Preparando PDF…</title></head>' +
+            '<body style="font-family:Segoe UI,Arial,sans-serif;padding:28px;color:#333"><p>Preparando PDF…</p></body></html>'
+          );
+          pendingWin.document.close();
+        } catch (eW) { /* ignore */ }
+        try { window.__IZC_PDF_PENDING_WIN = pendingWin; } catch (eSt) { /* ignore */ }
+      }
+
+      var tries = 0;
+      var timer = setInterval(function () {
+        tries += 1;
+        if (runDownload()) {
+          clearInterval(timer);
+          return;
+        }
+        if (tries >= 25) {
+          clearInterval(timer);
+          try { window.__IZC_PDF_PENDING_WIN = null; } catch (eClr) { /* ignore */ }
+          try { if (pendingWin && !pendingWin.closed) pendingWin.close(); } catch (eClose) { /* ignore */ }
+          alert('Pulsa Ctrl+F5 para actualizar el panel y poder descargar el PDF.');
+        }
+      }, 80);
+    }, true);
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', start);
+    } else {
+      start();
+    }
+  })();
+  </script>
 </body>
 </html>

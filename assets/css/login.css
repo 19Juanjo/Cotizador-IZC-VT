@@ -1,0 +1,511 @@
+/* Estilos exclusivos de login.html (elección IZC / VALTECH + credenciales). */
+/* Paleta: gris y negro (sin azul). */
+
+.empresa-choice-card {
+  max-width: 720px;
+}
+
+.empresa-choice-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin: 8px 0 8px;
+}
+
+.empresa-choice-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  min-height: 168px;
+  padding: 22px 16px;
+  border: 2px solid #b0b6bd;
+  border-radius: 14px;
+  background: linear-gradient(180deg, #ffffff 0%, #eceef0 100%);
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease, background 0.15s ease;
+}
+
+.empresa-choice-btn:hover {
+  border-color: #3a3f45;
+  background: linear-gradient(180deg, #ffffff 0%, #e2e5e8 100%);
+  box-shadow: 0 10px 24px rgba(30, 34, 38, 0.18);
+  transform: translateY(-2px);
+}
+
+.empresa-choice-btn[data-empresa="valtech"] {
+  border-color: #a8aeb5;
+  background: linear-gradient(180deg, #ffffff 0%, #eef0f2 100%);
+}
+
+.empresa-choice-btn[data-empresa="valtech"]:hover {
+  border-color: #2f9e44;
+  background: linear-gradient(180deg, #ffffff 0%, #e8f5eb 100%);
+  box-shadow: 0 10px 24px rgba(47, 158, 68, 0.18);
+}
+
+.empresa-choice-logo {
+  max-width: 100%;
+  width: auto;
+  height: 64px;
+  object-fit: contain;
+  display: block;
+}
+
+.empresa-choice-logos {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.empresa-choice-logos .empresa-choice-logo {
+  height: 48px;
+  max-width: 46%;
+}
+
+.empresa-choice-logo-sat {
+  height: 42px;
+}
+
+.empresa-choice-label {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #1e2226;
+  text-align: center;
+}
+
+.login-empresa-body {
+  position: relative;
+  isolation: isolate;
+  background: linear-gradient(125deg, #b8bec6 0%, #e4e6e9 35%, #f4f5f6 55%, #c5cad1 100%);
+  background-size: 200% 200%;
+  animation: loginBgPulse 10s ease-in-out infinite;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.login-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.login-bg-orb {
+  position: absolute;
+  display: block;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.login-bg-orb::before {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  filter: blur(32px);
+  opacity: 0.9;
+}
+
+.login-bg-orb--a {
+  width: min(58vw, 560px);
+  height: min(58vw, 560px);
+  top: -14%;
+  left: -10%;
+  animation: loginOrbA 5s ease-in-out infinite alternate;
+}
+
+.login-bg-orb--a::before {
+  background: radial-gradient(circle at 35% 35%, rgba(28, 32, 36, 0.88), rgba(42, 47, 53, 0.28) 55%, transparent 75%);
+}
+
+.login-bg-orb--b {
+  width: min(52vw, 500px);
+  height: min(52vw, 500px);
+  top: 18%;
+  right: -16%;
+  animation: loginOrbB 6.5s ease-in-out infinite alternate;
+}
+
+.login-bg-orb--b::before {
+  background: radial-gradient(circle at 60% 40%, rgba(18, 20, 24, 0.75), rgba(70, 76, 84, 0.22) 60%, transparent 78%);
+}
+
+.login-bg-orb--c {
+  width: min(44vw, 420px);
+  height: min(44vw, 420px);
+  bottom: -12%;
+  left: 24%;
+  animation: loginOrbC 4.8s ease-in-out infinite alternate;
+}
+
+.login-bg-orb--c::before {
+  background: radial-gradient(circle at 50% 50%, rgba(50, 55, 62, 0.7), transparent 72%);
+}
+
+.login-bg-orb--d {
+  width: min(36vw, 340px);
+  height: min(36vw, 340px);
+  top: 55%;
+  left: -8%;
+  animation: loginOrbD 5.6s ease-in-out infinite alternate;
+}
+
+.login-bg-orb--d::before {
+  background: radial-gradient(circle at 40% 50%, rgba(22, 24, 28, 0.65), transparent 70%);
+}
+
+.login-bg-grid {
+  position: absolute;
+  inset: -30%;
+  background-image:
+    linear-gradient(rgba(26, 30, 34, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26, 30, 34, 0.12) 1px, transparent 1px);
+  background-size: 48px 48px;
+  transform: rotate(-6deg);
+  animation: loginGridDrift 14s linear infinite;
+  opacity: 0.9;
+  mask-image: radial-gradient(ellipse 75% 65% at 50% 40%, #000 15%, transparent 78%);
+  -webkit-mask-image: radial-gradient(ellipse 75% 65% at 50% 40%, #000 15%, transparent 78%);
+}
+
+.login-bg-sheen {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    115deg,
+    transparent 0%,
+    transparent 36%,
+    rgba(255, 255, 255, 0.45) 48%,
+    transparent 60%,
+    transparent 100%
+  );
+  background-size: 260% 100%;
+  animation: loginSheen 5.5s ease-in-out infinite;
+  opacity: 0.75;
+}
+
+.login-bg-dust {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.login-bg-dust span {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #2a2f35;
+  opacity: 0.35;
+  animation: loginDust 8s linear infinite;
+}
+
+.login-bg-dust span:nth-child(1) { left: 8%; top: 78%; width: 5px; height: 5px; animation-duration: 7s; animation-delay: 0s; }
+.login-bg-dust span:nth-child(2) { left: 18%; top: 85%; width: 8px; height: 8px; animation-duration: 9s; animation-delay: -1.5s; opacity: 0.28; }
+.login-bg-dust span:nth-child(3) { left: 32%; top: 90%; width: 4px; height: 4px; animation-duration: 6.5s; animation-delay: -3s; }
+.login-bg-dust span:nth-child(4) { left: 48%; top: 82%; width: 7px; height: 7px; animation-duration: 8.5s; animation-delay: -0.8s; opacity: 0.22; }
+.login-bg-dust span:nth-child(5) { left: 62%; top: 88%; width: 5px; height: 5px; animation-duration: 7.5s; animation-delay: -4s; }
+.login-bg-dust span:nth-child(6) { left: 74%; top: 80%; width: 9px; height: 9px; animation-duration: 10s; animation-delay: -2.2s; opacity: 0.3; }
+.login-bg-dust span:nth-child(7) { left: 86%; top: 92%; width: 4px; height: 4px; animation-duration: 6s; animation-delay: -5s; }
+.login-bg-dust span:nth-child(8) { left: 92%; top: 76%; width: 6px; height: 6px; animation-duration: 8s; animation-delay: -1s; }
+.login-bg-dust span:nth-child(9) { left: 40%; top: 95%; width: 5px; height: 5px; animation-duration: 11s; animation-delay: -6s; opacity: 0.25; }
+.login-bg-dust span:nth-child(10) { left: 55%; top: 86%; width: 7px; height: 7px; animation-duration: 7.2s; animation-delay: -3.5s; }
+
+.login-empresa-body > .top-bar,
+.login-empresa-body > .main-header,
+.login-empresa-body > .auth-page {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes loginBgPulse {
+  0%, 100% { background-position: 0% 40%; }
+  50% { background-position: 100% 60%; }
+}
+
+@keyframes loginOrbA {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(12vw, 10vh, 0) scale(1.12); }
+  100% { transform: translate3d(22vw, 26vh, 0) scale(1.22); }
+}
+
+@keyframes loginOrbB {
+  0% { transform: translate3d(0, 0, 0) scale(1.05); }
+  50% { transform: translate3d(-10vw, 8vh, 0) scale(0.95); }
+  100% { transform: translate3d(-26vw, 18vh, 0) scale(0.85); }
+}
+
+@keyframes loginOrbC {
+  0% { transform: translate3d(0, 0, 0) scale(0.92); }
+  50% { transform: translate3d(8vw, -10vh, 0) scale(1.08); }
+  100% { transform: translate3d(-16vw, -24vh, 0) scale(1.24); }
+}
+
+@keyframes loginOrbD {
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  100% { transform: translate3d(20vw, -16vh, 0) scale(1.18); }
+}
+
+@keyframes loginGridDrift {
+  0% { transform: rotate(-6deg) translate3d(0, 0, 0); }
+  100% { transform: rotate(-6deg) translate3d(48px, 48px, 0); }
+}
+
+@keyframes loginSheen {
+  0% { background-position: 140% 0; }
+  100% { background-position: -40% 0; }
+}
+
+@keyframes loginDust {
+  0% {
+    transform: translate3d(0, 0, 0) scale(0.7);
+    opacity: 0;
+  }
+  12% { opacity: 0.4; }
+  70% { opacity: 0.28; }
+  100% {
+    transform: translate3d(28px, -110vh, 0) scale(1.15);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Solo apagar movimiento si el HTML no trae login-force-motion. */
+  .login-empresa-body:not(.login-force-motion) {
+    animation-duration: 24s !important;
+  }
+
+  .login-empresa-body:not(.login-force-motion) .login-bg-orb--a { animation-duration: 16s !important; }
+  .login-empresa-body:not(.login-force-motion) .login-bg-orb--b { animation-duration: 18s !important; }
+  .login-empresa-body:not(.login-force-motion) .login-bg-orb--c { animation-duration: 14s !important; }
+  .login-empresa-body:not(.login-force-motion) .login-bg-orb--d { animation-duration: 17s !important; }
+
+  .login-empresa-body:not(.login-force-motion) .login-bg-grid,
+  .login-empresa-body:not(.login-force-motion) .login-bg-sheen,
+  .login-empresa-body:not(.login-force-motion) .login-bg-dust span {
+    animation: none !important;
+  }
+}
+
+/* Refuerzo explícito del login animado (Windows suele tener animaciones del SO apagadas). */
+.login-empresa-body.login-force-motion {
+  animation: loginBgPulse 10s ease-in-out infinite !important;
+}
+.login-empresa-body.login-force-motion .login-bg-orb--a {
+  animation: loginOrbA 5s ease-in-out infinite alternate !important;
+}
+.login-empresa-body.login-force-motion .login-bg-orb--b {
+  animation: loginOrbB 6.5s ease-in-out infinite alternate !important;
+}
+.login-empresa-body.login-force-motion .login-bg-orb--c {
+  animation: loginOrbC 4.8s ease-in-out infinite alternate !important;
+}
+.login-empresa-body.login-force-motion .login-bg-orb--d {
+  animation: loginOrbD 5.6s ease-in-out infinite alternate !important;
+}
+.login-empresa-body.login-force-motion .login-bg-grid {
+  animation: loginGridDrift 14s linear infinite !important;
+}
+.login-empresa-body.login-force-motion .login-bg-sheen {
+  animation: loginSheen 5.5s ease-in-out infinite !important;
+}
+.login-empresa-body.login-force-motion .login-bg-dust span {
+  animation: loginDust 8s linear infinite !important;
+}
+
+.login-empresa-body .top-bar {
+  background: #2a2f35;
+}
+
+.login-empresa-body .main-header {
+  background: #ffffff;
+  border-bottom: 1px solid #c5cad0;
+}
+
+.login-empresa-body .header-auth-link {
+  background: #2a2f35;
+}
+
+.login-empresa-body .header-auth-link:hover {
+  background: #1a1e22;
+}
+
+/* En login/registro: solo botones de acceso (sin favoritos ni perfil). */
+.login-empresa-body #headerWishlist,
+.login-empresa-body .header-wishlist,
+.login-empresa-body #headerProfile,
+.login-empresa-body .header-profile {
+  display: none !important;
+}
+
+.login-empresa-body .login-header-auth,
+.login-empresa-body #headerAuth {
+  display: flex !important;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+}
+
+.login-empresa-body .login-header-auth .header-auth-link.is-active {
+  background: #0a0a0a;
+}
+
+.login-empresa-page {
+  padding-top: 40px;
+}
+
+.login-empresa-card {
+  max-width: 640px;
+  border: 1px solid #c5cad0;
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 16px 40px rgba(30, 34, 38, 0.12);
+}
+
+.login-empresa-card h1 {
+  color: #1a1e22;
+}
+
+.login-empresa-card .auth-lead {
+  color: #5a6169;
+}
+
+.login-empresa-card .auth-field input {
+  border-color: #b0b6bd;
+  color: #1a1e22;
+}
+
+.login-empresa-card .auth-field input:focus {
+  border-color: #3a3f45;
+  box-shadow: 0 0 0 3px rgba(58, 63, 69, 0.18);
+}
+
+.login-empresa-card .auth-submit {
+  background: #2a2f35;
+}
+
+.login-empresa-card .auth-submit:hover {
+  background: #1a1e22;
+}
+
+.login-empresa-card .auth-switch a {
+  color: #1a1e22;
+}
+
+.login-empresa-body.is-empresa-valtech .login-empresa-card {
+  border-color: #a8aeb5;
+  box-shadow: 0 16px 40px rgba(30, 34, 38, 0.14);
+}
+
+.login-empresa-body.is-empresa-valtech .login-empresa-card .auth-submit {
+  background: #2f9e44;
+}
+
+.login-empresa-body.is-empresa-valtech .login-empresa-card .auth-submit:hover {
+  background: #1e7a32;
+}
+
+.empresa-choice-btn.is-selected {
+  border-color: #3a3f45;
+  background: linear-gradient(180deg, #ffffff 0%, #d9dde1 100%);
+  box-shadow: 0 0 0 3px rgba(58, 63, 69, 0.2);
+}
+
+.empresa-choice-btn[data-empresa="valtech"].is-selected {
+  border-color: #2f9e44;
+  background: linear-gradient(180deg, #ffffff 0%, #d8efde 100%);
+  box-shadow: 0 0 0 3px rgba(47, 158, 68, 0.22);
+}
+
+.empresa-choice-grid.is-compact {
+  gap: 12px;
+  margin: 0 0 16px;
+}
+
+.empresa-choice-grid.is-compact .empresa-choice-btn {
+  min-height: 120px;
+  padding: 16px 12px;
+  gap: 10px;
+}
+
+.empresa-choice-grid.is-compact .empresa-choice-logo {
+  height: 48px;
+}
+
+.empresa-choice-grid.is-compact .empresa-choice-logos .empresa-choice-logo {
+  height: 40px;
+}
+
+.login-empresa-pick {
+  margin: 4px 0 8px;
+}
+
+.login-empresa-pick-lead {
+  margin: 0 0 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #1a1e22;
+}
+
+.login-empresa-selected {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 18px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #eceef0;
+  border: 1px solid #b0b6bd;
+}
+
+.login-empresa-selected img {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+  background: #fff;
+  border-radius: 8px;
+  padding: 4px 8px;
+}
+
+.login-empresa-selected strong {
+  display: block;
+  color: #1a1e22;
+  font-size: 0.98rem;
+}
+
+.login-empresa-change {
+  margin-top: 2px;
+  border: 0;
+  background: transparent;
+  color: #3a3f45;
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+}
+
+.login-step[hidden] {
+  display: none !important;
+}
+
+@media (max-width: 640px) {
+  .empresa-choice-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .empresa-choice-btn {
+    min-height: 140px;
+  }
+}

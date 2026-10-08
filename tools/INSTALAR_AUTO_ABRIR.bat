@@ -25,20 +25,26 @@ if exist "%STARTUP%\IZC_Servidor.vbs" (
 )
 
 set "PROTO=%~dp0ABRIR_PROTOCOLO.bat"
-reg add "HKCU\Software\Classes\izc" /ve /d "URL:IZC Protocol" /f >nul
-reg add "HKCU\Software\Classes\izc" /v "URL Protocol" /d "" /f >nul
-reg add "HKCU\Software\Classes\izc\DefaultIcon" /ve /d "shell32.dll,13" /f >nul
-reg add "HKCU\Software\Classes\izc\shell\open\command" /ve /d "\"%PROTO%\" \"%%1\"" /f >nul
+powershell -NoProfile -ExecutionPolicy Bypass -Command ^
+  "$p='%~dp0ABRIR_PROTOCOLO.bat';" ^
+  "New-Item -Path 'HKCU:\Software\Classes\izc' -Force | Out-Null;" ^
+  "Set-ItemProperty -Path 'HKCU:\Software\Classes\izc' -Name '(default)' -Value 'URL:IZC Protocol';" ^
+  "New-ItemProperty -Path 'HKCU:\Software\Classes\izc' -Name 'URL Protocol' -Value '' -PropertyType String -Force | Out-Null;" ^
+  "New-Item -Path 'HKCU:\Software\Classes\izc\DefaultIcon' -Force | Out-Null;" ^
+  "Set-ItemProperty -Path 'HKCU:\Software\Classes\izc\DefaultIcon' -Name '(default)' -Value 'shell32.dll,13';" ^
+  "New-Item -Path 'HKCU:\Software\Classes\izc\shell\open\command' -Force | Out-Null;" ^
+  "Set-ItemProperty -Path 'HKCU:\Software\Classes\izc\shell\open\command' -Name '(default)' -Value ('\"'+$p+'\" \"%1\"');"
 if errorlevel 1 (
   echo AVISO: no se pudo registrar el protocolo izc: ^(el autoarranque si quedo instalado^).
 ) else (
-  echo Protocolo izc: registrado.
+  echo Protocolo izc: registrado -^> %PROTO%
 )
 
 echo.
 echo Listo.
 echo - IZC se abrira solo al encender el PC / iniciar sesion
 echo - Tambien: tools\ABRIR.bat  ^(enciende :8080 y :5500^)
+echo - Al abrir cualquier .html por doble clic, despierta el servidor y abre esa pagina
 echo - Si Live Server ya ocupa :5500, IZC solo asegura :8080
 echo.
 if /I not "%~1"=="/silent" pause

@@ -1,4 +1,4 @@
-/* Estilos de la pagina de marca Ruijie. */
+﻿/* Estilos de la pagina de marca Ruijie. */
 
 /* Estilos específicos de la página de marca Ruijie. */
 :root {
@@ -238,7 +238,7 @@ ul { list-style: none; }
 /* GRID DE PRODUCTOS */
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 15px;
 }
 

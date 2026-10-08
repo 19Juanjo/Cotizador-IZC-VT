@@ -50,8 +50,15 @@
   }
 
   function isSat(product) {
-    var blob = [product.name, product.brand, product.brandName].join(' ').toLowerCase();
-    return /\bsat\b/.test(blob) || product.brand === 'sat';
+    if (window.IZCCatalogScope && typeof IZCCatalogScope.isSatProduct === 'function') {
+      return IZCCatalogScope.isSatProduct(product);
+    }
+    if (product && String(product.brand || '').toLowerCase() === 'sat') return true;
+    var blob = [product && product.name, product && product.brand, product && product.brandName]
+      .join(' ')
+      .toUpperCase()
+      .replace(/SATA/g, ' ');
+    return /\bSAT\b/.test(blob) || /\bSAT[A-Z0-9]/.test(blob);
   }
 
   function isImouMemoria(product) {
@@ -76,14 +83,15 @@
       '<div class="product-card" data-category="' + escapeHtml(category) + '" data-sku="' + escapeHtml(product.sku) + '" data-page="' + page + '">' +
         '<button class="wishlist-btn" type="button">♡</button>' +
         '<div class="product-img">' +
-          '<img src="' + escapeHtml(img) + '" alt="' + escapeHtml(product.name) + '" onerror="this.src=\'assets/imgmarcas/' + escapeHtml(logo) + '\'">' +
+          '<img src="' + escapeHtml(img) + '" alt="" loading="lazy" onerror="this.onerror=null;this.alt=\'\';this.src=\'assets/imgmarcas/' + escapeHtml(logo) + '\'">' +
         '</div>' +
         '<div class="product-info">' +
           '<span class="sku">Sku: ' + escapeHtml(product.sku) + '</span>' +
-          '<span class="price">$ 0.00</span>' +
+          '<span class="price"></span>' +
           '<h4 class="product-title">' +
             '<a href="' + escapeHtml(link) + '">' + escapeHtml(product.name) + '</a>' +
           '</h4>' +
+          '<button type="button" class="quote-cart-add" data-sku="' + escapeHtml(product.sku) + '">Agregar a cotizar</button>' +
         '</div>' +
       '</div>'
     );
@@ -103,7 +111,10 @@
     }
   }
 
-  function formatPriceEntry(entry) {
+  function formatPriceEntry(entry, productName) {
+    if (window.IZCPrices && typeof window.IZCPrices.formatForProduct === 'function') {
+      return window.IZCPrices.formatForProduct(entry, productName);
+    }
     if (window.IZCPrices && typeof window.IZCPrices.format === 'function') {
       return window.IZCPrices.format(entry);
     }
@@ -113,6 +124,7 @@
     }
     var amount = typeof entry === 'object' ? entry.amount : entry;
     if (amount == null) return null;
+    if (window.IZCMoney) return IZCMoney.formatUsd(amount);
     return '$ ' + Number(amount).toLocaleString('en-US', {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2
@@ -131,8 +143,15 @@
       if (entry == null) {
         entry = mapaPrecios[skuTexto.replace(/^0+/, '')];
       }
-      var text = formatPriceEntry(entry);
-      if (text) priceElem.textContent = text;
+      var titleEl = tarjeta.querySelector('.product-title, h4, .name');
+      var text = formatPriceEntry(entry, titleEl ? titleEl.textContent : '');
+      priceElem.classList.remove('price-locked', 'price-sin-stock');
+      if (text) {
+        priceElem.textContent = text;
+      } else {
+        priceElem.textContent = 'Sin stock';
+        priceElem.classList.add('price-sin-stock');
+      }
     });
   }
 
@@ -431,7 +450,7 @@
       html +=
         '<div class="filter-header"><span>' +
         escapeHtml(group.title) +
-        '</span><span class="arrow">▲</span></div>';
+        '</span><span class="arrow">&#9650;</span></div>';
 
       if (isColor) {
         html += '<ul class="filter-list filter-color-list">';
@@ -483,10 +502,10 @@
         if (!list) return;
         if (list.style.display === 'none') {
           list.style.display = 'block';
-          if (arrow) arrow.textContent = '▲';
+          if (arrow) arrow.textContent = '\u25B2';
         } else {
           list.style.display = 'none';
-          if (arrow) arrow.textContent = '▼';
+          if (arrow) arrow.textContent = '\u25BC';
         }
       });
     });
@@ -548,22 +567,35 @@
       });
     }
 
+    var overlayReady = window.IZCZktecoOverlay && typeof IZCZktecoOverlay.load === 'function'
+      ? IZCZktecoOverlay.load()
+      : Promise.resolve(null);
+
     Promise.all([
       loadJson('assets/files/catalogo.json'),
       loadJson('assets/files/brand_filters.json').catch(function () {
         return null;
-      })
+      }),
+      overlayReady
     ])
       .then(function (results) {
         var catalog = results[0];
         var filters = results[1];
+        var products = catalog.products || [];
+        if (window.IZCZktecoOverlay && typeof IZCZktecoOverlay.mergeIntoCatalog === 'function') {
+          products = IZCZktecoOverlay.mergeIntoCatalog(products);
+        }
 
-        state.allProducts = (catalog.products || []).filter(function (product) {
+        state.allProducts = products.filter(function (product) {
           if (product.brand !== brand) return false;
           // En la página SAT sí mostramos SAT; en otras marcas se excluyen cruces
           if (brand === 'sat') return true;
           return !isSat(product);
         });
+
+        if (window.IZCCatalogScope && typeof IZCCatalogScope.filterProducts === 'function') {
+          state.allProducts = IZCCatalogScope.filterProducts(state.allProducts);
+        }
 
         if (filters && filters[brand]) {
           state.filterData = filters[brand];

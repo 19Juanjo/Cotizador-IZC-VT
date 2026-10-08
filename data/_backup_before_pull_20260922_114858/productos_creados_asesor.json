@@ -1,0 +1,113 @@
+{
+    "products": [
+        {
+            "id": "c1ce133a75454f78",
+            "sku": "KT0820133-PRODUCTOZKT0820133",
+            "name": "Producto KT0820133-PRODUCTOZKT0820133",
+            "referencia": "—",
+            "unitario_usd": 289.75,
+            "unitario_cop": 898355,
+            "seller_codigo": "V31",
+            "seller_name": "IZC V31 Edgar Caicedo",
+            "created_at": "2026-09-16T11:06:25-05:00",
+            "quote_id": "202609161106255.6142-900836437"
+        },
+        {
+            "id": "385085d6f5322ab7",
+            "sku": "ZKT0820133",
+            "name": "Producto ZKT0820133",
+            "referencia": "ZKT0820133",
+            "unitario_usd": 289.75,
+            "unitario_cop": 898355,
+            "seller_codigo": "V31",
+            "seller_name": "IZC V31 Edgar Caicedo",
+            "created_at": "2026-09-16T11:04:43-05:00",
+            "quote_id": "202609161104433.4612-900836437"
+        },
+        {
+            "id": "03d346c0c8713244",
+            "sku": "10301",
+            "name": "ZEBRA IMPRESORA DE ETIQUETAS  ZT411 TT INDUSTRIAL USB",
+            "referencia": "ZT41142-T010000Z",
+            "unitario_usd": 962,
+            "unitario_cop": 2991147,
+            "seller_codigo": "V1",
+            "seller_name": "IZC V1 Jonathan Ramos",
+            "created_at": "2026-09-15T15:27:46-05:00",
+            "quote_id": "2026091515274666.689-800058607"
+        },
+        {
+            "id": "810d4fa7978ba70d",
+            "sku": "WLMT0",
+            "name": "T22B6ABE2-A6-TC22, WLAN, WIFI 6, SE4710, PANTALLA DE 6\", 6 GB/64 GB, RFC de 16 MP, FFC de 5 MP, E/S TRASERA DE 2 PINES, BATERÍA EXTENDIDA, NFC, BT, USB-C, GMS, ROW",
+            "referencia": "T22B6ABE2-A6-TC22, WLAN, WIFI 6, SE4710, PANTALLA DE 6\", 6 GB/64 GB, RFC de 16 MP, FFC de 5 MP, E/S TRASERA DE 2 PINES, BATERÍA EXTENDIDA, NFC, BT, USB-C, GMS, ROW",
+            "unitario_usd": 745.3025210084033,
+            "unitario_cop": 0,
+            "seller_codigo": "V45",
+            "seller_name": "V45 ELIANA DONADO",
+            "created_at": "2026-09-08T15:43:07-05:00",
+            "quote_id": "20260908154307187.39-1095933537"
+        },
+        {
+            "id": "773c6d0753247d19",
+            "sku": "WLMT0",
+            "name": "T22B6ABE2-A6-TC22, WLAN, WIFI 6, SE4710, PANTALLA DE 6\", 6 GB/64 GB, RFC de 16 MP, FFC de 5 MP, E/S TRASERA DE 2 PINES, BATERÍA EXTENDIDA, NFC, BT, USB-C, GMS, ROW",
+            "referencia": "T22B6ABE2-A6-TC22, WLAN, WIFI 6, SE4710, PANTALLA DE 6\", 6 GB/64 GB, RFC de 16 MP, FFC de 5 MP, E/S TRASERA DE 2 PINES, BATERÍA EXTENDIDA, NFC, BT, USB-C, GMS, ROW",
+            "unitario_usd": 745.3025210084033,
+            "unitario_cop": 0,
+            "seller_codigo": "V45",
+            "seller_name": "V45 ELIANA DONADO",
+            "created_at": "2026-09-08T15:39:25-05:00",
+            "quote_id": "202609081539255.9888-1095933537"
+        },
+        {
+            "id": "f270a5cc57562b25",
+            "sku": "ZT41143",
+            "name": "T010000Z-Impresora TT ZT411 de 4\", 300 ppp, cable estadounidense, serial, USB, Ethernet 10/100, Bluetooth 4.1/MFi, host USB, EZPL",
+            "referencia": "T010000Z-Impresora TT ZT411 de 4\", 300 ppp, cable estadounidense, serial, USB, Ethernet 10/100, Bluetooth 4.1/MFi, host USB, EZPL",
+            "unitario_usd": 1813.2773109243699,
+            "unitario_cop": 0,
+            "seller_codigo": "V2",
+            "seller_name": "IZC V2 Yaqueline Corzo",
+            "created_at": "2026-09-07T11:56:52-05:00",
+            "quote_id": "202609071156522.2608-901706948"
+        },
+        {
+            "id": "991931bf14985756",
+            "sku": "ZKBCVS",
+            "name": "VIS-P1-5K-LICENCIA ZKT",
+            "referencia": "VIS-P1-5K-LICENCIA ZKT",
+            "unitario_usd": 300,
+            "unitario_cop": 0,
+            "seller_codigo": "V5",
+            "seller_name": "IZC V5 Kelly Johana Alcaraz Serna",
+            "created_at": "2026-09-02T16:34:43-05:00",
+            "quote_id": "202609021634433.6434-900495764"
+        },
+        {
+            "id": "a6f592386650615b",
+            "sku": "DS3678",
+            "name": "HP2F003VZWW-DS3678: Robusto, sensor de área, alto rendimiento, inalámbrico, certificación FIPS, ecológico industrial, motor antivibración.",
+            "referencia": "HP2F003VZWW-DS3678: Robusto, sensor de área, alto rendimiento, inalámbrico, certificación FIPS, ecológico industrial, motor antivibración.",
+            "unitario_usd": 767.9915966386554,
+            "unitario_cop": 0,
+            "seller_codigo": "V1",
+            "seller_name": "IZC V1 Jonathan Ramos",
+            "created_at": "2026-09-01T09:52:07-05:00",
+            "quote_id": "202609010952077.6592-900025740"
+        },
+        {
+            "id": "44a44788779e105d",
+            "sku": "15565",
+            "name": "Producto 15565",
+            "referencia": "Producto 15565",
+            "unitario_usd": 7.156258459164212,
+            "unitario_cop": 23000,
+            "seller_codigo": "V49",
+            "seller_name": "IZC V49 Bairon Lopez",
+            "created_at": "2026-08-20T16:13:29-05:00",
+            "quote_id": "bx13938-71220236"
+        }
+    ],
+    "updated_at": "2026-09-22T11:06:38-05:00"
+}

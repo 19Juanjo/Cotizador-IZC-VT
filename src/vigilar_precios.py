@@ -1,6 +1,13 @@
-"""Vigila lista-precios-izc.xlsb y regenera precios automáticamente.
+"""Vigila lista-precios-izc.xlsb y lista-precios-zebra.xlsb; regenera precios.
 
-Se ejecuta en segundo plano (pythonw) al iniciar Windows o al abrir el sitio.
+Se ejecuta en segundo plano (pythonw) al iniciar Windows o al abrir el sitio
+(vía tools/ABRIR.bat → INICIAR_VIGILANCIA.vbs).
+
+Al detectar un cambio en cualquier Excel regenera:
+  - precios.json / precios.data.js          (clientes)
+  - precios_lp_asesor.json / .data.js       (cotizador asesor)
+  - referencias.json / .data.js
+  - inventario.json / .data.js              (bodegas IZC / VALTECH)
 """
 from __future__ import annotations
 
@@ -16,14 +23,33 @@ sys.path.insert(0, str(BASE_DIR / "src"))
 from extraer_precios import (  # noqa: E402
     RUTA_DATA_JS,
     RUTA_EXCEL,
+    RUTA_EXCEL_ZEBRA,
+    RUTA_INV_DATA_JS,
+    RUTA_INV_JSON,
     RUTA_JSON,
-    extraer_precios_stone_usd,
-    guardar_precios,
+    RUTA_LP_DATA_JS,
+    RUTA_LP_JSON,
+    RUTA_REF_DATA_JS,
+    RUTA_REF_JSON,
+    sincronizar_todo,
 )
+
+EXCEL_FILES = (RUTA_EXCEL, RUTA_EXCEL_ZEBRA)
 
 POLL_SECONDS = 2.0
 LOCK_FILE = BASE_DIR / "assets" / "files" / ".precios-watch.lock"
 LOG_FILE = BASE_DIR / "assets" / "files" / "precios-watch.log"
+
+OUTPUT_FILES = (
+    RUTA_JSON,
+    RUTA_DATA_JS,
+    RUTA_LP_JSON,
+    RUTA_LP_DATA_JS,
+    RUTA_REF_JSON,
+    RUTA_REF_DATA_JS,
+    RUTA_INV_JSON,
+    RUTA_INV_DATA_JS,
+)
 
 
 def log(msg: str) -> None:
@@ -43,13 +69,6 @@ def log(msg: str) -> None:
 def pid_alive(pid: int) -> bool:
     if pid <= 0:
         return False
-    try:
-        os.kill(pid, 0)
-    except OSError:
-        return False
-    except SystemError:
-        return False
-    # En Windows os.kill(pid, 0) puede no existir igual; fallback:
     if os.name == "nt":
         try:
             import ctypes
@@ -64,6 +83,10 @@ def pid_alive(pid: int) -> bool:
             return False
         except Exception:
             return False
+    try:
+        os.kill(pid, 0)
+    except OSError:
+        return False
     return True
 
 
@@ -75,7 +98,6 @@ def acquire_lock() -> bool:
         import ctypes
 
         ERROR_ALREADY_EXISTS = 183
-        # Mutex con nombre fijo para IZC
         handle = ctypes.windll.kernel32.CreateMutexW(None, False, "Local\\IZC_PreciosWatcher")
         if not handle:
             log("No se pudo crear el mutex de instancia única.")
@@ -84,7 +106,6 @@ def acquire_lock() -> bool:
             log("Ya hay un vigilante activo. Saliendo.")
             ctypes.windll.kernel32.CloseHandle(handle)
             return False
-        # Mantener el handle vivo en el proceso
         globals()["_IZC_MUTEX_HANDLE"] = handle
     else:
         if LOCK_FILE.exists():
@@ -100,7 +121,9 @@ def acquire_lock() -> bool:
 
     def _cleanup() -> None:
         try:
-            if LOCK_FILE.exists() and LOCK_FILE.read_text(encoding="utf-8").strip() == str(os.getpid()):
+            if LOCK_FILE.exists() and LOCK_FILE.read_text(encoding="utf-8").strip() == str(
+                os.getpid()
+            ):
                 LOCK_FILE.unlink()
         except OSError:
             pass
@@ -116,12 +139,23 @@ def signature(path: Path) -> tuple[float, int] | None:
     return (st.st_mtime, st.st_size)
 
 
-def needs_update(excel_sig: tuple[float, int]) -> bool:
-    if not RUTA_JSON.exists() or not RUTA_DATA_JS.exists():
-        return True
-    json_mtime = RUTA_JSON.stat().st_mtime
-    data_mtime = RUTA_DATA_JS.stat().st_mtime
-    return excel_sig[0] > min(json_mtime, data_mtime)
+def excel_signatures() -> tuple[tuple[float, int] | None, ...]:
+    return tuple(signature(path) for path in EXCEL_FILES)
+
+
+def needs_update(excel_sigs: tuple[tuple[float, int] | None, ...]) -> bool:
+    if not excel_sigs[0]:
+        return False
+    mtimes: list[float] = []
+    for path in OUTPUT_FILES:
+        if not path.exists():
+            return True
+        mtimes.append(path.stat().st_mtime)
+    oldest = min(mtimes) if mtimes else 0.0
+    for sig in excel_sigs:
+        if sig and sig[0] > oldest:
+            return True
+    return False
 
 
 def wait_until_stable(path: Path, rounds: int = 4, delay: float = 0.5) -> tuple[float, int] | None:
@@ -140,9 +174,13 @@ def wait_until_stable(path: Path, rounds: int = 4, delay: float = 0.5) -> tuple[
 
 def sync_now(reason: str) -> None:
     log(reason)
-    precios = extraer_precios_stone_usd()
-    guardar_precios(precios)
-    log(f"OK: {len(precios)} SKUs -> {RUTA_JSON.name} + {RUTA_DATA_JS.name}")
+    stats = sincronizar_todo(verbose=False)
+    log(
+        f"OK: clientes={stats['precios']} LPs={stats['lp_lists']} "
+        f"refs={stats['referencias']} inv={stats.get('inventario', 0)} "
+        f"zebra={stats.get('zebra_skus', 0)} "
+        f"-> {RUTA_JSON.name}, {RUTA_LP_JSON.name}, {RUTA_REF_JSON.name}, {RUTA_INV_JSON.name}"
+    )
 
 
 def main() -> None:
@@ -150,12 +188,13 @@ def main() -> None:
         return
 
     log("Vigilante de precios iniciado (sin XAMPP)")
-    log(f"Excel: {RUTA_EXCEL}")
+    log(f"Excel IZC: {RUTA_EXCEL}")
+    log(f"Excel ZEBRA: {RUTA_EXCEL_ZEBRA}")
 
-    last_sig = signature(RUTA_EXCEL)
-    if last_sig is None:
-        log("Esperando a que exista el Excel...")
-    elif needs_update(last_sig):
+    last_sigs = excel_signatures()
+    if last_sigs[0] is None:
+        log("Esperando a que exista lista-precios-izc.xlsb...")
+    elif needs_update(last_sigs):
         try:
             sync_now("Excel más nuevo que precios → actualizando")
         except Exception as exc:
@@ -164,20 +203,22 @@ def main() -> None:
     while True:
         try:
             time.sleep(POLL_SECONDS)
-            sig = signature(RUTA_EXCEL)
-            if sig is None:
-                if last_sig is not None:
-                    log("Excel no encontrado")
-                last_sig = None
+            sigs = excel_signatures()
+            if sigs[0] is None:
+                if last_sigs[0] is not None:
+                    log("Excel IZC no encontrado")
+                last_sigs = sigs
                 continue
-            if sig != last_sig:
-                stable = wait_until_stable(RUTA_EXCEL)
-                if stable is None:
-                    last_sig = None
+            if sigs != last_sigs:
+                if sigs[0]:
+                    wait_until_stable(RUTA_EXCEL)
+                if RUTA_EXCEL_ZEBRA.exists():
+                    wait_until_stable(RUTA_EXCEL_ZEBRA)
+                last_sigs = excel_signatures()
+                if last_sigs[0] is None:
                     continue
-                last_sig = stable
                 try:
-                    sync_now("Cambio detectado en lista-precios-izc.xlsb → actualizando")
+                    sync_now("Cambio detectado en lista de precios → actualizando")
                 except Exception as exc:
                     log(f"Error al actualizar (¿Excel abierto/bloqueado?): {exc}")
         except KeyboardInterrupt:

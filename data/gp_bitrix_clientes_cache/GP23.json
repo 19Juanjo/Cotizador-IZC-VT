@@ -1,0 +1,61 @@
+﻿{
+    "fetched_at":  "2026-09-29T16:03:23.1577903-05:00",
+    "codigo":  "GP23",
+    "bitrix_ids":  [
+                       [
+                           "201"
+                       ]
+                   ],
+    "count":  7,
+    "clientes":  [
+                     {
+                         "nit":  "901258457",
+                         "nombre":  "901258457",
+                         "telefono":  "",
+                         "manual":  false,
+                         "source":  "export"
+                     },
+                     {
+                         "nit":  "901327784",
+                         "nombre":  "901327784",
+                         "telefono":  "",
+                         "manual":  false,
+                         "source":  "export"
+                     },
+                     {
+                         "nit":  "901463701",
+                         "nombre":  "901463701",
+                         "telefono":  "",
+                         "manual":  false,
+                         "source":  "export"
+                     },
+                     {
+                         "nit":  "901441100",
+                         "nombre":  "BIOLABELS S.A.S",
+                         "telefono":  "",
+                         "manual":  false,
+                         "source":  "export"
+                     },
+                     {
+                         "nit":  "901428905",
+                         "nombre":  "LA ROCCA ONE S.A.S.",
+                         "telefono":  "",
+                         "manual":  false,
+                         "source":  "export"
+                     },
+                     {
+                         "nit":  "830039524",
+                         "nombre":  "SOLUSISTEMAS LTDA",
+                         "telefono":  "",
+                         "manual":  false,
+                         "source":  "export"
+                     },
+                     {
+                         "nit":  "901223534",
+                         "nombre":  "TECHNO SHOP SECURITY SAS",
+                         "telefono":  "",
+                         "manual":  false,
+                         "source":  "export"
+                     }
+                 ]
+}

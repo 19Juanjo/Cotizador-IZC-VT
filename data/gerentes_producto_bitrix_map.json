@@ -1,0 +1,350 @@
+{
+  "generated_at": "2026-09-29T15:14:55",
+  "source_companies_export": "C:\\IZC Server\\data\\bitrix_companias.json",
+  "export_total_companies": 12931,
+  "usuarios_activos_bitrix": 114,
+  "gerentes": [
+    {
+      "codigo": "GP1",
+      "nombre": "Valentina Zambrano",
+      "rol_foto": "",
+      "bitrix_id": "191",
+      "bitrix_nombre": "IZC GP1 Valentina Zambrano gp1@izc.com.co [29]",
+      "email": "gp1@izc.com.co",
+      "work_position": "",
+      "match": "codigo",
+      "clientes_export": 1,
+      "clientes_live": 1,
+      "tiene_clientes": true,
+      "muestras": [
+        {
+          "id": "10569",
+          "nit": "software develpment",
+          "nombre": "software develpment"
+        }
+      ],
+      "live_error": ""
+    },
+    {
+      "codigo": "GP3",
+      "nombre": "Diana Carolina Celis Ayala",
+      "rol_foto": "Gerente Producto",
+      "bitrix_id": "1760",
+      "bitrix_nombre": "IZC GP3 Diana Carolina Celis Ayala gp3@izc.com.co Gerente Producto [29, 35]",
+      "email": "gp3@izc.com.co",
+      "work_position": "Gerente Producto",
+      "match": "codigo",
+      "clientes_export": 0,
+      "clientes_live": 0,
+      "tiene_clientes": false,
+      "muestras": [],
+      "live_error": ""
+    },
+    {
+      "codigo": "GP4",
+      "nombre": "Enrique Morales Ortiz",
+      "rol_foto": "",
+      "bitrix_id": "177",
+      "bitrix_nombre": "IZC GP4 Enrique Morales Ortiz gp4@izc.com.co [29]",
+      "email": "gp4@izc.com.co",
+      "work_position": "",
+      "match": "codigo",
+      "clientes_export": 1,
+      "clientes_live": 1,
+      "tiene_clientes": true,
+      "muestras": [
+        {
+          "id": "21417",
+          "nit": "COMPUTAR SAS",
+          "nombre": "COMPUTAR SAS"
+        }
+      ],
+      "live_error": ""
+    },
+    {
+      "codigo": "GP5",
+      "nombre": "Mayra Alejandra Serge Comas",
+      "rol_foto": "",
+      "bitrix_id": "89",
+      "bitrix_nombre": "IZC GP5 Mayra Alejandra Serge Comas gp5@izc.com.co [29]",
+      "email": "gp5@izc.com.co",
+      "work_position": "",
+      "match": "codigo",
+      "clientes_export": 3,
+      "clientes_live": 3,
+      "tiene_clientes": true,
+      "muestras": [
+        {
+          "id": "12865",
+          "nit": "MICHOHOME SAS",
+          "nombre": "MICHOHOME SAS"
+        },
+        {
+          "id": "12877",
+          "nit": "901583147",
+          "nombre": "ARTISTEC SAS"
+        },
+        {
+          "id": "12937",
+          "nit": "830143800",
+          "nombre": "830143800"
+        }
+      ],
+      "live_error": ""
+    },
+    {
+      "codigo": "GP23",
+      "nombre": "Jorge Ortiz",
+      "rol_foto": "",
+      "bitrix_id": "201",
+      "bitrix_nombre": "IZC GP23 Jorge Ortiz gp23@izc.com.co [35]",
+      "email": "gp23@izc.com.co",
+      "work_position": "",
+      "match": "codigo",
+      "clientes_export": 7,
+      "clientes_live": 7,
+      "tiene_clientes": true,
+      "muestras": [
+        {
+          "id": "10259",
+          "nit": "901327784 MOTORTRONICA SAS",
+          "nombre": "901327784 MOTORTRONICA SAS"
+        },
+        {
+          "id": "10333",
+          "nit": "901258457 JF SECURITY AND SERVICE SAS",
+          "nombre": "901258457 JF SECURITY AND SERVICE SAS"
+        },
+        {
+          "id": "11881",
+          "nit": "901223534",
+          "nombre": "TECHNO SHOP SECURITY SAS"
+        },
+        {
+          "id": "12227",
+          "nit": "901441100",
+          "nombre": "BIOLABELS S.A.S"
+        },
+        {
+          "id": "12913",
+          "nit": "901463701 LR IMPORT SAS",
+          "nombre": "901463701 LR IMPORT SAS"
+        }
+      ],
+      "live_error": ""
+    },
+    {
+      "codigo": "GP41",
+      "nombre": "Andres Farre",
+      "rol_foto": "Gerente de producto",
+      "bitrix_id": "1711",
+      "bitrix_nombre": "GP 41 Andres Farre gp41@satpcs.com Gerente de producto [45, 140]",
+      "email": "gp41@satpcs.com",
+      "work_position": "Gerente de producto",
+      "match": "codigo",
+      "clientes_export": 1,
+      "clientes_live": 1,
+      "tiene_clientes": true,
+      "muestras": [
+        {
+          "id": "24015",
+          "nit": "INNOVASER",
+          "nombre": "INNOVASER"
+        }
+      ],
+      "live_error": ""
+    },
+    {
+      "codigo": "GP42",
+      "nombre": "Andres Chaves",
+      "rol_foto": "",
+      "bitrix_id": "9",
+      "bitrix_nombre": "IZC Gp42 Andres Chaves st8@izc.com.co [43]",
+      "email": "st8@izc.com.co",
+      "work_position": "",
+      "match": "codigo",
+      "clientes_export": 11,
+      "clientes_live": 11,
+      "tiene_clientes": true,
+      "muestras": [
+        {
+          "id": "11317",
+          "nit": "901025359",
+          "nombre": "901025359"
+        },
+        {
+          "id": "11385",
+          "nit": "811044127",
+          "nombre": "811044127"
+        },
+        {
+          "id": "11479",
+          "nit": "901424771",
+          "nombre": "901424771"
+        },
+        {
+          "id": "11489",
+          "nit": "830037946",
+          "nombre": "PANAMERICANA OUTSORCING SA"
+        },
+        {
+          "id": "11531",
+          "nit": "900984703",
+          "nombre": "900984703"
+        }
+      ],
+      "live_error": ""
+    },
+    {
+      "codigo": "GP43",
+      "nombre": "Sebastian Cadena",
+      "rol_foto": "",
+      "bitrix_id": "197",
+      "bitrix_nombre": "IZC GP43 Sebastian Cadena gp43@satpcs.com [45]",
+      "email": "gp43@satpcs.com",
+      "work_position": "",
+      "match": "codigo",
+      "clientes_export": 7,
+      "clientes_live": 7,
+      "tiene_clientes": true,
+      "muestras": [
+        {
+          "id": "11413",
+          "nit": "1031179356",
+          "nombre": "JUAN DAVID PEREZ ARAQUE"
+        },
+        {
+          "id": "11545",
+          "nit": "1024537176",
+          "nombre": "JONATHAN GOMEZ TELLO"
+        },
+        {
+          "id": "11547",
+          "nit": "901318328",
+          "nombre": "901318328"
+        },
+        {
+          "id": "11549",
+          "nit": "PESOS Y MEDIDAS",
+          "nombre": "PESOS Y MEDIDAS"
+        },
+        {
+          "id": "12843",
+          "nit": "65777669",
+          "nombre": "65777669"
+        }
+      ],
+      "live_error": ""
+    },
+    {
+      "codigo": "GP44",
+      "nombre": "Andrey Pinzon",
+      "rol_foto": "Gerente de producto SAT",
+      "bitrix_id": "157",
+      "bitrix_nombre": "IZC GP44 Andrey Pinzon GP44 gp44@izc.com.co GP44_Gerente de producto SAT [45]",
+      "email": "gp44@izc.com.co",
+      "work_position": "GP44_Gerente de producto SAT",
+      "match": "codigo",
+      "clientes_export": 2,
+      "clientes_live": 2,
+      "tiene_clientes": true,
+      "muestras": [
+        {
+          "id": "9587",
+          "nit": "SYSCOMP DE COLOMBIA S A S                                                                                                                                                                                                                       SYSCOMP DE COLO",
+          "nombre": "SYSCOMP DE COLOMBIA S A S                                                                                                                                                                                                                       SYSCOMP DE COLO"
+        },
+        {
+          "id": "20917",
+          "nit": "ALPINSOFT",
+          "nombre": "ALPINSOFT"
+        }
+      ],
+      "live_error": ""
+    },
+    {
+      "codigo": "GP45",
+      "nombre": "Laura Farre",
+      "rol_foto": "",
+      "bitrix_id": "167",
+      "bitrix_nombre": "IZC GP45 Laura  Farre laura@satpcs.com [43]",
+      "email": "laura@satpcs.com",
+      "work_position": "",
+      "match": "codigo",
+      "clientes_export": 6,
+      "clientes_live": 6,
+      "tiene_clientes": true,
+      "muestras": [
+        {
+          "id": "13883",
+          "nit": "900629964",
+          "nombre": "DIGITAL FLEXOGRAFICA DE ETIQUETAS DE COLOMBIA SAS"
+        },
+        {
+          "id": "14349",
+          "nit": "830077655",
+          "nombre": "830077655"
+        },
+        {
+          "id": "14691",
+          "nit": "Cartongraf Sas",
+          "nombre": "Cartongraf Sas"
+        },
+        {
+          "id": "14695",
+          "nit": "ETIPRESS S.A.",
+          "nombre": "ETIPRESS S.A."
+        },
+        {
+          "id": "14697",
+          "nit": "DRACOPRINT",
+          "nombre": "DRACOPRINT"
+        }
+      ],
+      "live_error": ""
+    },
+    {
+      "codigo": "GP46",
+      "nombre": "Jonathan Ospina",
+      "rol_foto": "Gerente de producto SAT POS LECTORES",
+      "bitrix_id": "53",
+      "bitrix_nombre": "IZC GP46 Jonathan Ospina gp46@satpcs.com Gerente de producto SAT POS LECTORES, SAT POS IMP, SAT IMP PORTATILES, SAT TABLET RUGGED [45]",
+      "email": "gp46@satpcs.com",
+      "work_position": "Gerente de producto SAT POS LECTORES, SAT POS IMP, SAT IMP PORTATILES, SAT TABLET RUGGED",
+      "match": "codigo",
+      "clientes_export": 1,
+      "clientes_live": 1,
+      "tiene_clientes": true,
+      "muestras": [
+        {
+          "id": "9619",
+          "nit": "CAÑAVERAL",
+          "nombre": "CAÑAVERAL"
+        }
+      ],
+      "live_error": ""
+    },
+    {
+      "codigo": "GP47",
+      "nombre": "Arlex RAMOS",
+      "rol_foto": "GP CONTADORAS | UPS",
+      "bitrix_id": "51",
+      "bitrix_nombre": "IZC GP47 Arlex RAMOS GP47@SATPCS.COM GP CONTADORAS | UPS [45]",
+      "email": "GP47@SATPCS.COM",
+      "work_position": "GP CONTADORAS | UPS",
+      "match": "codigo",
+      "clientes_export": 1,
+      "clientes_live": 1,
+      "tiene_clientes": true,
+      "muestras": [
+        {
+          "id": "10411",
+          "nit": "64657804",
+          "nombre": "64657804"
+        }
+      ],
+      "live_error": ""
+    }
+  ],
+  "otros_gp_detectados": []
+}

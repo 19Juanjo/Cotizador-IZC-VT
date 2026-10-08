@@ -64,3 +64,9 @@
   display: flex;
   flex-direction: column;
 }
+
+/* Si la imagen falla, no mostrar el texto alt (evita parpadeo del nombre). */
+.page-container--search .product-img img {
+  color: transparent;
+  font-size: 0;
+}

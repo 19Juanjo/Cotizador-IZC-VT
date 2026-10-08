@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<!-- Perfil del cliente VALTECH (identidad y navegaci&#243;n propias). -->
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi perfil - VALTECH Mayorista</title>
+  <link rel="icon" href="assets/logo/valtech.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/auth.css?v=15">
+  <link rel="stylesheet" href="assets/css/valtech.css?v=11">
+  <script src="assets/js/file-boot.js?v=2"></script>
+  <script src="assets/js/auth.js?v=91" defer></script>
+  <script src="assets/js/wishlist.js?v=6" defer></script>
+  <script src="assets/js/money.js?v=2" defer></script>
+  <script src="assets/js/perfil.js?v=15" defer></script>
+</head>
+<body class="valtech-body perfil-valtech-body" data-store="valtech">
+  <header class="vt-top">
+    <div class="vt-top-inner">
+      <a class="vt-logo-link" href="valtech.html" aria-label="VALTECH Mayorista">
+        <img src="assets/logo/valtech.png" alt="VALTECH Mayorista" class="vt-logo">
+      </a>
+      <nav class="vt-nav" aria-label="Navegaci&#243;n VALTECH">
+        <a href="valtech.html">Cat&#225;logo SAT</a>
+        <a href="cotizador-valtech.html">Cotizador</a>
+        <a href="perfil-valtech.html" class="is-active">Mi perfil</a>
+      </nav>
+      <div class="vt-top-actions">
+        <a href="favoritos-valtech.html" class="header-wishlist is-valtech" id="headerWishlist" title="Mis favoritos" aria-label="Mis favoritos"><span class="header-wishlist-icon" aria-hidden="true">?</span></a>
+      </div>
+    </div>
+  </header>
+
+  <section class="vt-profile-hero" aria-label="Mi cuenta">
+    <div class="vt-profile-hero-inner">
+      <div class="vt-profile-hero-copy">
+        <p class="vt-profile-kicker">&#193;rea de cliente</p>
+        <h1 class="vt-profile-greeting" id="profileGreeting">Hola</h1>
+        <p class="vt-profile-tagline">Gestiona tu sesi&#243;n VALTECH y revisa tus cotizaciones SAT.</p>
+      </div>
+      <div class="vt-profile-hero-mark" aria-hidden="true">
+        <img src="assets/logo/valtech.png" alt="" class="vt-profile-hero-logo">
+      </div>
+    </div>
+  </section>
+
+  <main class="vt-profile-shell">
+    <div class="vt-profile-grid">
+      <section class="vt-profile-panel vt-profile-account" aria-labelledby="vtAccountTitle">
+        <div class="vt-profile-panel-head">
+          <div class="vt-profile-avatar" aria-hidden="true">
+            <svg viewBox="0 0 64 64" width="56" height="56" focusable="false">
+              <circle cx="32" cy="32" r="32" fill="rgba(47, 158, 68, 0.35)"/>
+              <circle cx="32" cy="24" r="11" fill="#e8f5eb"/>
+              <path d="M12 54c4-12 14-18 20-18s16 6 20 18" fill="#e8f5eb"/>
+            </svg>
+          </div>
+          <div>
+            <h2 class="vt-profile-panel-title" id="vtAccountTitle">Tu cuenta</h2>
+            <span class="vt-profile-badge">Sesi&#243;n VALTECH</span>
+          </div>
+        </div>
+
+        <div class="vt-profile-fields">
+          <div class="vt-profile-field">
+            <label for="profileNombre">Nombre</label>
+            <input id="profileNombre" type="text" readonly>
+          </div>
+          <div class="vt-profile-field">
+            <label for="profileNit">NIT</label>
+            <input id="profileNit" type="text" readonly>
+          </div>
+        </div>
+
+        <p id="authMessage" class="vt-profile-message" role="status"></p>
+        <button class="vt-profile-logout" type="button" id="profileLogout">Cerrar sesi&#243;n</button>
+      </section>
+
+      <aside class="vt-profile-panel vt-profile-shortcuts" aria-labelledby="vtShortcutsTitle">
+        <h2 class="vt-profile-panel-title" id="vtShortcutsTitle">Accesos r&#225;pidos</h2>
+        <p class="vt-profile-panel-lead">Contin&#250;a donde lo dejaste en VALTECH.</p>
+        <ul class="vt-profile-shortcut-list">
+          <li>
+            <a href="valtech.html" class="vt-profile-shortcut">
+              <span class="vt-profile-shortcut-icon" aria-hidden="true">SAT</span>
+              <span class="vt-profile-shortcut-text">
+                <strong>Cat&#225;logo SAT</strong>
+                <small>Explorar productos</small>
+              </span>
+            </a>
+          </li>
+          <li>
+            <a href="cotizador-valtech.html" class="vt-profile-shortcut">
+              <span class="vt-profile-shortcut-icon" aria-hidden="true">$</span>
+              <span class="vt-profile-shortcut-text">
+                <strong>Cotizador</strong>
+                <small>Armar nueva cotizaci&#243;n</small>
+              </span>
+            </a>
+          </li>
+          <li>
+            <a href="favoritos-valtech.html" class="vt-profile-shortcut">
+              <span class="vt-profile-shortcut-icon" aria-hidden="true">?</span>
+              <span class="vt-profile-shortcut-text">
+                <strong>Favoritos</strong>
+                <small>Productos guardados</small>
+              </span>
+            </a>
+          </li>
+        </ul>
+      </aside>
+    </div>
+
+    <section class="vt-profile-panel vt-profile-history" id="profileQuotesSection" hidden aria-labelledby="vtHistoryTitle">
+      <div class="vt-profile-history-head">
+        <div>
+          <h2 class="vt-profile-panel-title" id="vtHistoryTitle">Historial de cotizaciones</h2>
+          <p class="vt-profile-panel-lead">Cotizaciones terminadas en tu sesi&#243;n VALTECH.</p>
+        </div>
+      </div>
+      <p id="profileQuotesMessage" class="vt-profile-message" role="status"></p>
+      <div class="vt-profile-table-wrap">
+        <table class="vt-profile-table profile-quotes-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Fecha</th>
+              <th>Fecha cierre venta</th>
+              <th>Productos</th>
+              <th>Total</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="profileQuotesBody">
+            <tr><td colspan="6" class="profile-quotes-empty">Cargando?</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer class="vt-footer">
+    <p>VALTECH Mayorista &#183; Mi perfil</p>
+    <a href="valtech.html">Volver al cat&#225;logo</a>
+  </footer>
+
+  <div class="profile-modal vt-profile-modal" id="profileQuoteModal" hidden>
+    <div class="profile-modal-backdrop" data-modal-close></div>
+    <div class="profile-modal-dialog vt-profile-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="profileQuoteTitle">
+      <h3 id="profileQuoteTitle">Detalle de cotizaci&#243;n</h3>
+      <p id="profileQuoteMeta" class="profile-quote-meta"></p>
+      <div id="profileQuoteBody" class="profile-quote-detail"></div>
+      <button type="button" class="vt-profile-modal-close profile-modal-close" data-modal-close>Cerrar</button>
+    </div>
+  </div>
+</body>
+</html>

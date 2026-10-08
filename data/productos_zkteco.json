@@ -1,0 +1,18 @@
+{
+  "products": [
+    {
+      "id": "04d86120e42080ee",
+      "sku": "16070",
+      "name": "Barrera Vehicular Derecha ZKTECO PROBG3030R-LED, Brazo 3MTS, LED",
+      "referencia": "PROBG3030R-LED",
+      "category": "control",
+      "source": "catalog",
+      "unitario_usd": 913.01,
+      "unitario_cop": 2914791.0,
+      "created_at": "2026-09-23T18:49:24.974944+00:00",
+      "updated_at": "2026-09-23T18:49:24.974944+00:00",
+      "created_by": "ZKTECO"
+    }
+  ],
+  "updated_at": ""
+}

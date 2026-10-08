@@ -3,64 +3,273 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
   <title>Cotizador asesor - IZC MAYORISTA</title>
   <link rel="icon" href="assets/logo/iconoizc.png" type="image/png">
-  <link rel="stylesheet" href="assets/css/index.css?v=29">
-  <link rel="stylesheet" href="assets/css/auth.css?v=9">
-  <link rel="stylesheet" href="assets/css/admin.css?v=12">
-  <link rel="stylesheet" href="assets/css/cotizador.css?v=4">
-  <script>
-    if (location.protocol === 'file:') {
-      location.replace('http://127.0.0.1:8080/cotizador-asesor.html' + location.search);
-    }
-  </script>
-  <script src="assets/js/data-loader.js?v=2" defer></script>
-  <script src="assets/js/auth.js?v=32" defer></script>
-  <script src="assets/js/cotizador-asesor.js?v=2" defer></script>
+  <script src="assets/js/zkteco-theme-boot.js?v=2"></script>
+  <link rel="stylesheet" href="assets/css/index.css?v=37">
+  <link rel="stylesheet" href="assets/css/auth.css?v=19">
+  <link rel="stylesheet" href="assets/css/perfil.css?v=3">
+  <link rel="stylesheet" href="assets/css/admin.css?v=16">
+  <link rel="stylesheet" href="assets/css/cotizador.css?v=53">
+  <link rel="stylesheet" href="assets/css/zkteco-admin.css?v=10">
+  <script src="assets/js/file-boot.js?v=2"></script>
+  <script src="assets/js/data-loader.js?v=20" defer></script>
+  <script src="assets/js/zkteco-overlay.js?v=2" defer></script>
+  <script src="assets/js/search.js?v=12" defer></script>
+  <script src="assets/js/wishlist.js?v=6" defer></script>
+  <script src="assets/js/auth.js?v=90" defer></script>
+  <script src="assets/js/live-sync.js?v=1" defer></script>
+  <script src="assets/js/money.js?v=2" defer></script>
+  <script src="assets/js/vendor/jspdf.umd.min.js"></script>
+  <script src="assets/js/vendor/jspdf.plugin.autotable.min.js"></script>
+  <script src="assets/js/cotizacion-pdf.js?v=105" defer></script>
+  <script src="assets/js/cotizador-asesor.sat183.js?v=191" defer></script>
+  <script src="assets/js/index.js?v=3" defer></script>
 </head>
 <body>
+  <div class="top-bar">
+    <div class="top-bar-inner">
+      <a href="https://api.whatsapp.com/send?phone=573144355391" target="_blank">Soporte T&#233;cnico</a>
+    </div>
+  </div>
+
   <header class="main-header">
     <div class="main-header-inner">
       <a class="logo" href="asesor.html">
         <img src="assets/logo/logoizc.png" alt="IZC Mayorista" class="logo-img">
       </a>
-      <a class="admin-refresh" href="asesor.html">← Volver al panel</a>
+      <form class="search-bar" id="searchForm" action="#" method="GET">
+        <div class="cat-select"></div>
+        <input type="text" name="q" id="searchInput" placeholder="Buscar en toda la tienda..." required>
+        <button type="submit">&#128269;</button>
+      </form>
+      <a href="favoritos.html" class="header-wishlist" id="headerWishlist" title="Mis favoritos" aria-label="Mis favoritos"><span class="header-wishlist-icon" aria-hidden="true">&#9829;</span></a>
     </div>
   </header>
+
+  <!-- Navigation -->
+  <nav class="main-nav"> <div class="nav-inner">
+      <ul>
+        <li class="nav-item has-flyout">
+          <a href="#">&#9776; Nuestros Productos</a>
+          <div class="flyout">
+            <div class="flyout-sidebar">
+              <ul>
+                <li class="flyout-cat active" data-panel="pos">Punto de Venta</li>
+                <li class="flyout-cat" data-panel="marcacion">Marcaci&#243;n y Etiquetado</li>
+                <li class="flyout-cat" data-panel="seguridad">Seguridad Electr&#243;nica</li>
+                <li class="flyout-cat" data-panel="conectividad">Cables y conectividad</li>
+                <li class="flyout-cat" data-panel="movilidad">Movilidad</li>
+              </ul>
+            </div>
+
+            <div class="flyout-panel">
+              <!-- Punto de Venta -->
+              <div class="flyout-panel-content active" data-panel="pos">
+                <div class="flyout-col">
+                  <div class="flyout-group">
+                    <a href="buscar.html?q=lectores" class="flyout-group-title"><span class="icon">&#9656;</span>Lectores de C&#243;digos de Barras</a>
+                    <ul>
+                      <li><a href="buscar.html?q=lectores-de-mano">De Mano</a></li>
+                      <li><a href="buscar.html?q=lectores-inalambricos">Inal&#225;mbricos</a></li>
+                      <li><a href="buscar.html?q=lectores-de-mesa">De Mesa</a></li>
+                      <li><a href="buscar.html?q=lectores-empotrables">Empotrables</a></li>
+                    </ul>
+                  </div>
+                  <div class="flyout-group">
+                    <a href="buscar.html?q=digitalizadores" class="flyout-group-title"><span class="icon">&#9656;</span>Perif&#233;ricos POS</a>
+                    <ul>
+                      <li><a href="buscar.html?q=digitalizadores">Digitalizadoras de Firmas</a></li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="flyout-col">
+                  <div class="flyout-group">
+                    <a href="buscar.html?q=equipos-pos" class="flyout-group-title"><span class="icon">&#9656;</span>Equipos para Punto de Venta</a>
+                  </div>
+                  <div class="flyout-group">
+                    <a href="buscar.html?q=monitores-touch" class="flyout-group-title"><span class="icon">&#128421;</span>Monitores Touch</a>
+                  </div>
+                  <div class="flyout-group">
+                    <a href="buscar.html?q=mini-pc" class="flyout-group-title"><span class="icon">&#128424;</span>Mini PC</a>
+                  </div>
+                  <div class="flyout-group">
+                    <a href="buscar.html?q=balanzas" class="flyout-group-title"><span class="icon">&#9656;</span>Balanzas</a>
+                  </div>
+                  <div class="flyout-group">
+                    <a href="buscar.html?q=cajones" class="flyout-group-title"><span class="icon">&#127991;</span>Cajones monederos</a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Marcaci&#243;n y Etiquetado -->
+              <div class="flyout-panel-content" data-panel="marcacion">
+                <div class="flyout-col">
+                  <div class="flyout-group">
+                    <a href="buscar.html?q=impresoras" class="flyout-group-title"><span class="icon">&#127991;</span>Impresoras de Etiquetas</a>
+                    <ul>
+                      <li><a href="buscar.html?q=impresoras-escritorio">De escritorio</a></li>
+                      <li><a href="buscar.html?q=impresoras-semi-industriales">Semi industriales</a></li>
+                      <li><a href="buscar.html?q=impresoras-industriales">Industriales</a></li>
+                    </ul>
+                  </div>
+                  <div class="flyout-group">
+                    <a href="buscar.html?q=impresoras-carnet" class="flyout-group-title"><span class="icon">&#9656;</span>Impresoras de carnet</a>
+                  </div>
+                  <div class="flyout-group">
+                    <a href="buscar.html?q=impresoras-manillas" class="flyout-group-title"><span class="icon">&#9656;</span>Impresoras de manillas</a>
+                  </div>
+                </div>
+                <div class="flyout-col">
+                  <div class="flyout-group">
+                    <a href="buscar.html?q=consumibles" class="flyout-group-title"><span class="icon">&#9656;</span>Consumibles</a>
+                    <ul>
+                      <li><a href="buscar.html?q=consumibles-etiquetas">Etiquetas adhesivas</a></li>
+                      <li><a href="buscar.html?q=consumibles-ribbons">Ribbons o Cintas</a></li>
+                      <li><a href="buscar.html?q=consumibles">Manillas para identificaci&#243;n</a></li>
+                      <li><a href="buscar.html?q=consumibles-kits">Kits de limpieza</a></li>
+                    </ul>
+                  </div>
+                  <div class="flyout-group">
+                    <a href="buscar.html?q=impresoras" class="flyout-group-title"><span class="icon">&#9656;</span>Flexografia</a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Seguridad Electr&#243;nica -->
+              <div class="flyout-panel-content" data-panel="seguridad">
+                <div class="flyout-col">
+                  <div class="flyout-group">
+                    <a href="buscar.html?q=control-acceso" class="flyout-group-title"><span class="icon">&#128247;</span>CONTROL Y VIGILANCIA</a>
+                    <ul>
+                      <li><a href="buscar.html?q=control-acceso">Controles de Acceso y Asistencia</a></li>
+                      <li><a href="buscar.html?q=accesorios-acceso">Accesorios de Control de Acceso</a></li>
+                      <li><a href="buscar.html?q=huella">Lectores de Huella Biometricos</a></li>
+                      <li><a href="buscar.html?q=seguridad">Alarmas</a></li>
+                    </ul>
+                  </div>
+                  <div class="flyout-group">
+                    <a href="buscar.html?q=camaras" class="flyout-group-title"><span class="icon">&#128247;</span>CAMARAS CCTV</a>
+                    <ul>
+                      <li><a href="buscar.html?q=camaras-ip">C&#225;maras IP</a></li>
+                      <li><a href="buscar.html?q=camaras-wifi">C&#225;maras WIFI</a></li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="flyout-col">
+                  <div class="flyout-group">
+                    <a href="buscar.html?q=grabadores" class="flyout-group-title"><span class="icon">&#128274;</span>GRABADORES CCTV</a>
+                    <ul>
+                      <li><a href="buscar.html?q=grabadores-analogo">Grabadores An&#225;logos</a></li>
+                      <li><a href="buscar.html?q=grabadores-ip">Grabadores IP</a></li>
+                    </ul>
+                  </div>
+                  <div class="flyout-group">
+                    <a href="buscar.html?q=accesorios-cctv" class="flyout-group-title"><span class="icon"></span>Accesorios para CCTV</a>
+                    <ul>
+                      <li><a href="buscar.html?q=accesorios-cctv">Accesorios para CCTV</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Cables y conectividad -->
+              <div class="flyout-panel-content" data-panel="conectividad">
+                <div class="flyout-col">
+                  <div class="flyout-group">
+                    <a href="buscar.html?q=red" class="flyout-group-title"><span class="icon">&#128225;</span>CONECTIVIDAD INAL&#193;MBRICA</a>
+                    <ul>
+                      <li><a href="buscar.html?q=access-point">Access Point</a></li>
+                      <li><a href="buscar.html?q=radio-enlaces">Radio Enlaces</a></li>
+                      <li><a href="buscar.html?q=routers">Routers</a></li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="flyout-col">
+                  <div class="flyout-group">
+                    <a href="buscar.html?q=switch-poe" class="flyout-group-title"><span class="icon">&#128268;</span>SWITCH POE</a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Movilidad -->
+              <div class="flyout-panel-content" data-panel="movilidad">
+                <div class="flyout-col">
+                  <div class="flyout-group">
+                    <a href="buscar.html?q=terminales-moviles" class="flyout-group-title"><span class="icon">&#128241;</span>MOVILIDAD</a>
+                    <ul>
+                      <li><a href="buscar.html?q=impresoras-portatiles">Impresoras Port&#225;tiles</a></li>
+                      <li><a href="buscar.html?q=terminales-moviles">Terminales M&#243;viles</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="nav-item"><a href="marcas.html">Marcas</a></li>
+        <li class="nav-item"><a href="cotizador-asesor.html">Cotizador</a></li>
+      </ul>
+    </div>
+  </nav>
 
   <main class="cotizador-page">
     <div class="cotizador-wrap">
       <header class="cotizador-head">
         <div>
-          <h1>Cotizador del asesor</h1>
+          <h1 id="cotizadorTitle">Cotizador del asesor</h1>
         </div>
-        <div class="cotizador-trm">
-          <label for="cotizadorTrm">TRM (COP por 1 USD)</label>
-          <input id="cotizadorTrm" type="number" min="1" step="0.01" value="3204" readonly>
+        <div class="cotizador-head-controls">
+          <div class="cotizador-trm cotizador-empresa">
+            <label for="cotizadorEmpresa">Empresa</label>
+            <select id="cotizadorEmpresa" name="empresa">
+              <option value="IZC MAYORISTA S.A.S.">IZC MAYORISTA S.A.S.</option>
+              <option value="VALTECH MAYORISTA S.A.S." selected>VALTECH MAYORISTA S.A.S.</option>
+            </select>
+          </div>
+          <div class="cotizador-trm">
+            <label for="cotizadorTrm">TRM (COP por 1 USD)</label>
+            <input id="cotizadorTrm" type="number" min="1" step="0.01" value="3204" readonly>
+          </div>
+          <div class="cotizador-trm cotizador-fecha-cierre">
+            <label for="cotizadorFechaCierreVenta">Fecha cierre venta</label>
+            <input id="cotizadorFechaCierreVenta" type="date" autocomplete="off" aria-label="Fecha de cierre de venta">
+          </div>
         </div>
       </header>
 
       <div class="cotizador-client-card" id="cotizadorClientCard">
-        <div>
-          <span class="cotizador-client-label">Cliente</span>
-          <strong id="cotizadorClientNombre">—</strong>
+        <div class="cotizador-client-field">
+          <label class="cotizador-client-label" for="cotizadorClientNombreInput">Cliente</label>
+          <div class="cotizador-client-nombre-wrap">
+            <input type="text" id="cotizadorClientNombreInput" class="cotizador-client-input" placeholder="Buscar por nombre" autocomplete="off" aria-autocomplete="list" aria-controls="cotizadorClientNombreSuggest">
+            <ul id="cotizadorClientNombreSuggest" class="cotizador-client-suggest" role="listbox" hidden></ul>
+          </div>
         </div>
-        <div>
-          <span class="cotizador-client-label">NIT</span>
-          <strong id="cotizadorClientNit">—</strong>
+        <div class="cotizador-client-field">
+          <label class="cotizador-client-label" for="cotizadorClientNitInput">NIT</label>
+          <div class="cotizador-client-nombre-wrap">
+            <input type="text" id="cotizadorClientNitInput" class="cotizador-client-input" placeholder="NIT del cliente" inputmode="numeric" autocomplete="off" aria-autocomplete="list" aria-controls="cotizadorClientNitSuggest">
+            <ul id="cotizadorClientNitSuggest" class="cotizador-client-suggest" role="listbox" hidden></ul>
+          </div>
         </div>
       </div>
 
       <p id="cotizadorGate" class="cotizador-gate" hidden>
-        Debes iniciar sesión como asesor.
-        <a href="login.html">Iniciar sesión</a>
+        Debes iniciar sesi&#243;n como asesor, administrador o ZKTeco.
+        <a href="login.html">Iniciar sesi&#243;n</a>
       </p>
 
       <section id="cotizadorPanel" class="cotizador-panel" hidden>
         <form id="cotizadorAddForm" class="cotizador-add">
-          <div class="cotizador-field">
-            <label for="cotizadorSku">Código de producto (SKU)</label>
-            <input id="cotizadorSku" name="sku" type="text" inputmode="numeric" placeholder="Ej: 4031" required autocomplete="off">
+          <div class="cotizador-field cotizador-field-sku">
+            <label for="cotizadorSku">Buscar producto (c&#243;digo, nombre o referencia)</label>
+            <div class="cotizador-sku-wrap">
+              <input id="cotizadorSku" name="sku" type="text" inputmode="search" placeholder="Ej: 4031, scanner, TT 70X50" required autocomplete="off" aria-autocomplete="list" aria-controls="cotizadorSkuSuggest">
+              <ul id="cotizadorSkuSuggest" class="cotizador-sku-suggest" role="listbox" hidden></ul>
+            </div>
             <p id="cotizadorSkuName" class="cotizador-sku-name is-empty" aria-live="polite"></p>
           </div>
           <div class="cotizador-field cotizador-field-qty">
@@ -72,52 +281,142 @@
         <p id="cotizadorMessage" class="cotizador-message" role="status"></p>
 
         <div class="cotizador-table-wrap">
-          <table class="cotizador-table">
+          <table class="cotizador-table cotizador-table-asesor">
+            <colgroup>
+              <col class="col-num">
+              <col class="col-inv"><col class="col-inv"><col class="col-inv"><col class="col-inv">
+              <col class="col-inv"><col class="col-inv"><col class="col-inv"><col class="col-inv">
+              <col class="col-inv-total">
+              <col class="col-lp">
+              <col class="col-flete">
+              <col class="col-ciudad">
+              <col class="col-sku">
+              <col class="col-name">
+              <col class="col-ref">
+              <col class="col-qty">
+              <col class="col-money-unit">
+              <col class="col-money-unit">
+              <col class="col-money-pv">
+              <col class="col-money-pv">
+              <col class="col-money-iva">
+              <col class="col-money-iva">
+              <col class="col-money-total">
+              <col class="col-money-total">
+              <col class="col-money-grand">
+              <col class="col-actions">
+            </colgroup>
             <thead>
               <tr>
-                <th>Código</th>
-                <th>Nombre</th>
-                <th>Cant.</th>
-                <th>USD und.</th>
-                <th>COP und.</th>
-                <th>Total USD</th>
-                <th>Total COP</th>
-                <th>Total + IVA</th>
-                <th></th>
+                <th rowspan="2" class="cotizador-th-num">#</th>
+                <th class="cotizador-inv-empresa is-izc" colspan="4" title="IZC Mayorista">IZC</th>
+                <th class="cotizador-inv-empresa is-valtech" colspan="4" title="VALTECH Mayorista">VALTECH</th>
+                <th class="cotizador-inv-total-h" rowspan="2" title="Total inventario">Total</th>
+                <th rowspan="2">LP</th>
+                <th rowspan="2">Flete</th>
+                <th rowspan="2" class="cotizador-th-ciudades">Ciudades</th>
+                <th rowspan="2">Codigo</th>
+                <th rowspan="2">Descripci&#243;n del Producto</th>
+                <th rowspan="2">Referencia</th>
+                <th rowspan="2">Cant.</th>
+                <th rowspan="2" class="cotizador-th-money">Prc.<br>Unitario USD</th>
+                <th rowspan="2" class="cotizador-th-money">Prc.<br>Unitario COP</th>
+                <th rowspan="2" class="cotizador-th-money">P.V.<br>USD</th>
+                <th rowspan="2" class="cotizador-th-money">P.V.<br>COP</th>
+                <th rowspan="2" class="cotizador-th-money is-wide is-3l">P.V. COP<br>+ IVA<br>INCLUIDO</th>
+                <th rowspan="2" class="cotizador-th-money is-wide is-3l">P.V. USD<br>+ IVA<br>INCLUIDO</th>
+                <th rowspan="2" class="cotizador-th-money is-mid">Total<br>sin flete</th>
+                <th rowspan="2" class="cotizador-th-money is-mid">Flete<br>antes de IVA</th>
+                <th rowspan="2" class="cotizador-th-money is-wide">Total con<br>flete incluido</th>
+                <th rowspan="2"></th>
+              </tr>
+              <tr class="cotizador-inv-subhead">
+                <th class="is-izc" title="Bodega de Armenia (29)">AR<br>29</th>
+                <th class="is-izc" title="Bodega de Cota (10)">CT<br>10</th>
+                <th class="is-izc" title="Bodega de Unilago (20)">UN<br>20</th>
+                <th class="is-izc" title="RC">RC</th>
+                <th class="is-valtech" title="Bodega de Armenia (10)">AR<br>10</th>
+                <th class="is-valtech" title="Bodega de Cota (15)">CT<br>15</th>
+                <th class="is-valtech" title="Bodega de Unilago (20)">UN<br>20</th>
+                <th class="is-valtech" title="RC">RC</th>
               </tr>
             </thead>
             <tbody id="cotizadorBody">
-              <tr class="cotizador-empty-row"><td colspan="9">Aún no hay productos en la cotización.</td></tr>
+              <tr class="cotizador-empty-row"><td colspan="27">A&#250;n no hay productos en la cotizaci&#243;n.</td></tr>
             </tbody>
+            <tfoot>
+              <tr class="cotizador-totals-row">
+                <td colspan="19" class="cotizador-totals-spacer">
+                  <span class="cotizador-totals-label">Totales: </span>
+                </td>
+                <td class="cotizador-total-under">
+                  <div class="cotizador-excel-total-card">
+                    <span>Total P.V.<br>USD</span>
+                    <strong id="totalUsdEquiv">USD 0</strong>
+                  </div>
+                </td>
+                <td class="cotizador-total-under">
+                  <div class="cotizador-excel-total-card">
+                    <span>Total P.V.<br>COP</span>
+                    <strong id="totalPvCop">$0</strong>
+                  </div>
+                </td>
+                <td class="cotizador-total-under">
+                  <div class="cotizador-excel-total-card">
+                    <span>Total P.V. COP<br>+ IVA</span>
+                    <strong id="totalPvCopIva">$0</strong>
+                  </div>
+                </td>
+                <td class="cotizador-total-under">
+                  <div class="cotizador-excel-total-card">
+                    <span>Total P.V. USD<br>+ IVA</span>
+                    <strong id="totalPvUsdIva">USD 0</strong>
+                  </div>
+                </td>
+                <td class="cotizador-total-under">
+                  <div class="cotizador-excel-total-card">
+                    <span>Total<br>sin flete</span>
+                    <strong id="totalSinFlete">$0</strong>
+                  </div>
+                </td>
+                <td class="cotizador-total-under">
+                  <div class="cotizador-excel-total-card">
+                    <span id="fleteAntesIvaLabel">Flete<br>antes de IVA</span>
+                    <input type="text" inputmode="decimal" id="fleteAntesIva" class="cotizador-flete-input" value="0,00" aria-label="Editar flete">
+                  </div>
+                </td>
+                <td class="cotizador-total-under">
+                  <div class="cotizador-excel-total-card">
+                    <span>Total con<br>flete</span>
+                    <strong id="totalConFlete">$0</strong>
+                  </div>
+                </td>
+                <td class="cotizador-totals-end"></td>
+              </tr>
+            </tfoot>
           </table>
         </div>
-
-        <div class="cotizador-totals">
-          <div class="cotizador-total-card">
-            <span>Cantidad total</span>
-            <strong id="totalQty">0</strong>
-          </div>
-          <div class="cotizador-total-card">
-            <span>Total USD</span>
-            <strong id="totalUsd">$ 0.00</strong>
-          </div>
-          <div class="cotizador-total-card">
-            <span>Total COP</span>
-            <strong id="totalCop">$ 0 COP</strong>
-          </div>
-          <div class="cotizador-total-card is-iva">
-            <span>Total USD + IVA</span>
-            <strong id="totalUsdIva">$ 0.00</strong>
-          </div>
-          <div class="cotizador-total-card is-iva">
-            <span>Total COP + IVA</span>
-            <strong id="totalCopIva">$ 0 COP</strong>
-          </div>
-        </div>
+        <datalist id="cotizadorCiudadesList"></datalist>
 
         <div class="cotizador-actions">
-          <button type="button" class="cotizador-finish" id="cotizadorFinish">Terminar cotización</button>
+          <button type="button" class="cotizador-finish" id="cotizadorFinish">Terminar cotizaci&#243;n</button>
         </div>
+
+        <aside class="cotizador-legal" id="cotizadorLegal" aria-label="Condiciones de la cotizaci&#243;n">
+          <p class="cotizador-legal-validity">Esta cotizaci&#243;n tiene validez de hasta ocho (8) d&#237;as para el valor en d&#243;lares. El valor en pesos es v&#225;lido &#250;nicamente el d&#237;a de hoy. Los precios est&#225;n sujetos a cambio sin previo aviso y la mercanc&#237;a est&#225; sujeta a disponibilidad de inventario al momento de la compra.</p>
+          <div class="cotizador-legal-brand">
+            <span id="cotizadorLegalBrand">VALTECH MAYORISTA S.A.S. - Documento generado electr&#243;nicamente</span>
+          </div>
+          <div class="cotizador-legal-policy">
+            <h2>Pol&#237;tica de Productos Bajo Pedido</h2>
+            <p class="cotizador-legal-intro">Con el fin de garantizar una gesti&#243;n eficiente y servicio personalizado, aplicamos las siguientes condiciones para productos solicitados exclusivamente bajo pedido:</p>
+            <h3>Venta al Contado</h3>
+            <p>Requiere anticipo del 30%, calculado al tipo de cambio del d&#237;a. - El pago del anticipo implica aceptaci&#243;n total de esta pol&#237;tica. - Se confirma y gestiona el pedido al recibir el anticipo. - El saldo del 70% se paga al llegar el producto, con proforma actualizada a la TRM del d&#237;a de llegada. - La entrega se realiza &#250;nicamente con el pago completo.</p>
+            <h3>Venta a Cr&#233;dito</h3>
+            <p>El pedido se confirma con una Orden de Compra (OC), sin necesidad de consignar el anticipo. - El anticipo del 30% ser&#225; reservado del cupo de cr&#233;dito disponible. El saldo del 70% se facturar&#225; al momento de llegada, seg&#250;n disponibilidad del cupo. Si no hay cupo, el valor deber&#225; ser cancelado antes de la entrega. - La entrega se realiza &#250;nicamente con el pago completo.</p>
+            <h3>Condiciones Generales</h3>
+            <p>El tiempo estimado de llegada ser&#225; informado al confirmar el pedido y puede variar por temas log&#237;sticos o aduaneros. - No se aceptan cancelaciones una vez confirmado el pedido. - En caso de cancelaci&#243;n, el cliente deber&#225; pagar el valor del anticipo como compensaci&#243;n por la gesti&#243;n y log&#237;stica. - Determinar&#225; si el producto es o no de rotaci&#243;n, lo cual puede afectar la devoluci&#243;n del anticipo en caso de no retiro.</p>
+          </div>
+        </aside>
       </section>
     </div>
   </main>
@@ -126,10 +425,10 @@
     <div class="cotizador-modal-backdrop" data-modal-close></div>
     <div class="cotizador-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="cotizadorRemoveTitle">
       <h3 id="cotizadorRemoveTitle">Quitar producto</h3>
-      <p id="cotizadorRemoveText">¿Quieres quitar este producto de la cotización?</p>
+      <p id="cotizadorRemoveText">&#191;Quieres quitar este producto de la cotizaci&#243;n?</p>
       <div class="cotizador-modal-actions">
         <button type="button" class="cotizador-modal-cancel" data-modal-close>No, cancelar</button>
-        <button type="button" class="cotizador-modal-confirm" id="cotizadorRemoveConfirm">Sí, quitar</button>
+        <button type="button" class="cotizador-modal-confirm" id="cotizadorRemoveConfirm">S&#237;, quitar</button>
       </div>
     </div>
   </div>

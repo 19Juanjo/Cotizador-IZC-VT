@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<!-- Panel Gerente de Producto (GP): clientes, historial propio y cotizaciones de sus clientes. -->
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel GP - VALTECH / SAT</title>
+  <link rel="icon" href="assets/logo/valtech.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/auth.css?v=19">
+  <link rel="stylesheet" href="assets/css/perfil.css?v=6">
+  <link rel="stylesheet" href="assets/css/admin.css?v=60">
+  <link rel="stylesheet" href="assets/css/valtech.css?v=11">
+  <link rel="stylesheet" href="assets/css/sat-admin.css?v=12">
+  <script src="assets/js/file-boot.js?v=2"></script>
+  <script src="assets/js/data-loader.js?v=22" defer></script>
+  <script src="assets/js/auth.js?v=91" defer></script>
+  <script src="assets/js/vendor/jspdf.umd.min.js"></script>
+  <script src="assets/js/vendor/jspdf.plugin.autotable.min.js"></script>
+  <script src="assets/js/cotizacion-pdf.js?v=105" defer></script>
+  <script src="assets/js/panel-gp.js?v=10" defer></script>
+</head>
+<body class="valtech-body is-sat-admin is-gp-panel sat-admin-body" data-brand="sat" data-store="valtech">
+  <header class="vt-top">
+    <div class="vt-top-inner">
+      <a class="vt-logo-link" href="valtech.html" aria-label="Catalogo SAT VALTECH">
+        <img src="assets/logo/valtech.png" alt="VALTECH Mayorista" class="vt-logo">
+      </a>
+      <nav class="vt-nav" aria-label="Navegacion GP">
+        <a href="valtech.html">Catalogo SAT</a>
+        <a href="cotizador-sat.html">Cotizador GP</a>
+      </nav>
+      <div class="vt-top-actions"></div>
+    </div>
+  </header>
+
+  <main class="sat-admin-main admin-page profile-page sat-admin-page">
+    <div class="auth-card profile-name-card">
+      <button type="button" class="profile-name-pencil" id="gpNombreToggle" title="Editar nombre" aria-label="Editar nombre" aria-pressed="false">
+        <svg class="profile-name-icon is-pencil" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 20h9"></path>
+          <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"></path>
+        </svg>
+        <svg class="profile-name-icon is-check" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" hidden>
+          <path d="M20 6 9 17l-5-5"></path>
+        </svg>
+      </button>
+      <h1 class="profile-greeting" id="profileGreeting">Hola</h1>
+      <input
+        type="text"
+        id="gpNombreInput"
+        class="profile-name-inline"
+        maxlength="80"
+        autocomplete="name"
+        placeholder="Tu nombre"
+        hidden
+      >
+      <p class="profile-lead">Panel Gerente de Producto SAT</p>
+      <p id="gpNombreStatus" class="auth-message profile-name-status" role="status"></p>
+      <p id="gpMessage" class="auth-message" role="status"></p>
+      <button class="auth-submit" type="button" id="profileLogout">Cerrar sesion</button>
+    </div>
+
+    <div class="admin-card profile-admin-card">
+      <div class="admin-card-head">
+        <div>
+          <h2>Panel GP</h2>
+          <p class="admin-lead">Tus clientes Bitrix, tus cotizaciones SAT y las cotizaciones de tus clientes.</p>
+        </div>
+      </div>
+
+      <div class="admin-stats sat-admin-stats" role="tablist" aria-label="Secciones GP">
+        <button type="button" class="admin-stat is-tab is-active" data-tab="clientes" id="gpTabClientes" role="tab" aria-selected="true">
+          <span class="admin-stat-label">Mis clientes</span>
+          <strong id="gpClientCount">0</strong>
+        </button>
+        <button type="button" class="admin-stat is-tab" data-tab="historial" id="gpTabHistorial" role="tab" aria-selected="false">
+          <span class="admin-stat-label">Historial de cotizaciones</span>
+          <strong id="gpHistorialCount">0</strong>
+        </button>
+        <button type="button" class="admin-stat is-tab" data-tab="quotes-client" id="gpTabQuotesClient" role="tab" aria-selected="false">
+          <span class="admin-stat-label">Cotizaciones Clientes</span>
+          <strong id="gpClientQuotesCount">0</strong>
+        </button>
+        <button type="button" class="admin-stat is-tab" data-tab="fibra" id="gpTabFibra" role="tab" aria-selected="false" hidden>
+          <span class="admin-stat-label">Cotizaciones Fibra</span>
+          <strong id="gpFibraCount">0</strong>
+        </button>
+      </div>
+
+      <p id="gpPanelMessage" class="auth-message" role="status"></p>
+
+      <div class="admin-panel" id="gpPanelClientes">
+        <div class="admin-toolbar">
+          <button type="button" class="admin-toolbar-btn" id="gpClienteRegisterBtn">Registrar cliente</button>
+          <button type="button" class="admin-toolbar-btn is-secondary" id="gpClientesRefreshBtn" title="Consulta Bitrix ahora">Actualizar desde Bitrix</button>
+        </div>
+        <div class="admin-table-wrap">
+          <table class="admin-table" id="gpClientesTable">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>NIT</th>
+                <th>Cliente / Razon social</th>
+                <th>Telefono</th>
+              </tr>
+            </thead>
+            <tbody id="gpClientesBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="admin-panel" id="gpPanelHistorial" hidden>
+        <p class="admin-panel-hint">Cotizaciones que tu creaste en el Cotizador GP.</p>
+        <div class="admin-table-wrap">
+          <table class="admin-table" id="gpHistorialTable">
+            <thead>
+              <tr>
+                <th>Estado</th>
+                <th>Fecha</th>
+                <th>Cliente</th>
+                <th>NIT</th>
+                <th>Productos</th>
+                <th>Total</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="gpHistorialBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="admin-panel" id="gpPanelQuotesClient" hidden>
+        <p class="admin-panel-hint">Cotizaciones hechas por tus clientes en el portal (no por vendedores V#).</p>
+        <div class="admin-table-wrap">
+          <table class="admin-table" id="gpQuotesClientTable">
+            <thead>
+              <tr>
+                <th>Estado</th>
+                <th>Fecha</th>
+                <th>Cliente</th>
+                <th>NIT</th>
+                <th>Productos</th>
+                <th>Total</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="gpQuotesClientBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="admin-panel" id="gpPanelFibra" hidden>
+        <p class="admin-panel-hint">Cotizaciones de asesores (V#) que incluyen productos de fibra SAT.</p>
+        <div class="admin-table-wrap">
+          <table class="admin-table" id="gpFibraTable">
+            <thead>
+              <tr>
+                <th>Estado</th>
+                <th>Fecha</th>
+                <th>Asesor</th>
+                <th>Cliente</th>
+                <th>NIT</th>
+                <th>Productos</th>
+                <th>Total</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="gpFibraBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div class="admin-modal" id="gpClienteModal" hidden>
+    <div class="admin-modal-backdrop" data-gp-cliente-modal-close></div>
+    <div class="admin-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="gpClienteModalTitle">
+      <h3 id="gpClienteModalTitle">Registrar cliente</h3>
+      <p class="admin-quote-meta">Registra un cliente con NIT y nombre. Solo aparecer&#225; en tu lista de Mis clientes.</p>
+      <form id="gpClienteForm" class="asesor-cliente-form">
+        <label for="gpClienteNitInput">NIT</label>
+        <input
+          type="text"
+          id="gpClienteNitInput"
+          inputmode="numeric"
+          autocomplete="off"
+          placeholder="Ej. 900639921"
+          required
+        >
+        <label for="gpClienteNombreInput">Nombre / Razon social</label>
+        <input
+          type="text"
+          id="gpClienteNombreInput"
+          autocomplete="organization"
+          placeholder="Nombre del cliente"
+          maxlength="120"
+          required
+        >
+        <p id="gpClienteFormStatus" class="auth-message" role="status"></p>
+        <div class="admin-modal-actions">
+          <button type="submit" class="admin-view-quote" id="gpClienteFormSave">Guardar</button>
+          <button type="button" class="admin-modal-cancel" data-gp-cliente-modal-close>Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="admin-modal" id="gpQuoteDetailModal" hidden>
+    <div class="admin-modal-backdrop" data-modal-close></div>
+    <div class="admin-modal-dialog admin-modal-dialog-wide" role="dialog" aria-modal="true" aria-labelledby="gpQuoteDetailTitle">
+      <h3 id="gpQuoteDetailTitle">Detalle de cotizacion</h3>
+      <p id="gpQuoteDetailEstado" class="admin-quote-meta"></p>
+      <p id="gpQuoteDetailMeta" class="admin-quote-meta"></p>
+      <div class="admin-quote-detail-wrap" id="gpQuoteDetailBody"></div>
+      <div class="admin-modal-actions">
+        <button type="button" class="admin-quote-pdf admin-quote-pdf-modal" data-currency="USD">PDF USD</button>
+        <button type="button" class="admin-quote-pdf admin-quote-pdf-modal" data-currency="COP">PDF COP</button>
+        <button type="button" class="admin-modal-cancel" data-modal-close>Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="vt-footer">
+    <p>VALTECH Mayorista &#183; Gerente de Producto SAT</p>
+    <a href="cotizador-sat.html">Ir al Cotizador GP</a>
+  </footer>
+</body>
+</html>

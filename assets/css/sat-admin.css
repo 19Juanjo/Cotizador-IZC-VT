@@ -1,0 +1,299 @@
+/* Administrador SAT — misma estructura y colores que tienda VALTECH (catálogo SAT). */
+
+.is-sat-admin.valtech-body {
+  --sat-admin-accent: var(--vt-accent, #2f9e44);
+  --sat-admin-accent-2: var(--vt-accent-2, #1e7a32);
+  --sat-admin-blue: #1653a0;
+  --sat-admin-blue-bright: #1d72db;
+}
+
+.is-sat-admin .vt-logo-link .vt-logo {
+  height: 54px;
+  width: auto;
+}
+
+.is-sat-admin .vt-nav a.is-active {
+  border-bottom-color: var(--sat-admin-accent);
+}
+
+.sat-admin-main {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 24px 24px 40px;
+}
+
+.is-gp-panel .sat-admin-main {
+  max-width: 1760px;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.is-gp-panel .sat-admin-main .auth-card.profile-name-card {
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.sat-admin-main .auth-card.profile-name-card,
+.sat-admin-main .admin-card.profile-admin-card {
+  background: var(--vt-card, #fff);
+  color: var(--vt-card-ink, #2f3438);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.18);
+  border-radius: 12px;
+}
+
+.sat-admin-main .profile-greeting {
+  color: var(--vt-card-ink, #2f3438);
+}
+
+.is-sat-admin .profile-lead {
+  color: var(--sat-admin-blue);
+  font-weight: 600;
+}
+
+.is-sat-admin .auth-submit {
+  background: linear-gradient(180deg, var(--sat-admin-accent) 0%, var(--sat-admin-accent-2) 100%);
+  border: none;
+}
+
+.is-sat-admin .auth-submit:hover {
+  filter: brightness(1.05);
+}
+
+.is-sat-admin .admin-card-head h2 {
+  color: var(--vt-card-ink, #2f3438);
+}
+
+.is-sat-admin .admin-lead,
+.is-sat-admin .admin-panel-hint {
+  color: #5a6169;
+}
+
+.is-sat-admin .sat-admin-stats {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 10px;
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.is-sat-admin .sat-admin-stats .admin-stat {
+  flex: 1 1 0;
+  min-width: 0;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+}
+
+.is-sat-admin .sat-admin-stats .admin-stat-label {
+  display: block;
+  line-height: 1.25;
+  white-space: normal;
+  color: #64748b;
+}
+
+.is-sat-admin .sat-admin-stats .admin-stat strong {
+  color: var(--sat-admin-blue);
+}
+
+.is-sat-admin .sat-admin-stats .admin-stat.is-tab.is-active {
+  background: var(--vt-accent-soft, #e8f5eb);
+  border-color: var(--sat-admin-accent);
+  box-shadow: inset 0 0 0 1px rgba(47, 158, 68, 0.2);
+}
+
+.is-sat-admin .sat-admin-stats .admin-stat.is-tab.is-active strong {
+  color: var(--sat-admin-accent-2);
+}
+
+.is-sat-admin .admin-stat.is-link {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.is-sat-admin .admin-stat.is-link:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 22px rgba(47, 158, 68, 0.15);
+}
+
+.is-sat-admin .admin-table thead th {
+  background: var(--vt-panel, #3a4046);
+  color: #fff;
+}
+
+.is-sat-admin .vt-footer {
+  text-align: center;
+  padding: 20px 24px 32px;
+  color: var(--vt-muted);
+  font-size: 0.88rem;
+}
+
+.is-sat-admin .vt-footer a {
+  display: inline-block;
+  margin-top: 6px;
+  color: #fff;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.sat-report-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+  margin: 0 0 16px;
+  padding: 12px 14px;
+  background: #f4f7f5;
+  border: 1px solid rgba(47, 158, 68, 0.22);
+  border-radius: 10px;
+}
+
+.sat-report-toolbar[hidden] {
+  display: none !important;
+}
+
+.sat-report-dates {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 10px;
+}
+
+.sat-report-dates label {
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: #2f3438;
+}
+
+.sat-report-date {
+  height: 36px;
+  padding: 0 10px;
+  border: 1px solid #c9d2cc;
+  border-radius: 6px;
+  font: inherit;
+  font-size: 0.9rem;
+  background: #fff;
+  color: #2f3438;
+}
+
+.sat-report-date:focus {
+  outline: 2px solid rgba(22, 83, 160, 0.35);
+  border-color: #1653a0;
+}
+
+.sat-report-toolbar .admin-report-btn {
+  background: var(--sat-admin-accent, #2f9e44);
+}
+
+.sat-report-toolbar .admin-report-btn:hover {
+  background: var(--sat-admin-accent-2, #1e7a32);
+  filter: none;
+}
+
+.sat-report-toolbar .admin-filter-meta {
+  flex: 1 1 100%;
+  margin: 0;
+  font-size: 0.86rem;
+  color: #4a5550;
+}
+
+/* Panel GP: botones del toolbar más compactos */
+.is-gp-panel .admin-toolbar {
+  justify-content: flex-start;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.is-gp-panel .admin-toolbar-btn,
+.is-gp-panel .admin-toolbar-btn.is-secondary {
+  margin-left: 0;
+  padding: 6px 12px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  line-height: 1.2;
+  border-radius: 5px;
+  width: auto;
+  flex: 0 0 auto;
+}
+
+.is-gp-panel .sat-admin-stats {
+  flex-wrap: wrap;
+}
+
+.is-gp-panel .sat-admin-stats .admin-stat {
+  flex: 1 1 140px;
+}
+
+.is-gp-panel .admin-table .quote-estado-badge,
+#gpQuoteDetailModal .quote-estado-badge {
+  position: static;
+  display: inline-block;
+  padding: 5px 8px;
+  border-radius: 4px;
+  background: #eef3f8;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+
+#gpQuoteDetailModal .admin-table tbody td,
+#gpQuoteDetailModal .admin-muted {
+  color: #111111;
+}
+
+.is-gp-panel .admin-table {
+  width: 100%;
+  min-width: 0;
+}
+
+.is-gp-panel .admin-table td.gp-nowrap,
+.is-gp-panel .admin-table td.admin-date-cell,
+.is-gp-panel .admin-table th {
+  white-space: nowrap;
+}
+
+.is-gp-panel .admin-table td.gp-col-client {
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.is-gp-panel .admin-table th:last-child,
+.is-gp-panel .admin-table td.admin-actions {
+  position: sticky;
+  right: 0;
+  z-index: 3;
+  background: #fff;
+  box-shadow: -10px 0 12px rgba(0, 0, 0, 0.08);
+}
+
+.is-gp-panel .admin-table thead th:last-child {
+  background: var(--vt-panel, #3a4046);
+  color: #fff;
+  z-index: 4;
+}
+
+.is-gp-panel .admin-actions-btns {
+  flex-wrap: nowrap;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 4px;
+}
+
+.is-gp-panel .admin-quote-pdf-row,
+.is-gp-panel .admin-view-quote {
+  padding: 6px 10px;
+  font-size: 0.78rem;
+  width: 100%;
+}
+
+@media (max-width: 720px) {
+  .is-sat-admin .sat-admin-stats {
+    flex-wrap: wrap;
+  }
+
+  .is-sat-admin .sat-admin-stats .admin-stat {
+    flex: 1 1 calc(50% - 10px);
+  }
+}

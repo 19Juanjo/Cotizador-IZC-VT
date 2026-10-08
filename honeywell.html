@@ -2,35 +2,41 @@
 <!-- Catalogo de productos de la marca Honeywell. -->
 <html lang="es">
 <head>
+  <script src="assets/js/file-boot.js?v=2"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>IZC MAYORISTA - Honeywell</title>
   <link rel="icon" href="assets/logo/iconoizc.png" type="image/png">
+  <script src="assets/js/zkteco-theme-boot.js?v=2"></script>
 
-  <link rel="stylesheet" href="assets/css/honeywell.css?v=16">
-  <link rel="stylesheet" href="assets/css/index.css?v=29">
-  <link rel="stylesheet" href="assets/css/auth.css?v=9">
-  <!-- Scripts de lógica principal -->
-  <script src="assets/js/data-loader.js?v=2" defer></script>
-  <script src="assets/js/prices.js?v=5" defer></script>
-  <script src="assets/js/search.js?v=4" defer></script>
-  <script src="assets/js/wishlist.js?v=4" defer></script>
-  <script src="assets/js/auth.js?v=29" defer></script>
-  <script src="assets/js/brand_catalog.js?v=8" defer></script>
+  <link rel="stylesheet" href="assets/css/honeywell.css?v=18">
+  <link rel="stylesheet" href="assets/css/index.css?v=47">
+  <link rel="stylesheet" href="assets/css/auth.css?v=15">
+  <!-- Scripts de l&#243;gica principal -->
+  <script src="assets/js/data-loader.js?v=20" defer></script>
+  <script src="assets/js/featured-brands.js?v=7" defer></script>
+  <script src="assets/js/prices.js?v=12" defer></script>
+  <script src="assets/js/search.js?v=12" defer></script>
+  <script src="assets/js/wishlist.js?v=6" defer></script>
+  <script src="assets/js/quote-cart.js?v=9" defer></script>
+  <script src="assets/js/auth.js?v=91" defer></script>
+  <script src="assets/js/brand_catalog.js?v=15" defer></script>
   <script src="assets/js/honeywell.js?v=9" defer></script>
   <script src="assets/js/index.js?v=3" defer></script>
+  <link rel="stylesheet" href="assets/css/quote-cart.css?v=7">
 </head>
 <body data-brand="honeywell">
 
   <!-- Barra superior de utilidades -->
   <div class="top-bar">
     <div class="top-bar-inner">
-      <a href="https://api.whatsapp.com/send?phone=573144355391" target="_blank">Soporte Técnico</a>
+      <a href="https://api.whatsapp.com/send?phone=573144355391" target="_blank">Soporte T&#233;cnico</a>
     </div>
   </div>
 
   <!-- Encabezado principal -->
   <header class="main-header">
+  <script src="assets/js/file-boot.js?v=2"></script>
     <div class="main-header-inner">
       <a class="logo" href="index.html">
         <img src="assets/logo/logoizc.png" alt="IZC Mayorista" class="logo-img">
@@ -40,24 +46,24 @@
       <form class="search-bar" id="searchForm" action="#" method="GET">
         <div class="cat-select"></div>
         <input type="text" name="q" id="searchInput" placeholder="Buscar en toda la tienda..." required>
-        <button type="submit">🔍︎</button>
+        <button type="submit">&#128269;</button>
       </form>
-      <a href="favoritos.html" class="header-wishlist" id="headerWishlist" title="Mis favoritos" aria-label="Mis favoritos"><span class="header-wishlist-icon" aria-hidden="true">♥</span></a>
+      <a href="favoritos.html" class="header-wishlist" id="headerWishlist" title="Mis favoritos" aria-label="Mis favoritos"><span class="header-wishlist-icon" aria-hidden="true">&#9829;</span></a>
     </div>
   </header>
 
-  <!-- Navegación -->
+  <!-- Navegaci&#243;n -->
   <nav class="main-nav">
     <div class="nav-inner">
       <ul>
         <li class="nav-item has-flyout">
-          <a href="#">☰ Nuestros Productos</a>
+          <a href="#">&#9776; Nuestros Productos</a>
           <div class="flyout">
             <div class="flyout-sidebar">
               <ul>
                 <li class="flyout-cat active" data-panel="pos">Punto de Venta</li>
-                <li class="flyout-cat" data-panel="marcacion">Marcación y Etiquetado</li>
-                <li class="flyout-cat" data-panel="seguridad">Seguridad Electrónica</li>
+                <li class="flyout-cat" data-panel="marcacion">Marcaci&#243;n y Etiquetado</li>
+                <li class="flyout-cat" data-panel="seguridad">Seguridad Electr&#243;nica</li>
                 <li class="flyout-cat" data-panel="conectividad">Cables y conectividad</li>
                 <li class="flyout-cat" data-panel="movilidad">Movilidad</li>
               </ul>
@@ -68,16 +74,16 @@
               <div class="flyout-panel-content active" data-panel="pos">
                 <div class="flyout-col">
                   <div class="flyout-group">
-                    <a href="buscar.html?q=lectores" class="flyout-group-title"><span class="icon">▤</span>Lectores de Códigos de Barras</a>
+                    <a href="buscar.html?q=lectores" class="flyout-group-title"><span class="icon">&#9656;</span>Lectores de C&#243;digos de Barras</a>
                     <ul>
                       <li><a href="buscar.html?q=lectores-de-mano">De Mano</a></li>
-                      <li><a href="buscar.html?q=lectores-inalambricos">Inalámbricos</a></li>
+                      <li><a href="buscar.html?q=lectores-inalambricos">Inal&#225;mbricos</a></li>
                       <li><a href="buscar.html?q=lectores-de-mesa">De Mesa</a></li>
                       <li><a href="buscar.html?q=lectores-empotrables">Empotrables</a></li>
                     </ul>
                   </div>
                   <div class="flyout-group">
-                    <a href="buscar.html?q=digitalizadores" class="flyout-group-title"><span class="icon">▭</span>Periféricos POS</a>
+                    <a href="buscar.html?q=digitalizadores" class="flyout-group-title"><span class="icon">&#9656;</span>Perif&#233;ricos POS</a>
                     <ul>
                       <li><a href="buscar.html?q=digitalizadores">Digitalizadoras de Firmas</a></li>
                     </ul>
@@ -85,28 +91,28 @@
                 </div>
                 <div class="flyout-col">
                   <div class="flyout-group">
-                    <a href="buscar.html?q=equipos-pos" class="flyout-group-title"><span class="icon">🖳</span>Equipos para Punto de Venta</a>
+                    <a href="buscar.html?q=equipos-pos" class="flyout-group-title"><span class="icon">&#128187;</span>Equipos para Punto de Venta</a>
                   </div>
                   <div class="flyout-group">
-                    <a href="buscar.html?q=monitores-touch" class="flyout-group-title"><span class="icon">🖥</span>Monitores Touch</a>
+                    <a href="buscar.html?q=monitores-touch" class="flyout-group-title"><span class="icon">&#128421;</span>Monitores Touch</a>
                   </div>
                   <div class="flyout-group">
-                    <a href="buscar.html?q=mini-pc" class="flyout-group-title"><span class="icon">🖨</span>Mini PC</a>
+                    <a href="buscar.html?q=mini-pc" class="flyout-group-title"><span class="icon">&#128424;</span>Mini PC</a>
                   </div>
                   <div class="flyout-group">
-                    <a href="buscar.html?q=balanzas" class="flyout-group-title"><span class="icon">⚖</span>Balanzas</a>
+                    <a href="buscar.html?q=balanzas" class="flyout-group-title"><span class="icon">&#9656;</span>Balanzas</a>
                   </div>
                   <div class="flyout-group">
-                    <a href="buscar.html?q=cajones" class="flyout-group-title"><span class="icon">🏷</span>Cajones monederos</a>
+                    <a href="buscar.html?q=cajones" class="flyout-group-title"><span class="icon">&#127991;</span>Cajones monederos</a>
                   </div>
                 </div>
               </div>
 
-              <!-- Marcación y Etiquetado -->
+              <!-- Marcaci&#243;n y Etiquetado -->
               <div class="flyout-panel-content" data-panel="marcacion">
                 <div class="flyout-col">
                   <div class="flyout-group">
-                    <a href="buscar.html?q=impresoras" class="flyout-group-title"><span class="icon">🏷</span>Impresoras de Etiquetas</a>
+                    <a href="buscar.html?q=impresoras" class="flyout-group-title"><span class="icon">&#127991;</span>Impresoras de Etiquetas</a>
                     <ul>
                       <li><a href="buscar.html?q=impresoras-escritorio">De escritorio</a></li>
                       <li><a href="buscar.html?q=impresoras-semi-industriales">Semi industriales</a></li>
@@ -114,58 +120,58 @@
                     </ul>
                   </div>
                   <div class="flyout-group">
-                    <a href="buscar.html?q=impresoras-carnet" class="flyout-group-title"><span class="icon">▭</span>Impresoras de carnet</a>
+                    <a href="buscar.html?q=impresoras-carnet" class="flyout-group-title"><span class="icon">&#9656;</span>Impresoras de carnet</a>
                   </div>
                   <div class="flyout-group">
-                    <a href="buscar.html?q=impresoras-manillas" class="flyout-group-title"><span class="icon">▭</span>Impresoras de manillas</a>
+                    <a href="buscar.html?q=impresoras-manillas" class="flyout-group-title"><span class="icon">&#9656;</span>Impresoras de manillas</a>
                   </div>
                 </div>
                 <div class="flyout-col">
                   <div class="flyout-group">
-                    <a href="buscar.html?q=consumibles" class="flyout-group-title"><span class="icon">▭</span>Consumibles</a>
+                    <a href="buscar.html?q=consumibles" class="flyout-group-title"><span class="icon">&#9656;</span>Consumibles</a>
                     <ul>
                       <li><a href="buscar.html?q=consumibles-etiquetas">Etiquetas adhesivas</a></li>
                       <li><a href="buscar.html?q=consumibles-ribbons">Ribbons o Cintas</a></li>
-                      <li><a href="buscar.html?q=consumibles">Manillas para identificación</a></li>
+                      <li><a href="buscar.html?q=consumibles">Manillas para identificaci&#243;n</a></li>
                       <li><a href="buscar.html?q=consumibles-kits">Kits de limpieza</a></li>
                     </ul>
                   </div>
                   <div class="flyout-group">
-                    <a href="buscar.html?q=impresoras" class="flyout-group-title"><span class="icon">▭</span>Flexografía</a>
+                    <a href="buscar.html?q=impresoras" class="flyout-group-title"><span class="icon">&#9656;</span>Flexograf&#237;a</a>
                   </div>
                 </div>
               </div>
 
-              <!-- Seguridad Electrónica -->
+              <!-- Seguridad Electr&#243;nica -->
               <div class="flyout-panel-content" data-panel="seguridad">
                 <div class="flyout-col">
                   <div class="flyout-group">
-                    <a href="buscar.html?q=control-acceso" class="flyout-group-title"><span class="icon">📷</span>CONTROL Y VIGILANCIA</a>
+                    <a href="buscar.html?q=control-acceso" class="flyout-group-title"><span class="icon">&#128247;</span>CONTROL Y VIGILANCIA</a>
                     <ul>
                       <li><a href="buscar.html?q=control-acceso">Controles de Acceso y Asistencia</a></li>
                       <li><a href="buscar.html?q=accesorios-acceso">Accesorios de Control de Acceso</a></li>
-                      <li><a href="buscar.html?q=huella">Lectores de Huella Biométricos</a></li>
+                      <li><a href="buscar.html?q=huella">Lectores de Huella Biom&#233;tricos</a></li>
                       <li><a href="buscar.html?q=seguridad">Alarmas</a></li>
                     </ul>
                   </div>
                   <div class="flyout-group">
-                    <a href="buscar.html?q=camaras" class="flyout-group-title"><span class="icon">📷</span>CÁMARAS CCTV</a>
+                    <a href="buscar.html?q=camaras" class="flyout-group-title"><span class="icon">&#128247;</span>C&#193;MARAS CCTV</a>
                     <ul>
-                      <li><a href="buscar.html?q=camaras-ip">Cámaras IP</a></li>
-                      <li><a href="buscar.html?q=camaras-wifi">Cámaras WIFI</a></li>
+                      <li><a href="buscar.html?q=camaras-ip">C&#225;maras IP</a></li>
+                      <li><a href="buscar.html?q=camaras-wifi">C&#225;maras WIFI</a></li>
                     </ul>
                   </div>
                 </div>
                 <div class="flyout-col">
                   <div class="flyout-group">
-                    <a href="buscar.html?q=grabadores" class="flyout-group-title"><span class="icon">🔒</span>GRABADORES CCTV</a>
+                    <a href="buscar.html?q=grabadores" class="flyout-group-title"><span class="icon">&#128274;</span>GRABADORES CCTV</a>
                     <ul>
-                      <li><a href="buscar.html?q=grabadores-analogo">Grabadores Análogos</a></li>
+                      <li><a href="buscar.html?q=grabadores-analogo">Grabadores An&#225;logos</a></li>
                       <li><a href="buscar.html?q=grabadores-ip">Grabadores IP</a></li>
                     </ul>
                   </div>
                   <div class="flyout-group">
-                    <a href="buscar.html?q=accesorios-cctv" class="flyout-group-title"><span class="icon">🔌</span>Accesorios para CCTV</a>
+                    <a href="buscar.html?q=accesorios-cctv" class="flyout-group-title"><span class="icon">&#128268;</span>Accesorios para CCTV</a>
                     <ul>
                       <li><a href="buscar.html?q=accesorios-cctv">Accesorios para CCTV</a></li>
                     </ul>
@@ -177,7 +183,7 @@
               <div class="flyout-panel-content" data-panel="conectividad">
                 <div class="flyout-col">
                   <div class="flyout-group">
-                    <a href="buscar.html?q=red" class="flyout-group-title"><span class="icon">📡</span>CONECTIVIDAD INALÁMBRICA</a>
+                    <a href="buscar.html?q=red" class="flyout-group-title"><span class="icon">&#128225;</span>CONECTIVIDAD INAL&#193;MBRICA</a>
                     <ul>
                       <li><a href="buscar.html?q=access-point">Access Point</a></li>
                       <li><a href="buscar.html?q=radio-enlaces">Radio Enlaces</a></li>
@@ -187,7 +193,7 @@
                 </div>
                 <div class="flyout-col">
                   <div class="flyout-group">
-                    <a href="buscar.html?q=switch-poe" class="flyout-group-title"><span class="icon">🔌</span>SWITCH POE</a>
+                    <a href="buscar.html?q=switch-poe" class="flyout-group-title"><span class="icon">&#128268;</span>SWITCH POE</a>
                   </div>
                 </div>
               </div>
@@ -196,10 +202,10 @@
               <div class="flyout-panel-content" data-panel="movilidad">
                 <div class="flyout-col">
                   <div class="flyout-group">
-                    <a href="buscar.html?q=terminales-moviles" class="flyout-group-title"><span class="icon">📱</span>MOVILIDAD</a>
+                    <a href="buscar.html?q=terminales-moviles" class="flyout-group-title"><span class="icon">&#128241;</span>MOVILIDAD</a>
                     <ul>
-                      <li><a href="buscar.html?q=impresoras-portatiles">Impresoras Portátiles</a></li>
-                      <li><a href="buscar.html?q=terminales-moviles">Terminales Móviles</a></li>
+                      <li><a href="buscar.html?q=impresoras-portatiles">Impresoras Port&#225;tiles</a></li>
+                      <li><a href="buscar.html?q=terminales-moviles">Terminales M&#243;viles</a></li>
                     </ul>
                   </div>
                 </div>
@@ -227,13 +233,13 @@
 
         <div class="filter-group">
           <div class="filter-header">
-            <span>Categoría</span>
-            <span class="arrow">▲</span>
+            <span>Categor&#237;a</span>
+            <span class="arrow">&#9650;</span>
           </div>
           <ul class="filter-list">
             <li><a href="#">&rsaquo; Movilidad <span class="count">5</span></a></li>
             <li><a href="#">&rsaquo; Punto de Venta POS <span class="count">16</span></a></li>
-            <li><a href="#">&rsaquo; Identificación y Marcación <span class="count">2</span></a></li>
+            <li><a href="#">&rsaquo; Identificaci&#243;n y Marcaci&#243;n <span class="count">2</span></a></li>
             <li><a href="#">&rsaquo; Productos en Remate <span class="count">6</span></a></li>
           </ul>
         </div>
@@ -241,7 +247,7 @@
         <div class="filter-group">
           <div class="filter-header">
             <span>Memoria RAM</span>
-            <span class="arrow">▲</span>
+            <span class="arrow">&#9650;</span>
           </div>
           <ul class="filter-list">
             <li><a href="#">&rsaquo; 128 MB <span class="count">1</span></a></li>
@@ -253,7 +259,7 @@
         <div class="filter-group">
           <div class="filter-header">
             <span>Core</span>
-            <span class="arrow">▲</span>
+            <span class="arrow">&#9650;</span>
           </div>
           <ul class="filter-list">
             <li><a href="#">&rsaquo; 1 pulgada <span class="count">2</span></a></li>
@@ -262,8 +268,8 @@
 
         <div class="filter-group">
           <div class="filter-header">
-            <span>Código de barras</span>
-            <span class="arrow">▲</span>
+            <span>C&#243;digo de barras</span>
+            <span class="arrow">&#9650;</span>
           </div>
           <ul class="filter-list">
             <li><a href="#">&rsaquo; 1D / 2D <span class="count">1</span></a></li>
@@ -274,7 +280,7 @@
         <div class="filter-group">
           <div class="filter-header">
             <span>Color</span>
-            <span class="arrow">▲</span>
+            <span class="arrow">&#9650;</span>
           </div>
           <ul class="filter-list filter-color-list">
             <li><span class="color-swatch" style="background:#000000" title="Negro"></span></li>
@@ -284,8 +290,8 @@
 
         <div class="filter-group">
           <div class="filter-header">
-            <span>Tamaño de la Pantalla</span>
-            <span class="arrow">▲</span>
+            <span>Tama&#241;o de la Pantalla</span>
+            <span class="arrow">&#9650;</span>
           </div>
           <ul class="filter-list">
             <li><a href="#">&rsaquo; 4 pulgadas <span class="count">3</span></a></li>
@@ -297,7 +303,7 @@
         <div class="filter-group">
           <div class="filter-header">
             <span>Velocidad</span>
-            <span class="arrow">▲</span>
+            <span class="arrow">&#9650;</span>
           </div>
           <ul class="filter-list">
             <li><a href="#">&rsaquo; - <span class="count">4</span></a></li>
@@ -314,8 +320,8 @@
 
         <div class="filter-group">
           <div class="filter-header">
-            <span>Tecnología</span>
-            <span class="arrow">▲</span>
+            <span>Tecnolog&#237;a</span>
+            <span class="arrow">&#9650;</span>
           </div>
           <ul class="filter-list">
             <li><a href="#">&rsaquo; Laser <span class="count">1</span></a></li>
@@ -329,33 +335,33 @@
 
         <div class="filter-group">
           <div class="filter-header">
-            <span>Activación</span>
-            <span class="arrow">▲</span>
+            <span>Activaci&#243;n</span>
+            <span class="arrow">&#9650;</span>
           </div>
           <ul class="filter-list">
             <li><a href="#">&rsaquo; Manual <span class="count">1</span></a></li>
-            <li><a href="#">&rsaquo; Automático <span class="count">6</span></a></li>
+            <li><a href="#">&rsaquo; Autom&#225;tico <span class="count">6</span></a></li>
             <li><a href="#">&rsaquo; Por gatillo <span class="count">2</span></a></li>
-            <li><a href="#">&rsaquo; Manual / Automático <span class="count">5</span></a></li>
+            <li><a href="#">&rsaquo; Manual / Autom&#225;tico <span class="count">5</span></a></li>
           </ul>
         </div>
 
         <div class="filter-group">
           <div class="filter-header">
             <span>Tipo de pantalla</span>
-            <span class="arrow">▲</span>
+            <span class="arrow">&#9650;</span>
           </div>
           <ul class="filter-list">
             <li><a href="#">&rsaquo; Pantalla Touch <span class="count">1</span></a></li>
             <li><a href="#">&rsaquo; Pantalla Touch TFT / Transflectiva <span class="count">2</span></a></li>
-            <li><a href="#">&rsaquo; Capacitiva multitáctil <span class="count">1</span></a></li>
+            <li><a href="#">&rsaquo; Capacitiva multit&#225;ctil <span class="count">1</span></a></li>
           </ul>       
         </div>
 
         <div class="filter-group">
           <div class="filter-header">
             <span>procesador</span>
-            <span class="arrow">▲</span>
+            <span class="arrow">&#9650;</span>
           </div>
           <ul class="filter-list">
             <li><a href="#">&rsaquo; Qualcomm Snapdragon SM6115 de cuatro nucleos <span class="count">1</span></a></li>
@@ -368,43 +374,43 @@
       <div class="featured-brands-box">
         <div class="featured-header">
           <span>MARCAS DESTACADAS</span>
-          <div class="nav-arrows">
-            <button type="button" class="arrow-btn" id="prevBrand">❮</button>
-            <button type="button" class="arrow-btn" id="nextBrand">❯</button>
+          <div class="brand-arrows">
+            <button type="button" class="arrow-btn prev" id="prevBrand" aria-label="Anterior">&#10094;</button>
+            <button type="button" class="arrow-btn next" id="nextBrand" aria-label="Siguiente">&#10095;</button>
           </div>
         </div>
-
         <div class="brands-carousel-wrapper">
           <div class="brands-carousel-track" id="brandsTrack">
             <div class="brand-column">
               <a href="datalogic.html" class="brand-item"><img src="assets/imgmarcas/Datalogic.png" alt="Datalogic"></a>
               <a href="elo.html" class="brand-item"><img src="assets/imgmarcas/Elo.png" alt="Elo"></a>
               <a href="hid.html" class="brand-item"><img src="assets/imgmarcas/HID.png" alt="HID"></a>
-              <a href="honeywell.html" class="brand-item"><img src="assets/imgmarcas/Honeywell.png" alt="Honeywell"></a> 
             </div>
             <div class="brand-column">
               <a href="imou.html" class="brand-item"><img src="assets/imgmarcas/IMOU.png" alt="IMOU"></a>
               <a href="ruijie.html" class="brand-item"><img src="assets/imgmarcas/Ruijie.png" alt="Ruijie"></a>
-              <a href="topaz.html" class="brand-item"><img src="assets/imgmarcas/Topaz.png" alt="Topaz Systems"></a>
-              <a href="zebra.html" class="brand-item"><img src="assets/imgmarcas/Zebra.png" alt="Zebra"></a>
+              <a href="topaz.html" class="brand-item"><img src="assets/imgmarcas/Topaz.png" alt="Topaz"></a>
             </div>
             <div class="brand-column">
               <a href="zkteco.html" class="brand-item"><img src="assets/imgmarcas/ZKTeco.png" alt="ZKTeco"></a>
-              <a href="sat.html" class="brand-item"><img src="assets/imgmarcas/SAT.png" alt="SAT"></a>
+              <a href="honeywell.html" class="brand-item"><img src="assets/imgmarcas/Honeywell.png" alt="Honeywell"></a>
+              <a href="zebra.html" class="brand-item"><img src="assets/imgmarcas/Zebra.png" alt="Zebra"></a>
+            </div>
+            <div class="brand-column brand-column-sat">
+              <a href="sat.html" class="brand-item brand-sat"><img src="assets/imgmarcas/SAT.png" alt="SAT"></a>
             </div>
           </div>
         </div>
       </div>
+</aside>
 
-    </aside>
-
-    <!-- Área de Contenido Principal -->
+    <!-- &#193;rea de Contenido Principal -->
     <main class="content-area">
 
         <!-- Tarjeta banner Honeywell -->
         <div class="product-carddatalogic">
           <div class="product-imgdatalogic brand-hero">
-            <img class="brand-hero-banner" src="https://izc.com.co/pub/media/webp_image/codazon_cache/brand/1200x/codazon/brand/banner_marca/Honeywell.webp" alt="Honeywell Banner">
+            <img class="brand-hero-banner" src="https://izc.com.co/marcas/assets/img/honeywell.png" alt="Honeywell Banner" onerror="this.onerror=null;this.src='https://izc.com.co/marcas/assets/img/fondo-soluciones-honeywell.jpg'">
             <div class="brand-hero-logo">
               <img src="assets/imgmarcas/Honeywell.png" alt="Honeywell Logo">
             </div>
@@ -414,43 +420,43 @@
             <h4 class="product-title"></h4>
           </div>
         </div>
-      <!-- Descripción de Marca -->
+      <!-- Descripci&#243;n de Marca -->
       <section class="brand-description">
         <h2>IZC es un distribuidor mayorista autorizado de la marca Honeywell en Colombia</h2>
-        <p>Conozca nuestro portafolio de escáneres de códigos de barras versátiles que pueden usar como dispositivos de mano o escáneres de presentación manos libres con activación automática por infrarrojos.</p>
-        <p>Honeywell cuenta con una alta gama de impresoras de escritorio e industriales de códigos de barras, etiquetas, tickets y rótulos. También cuenta con un amplio portafolio de computadoras móviles e impresión móvil adecuada para usted.</p>
-        <h2 class="slogan">¡El futuro depende de nosotros!</h2>
+        <p>Conozca nuestro portafolio de esc&#225;neres de c&#243;digos de barras vers&#225;tiles que pueden usar como dispositivos de mano o esc&#225;neres de presentaci&#243;n manos libres con activaci&#243;n autom&#225;tica por infrarrojos.</p>
+        <p>Honeywell cuenta con una alta gama de impresoras de escritorio e industriales de c&#243;digos de barras, etiquetas, tickets y r&#243;tulos. Tambi&#233;n cuenta con un amplio portafolio de computadoras m&#243;viles e impresi&#243;n m&#243;vil adecuada para usted.</p>
+        <h2 class="slogan">&#161;El futuro depende de nosotros!</h2>
       </section>
 
       <!-- Barra de Herramientas -->
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               <div class="toolbar">
         <div class="view-mode">
-          <span class="item-count" id="itemCountDisplay">24 artículos</span>
+          <span class="item-count" id="itemCountDisplay">24 art&#237;culos</span>
         </div>
         <div class="sort-mode">
           <select id="sortSelect">
-            <option value="all">Todas las Categorías</option>
-            <option value="lectores">Lectores de Código de Barras</option>
+            <option value="all">Todas las Categor&#237;as</option>
+            <option value="lectores">Lectores de C&#243;digo de Barras</option>
             <option value="impresoras">Impresoras de Etiquetas</option>
-            <option value="movilidad">Computadoras Móviles</option>
+            <option value="movilidad">Computadoras M&#243;viles</option>
           </select>
-          <button class="sort-dir-btn">↑</button>
+          <button class="sort-dir-btn">&#8593;</button>
         </div>
       </div>
 
-      <!-- Grilla de Productos Honeywell (Extraídos de las imágenes) -->
+      <!-- Grilla de Productos Honeywell (Extra&#237;dos de las im&#225;genes) -->
       <section class="product-grid" id="productGrid">
         <!-- productos cargados desde catalogo.json -->
       </section>
 
       <!-- Mensaje cuando no hay productos -->
       <div id="noProductsMessage" style="display: none; padding: 40px; text-align: center; color: #666; font-size: 15px;">
-        No se encontraron productos disponibles para esta categoría en la marca Honeywell.
+        No se encontraron productos disponibles para esta categor&#237;a en la marca Honeywell.
       </div>
 
     </main>
   </div>
 
-  <!-- Botón flotante -->
+  <!-- Bot&#243;n flotante -->
 </body>
 </html>

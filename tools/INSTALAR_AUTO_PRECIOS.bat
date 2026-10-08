@@ -16,5 +16,6 @@ echo - Vigilante activo ahora en segundo plano
 echo - Se iniciara solo al encender el PC / iniciar sesion
 echo.
 echo Solo cambia assets\files\lista-precios-izc.xlsb
-echo La web actualiza precios sola (espera unos segundos y, si hace falta, recarga).
+echo La web actualiza sola en unos segundos (clientes + LP asesor + referencias).
+echo Si hace falta, recarga la pagina.
 pause

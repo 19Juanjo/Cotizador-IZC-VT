@@ -1,4 +1,3 @@
-# Control del servidor: iniciar, detener, reiniciar por puerto/proceso.
 # Control del servidor local IZC (inicio, reinicio y comprobacion de API).
 # Mantiene API + archivos en :8080 y :5500 (misma carpeta / mismos JSON).
 param(
@@ -9,6 +8,13 @@ param(
 $ErrorActionPreference = 'Stop'
 $ScriptDir = $PSScriptRoot
 $Root = (Resolve-Path (Join-Path $ScriptDir '..')).Path
+
+# En WAMP (pqr :8183) no se debe levantar el servidor Python :8080.
+if ($Root -match '(?i)\\wamp64\\www\\') {
+  Write-Host "IZC en WAMP: usa http://pqr.izc.com.co:8183/IZC/  (no el puerto 8080)"
+  exit 0
+}
+
 $ServerScript = Join-Path $ScriptDir 'servidor_local.ps1'
 $SigFile = Join-Path $ScriptDir '.servidor_local.sig'
 $Ports = @(8080, 5500)
@@ -26,23 +32,38 @@ function Save-ServerSignature {
 
 function Test-PortListening([int]$Port) {
   try {
-    $conn = Get-NetTCPConnection -LocalPort $Port -State Listen -ErrorAction Stop
-    return ($null -ne $conn)
+    $client = New-Object System.Net.Sockets.TcpClient
+    $iar = $client.BeginConnect('127.0.0.1', $Port, $null, $null)
+    $ok = $iar.AsyncWaitHandle.WaitOne(400)
+    if ($ok -and $client.Connected) {
+      $client.EndConnect($iar) | Out-Null
+      $client.Close()
+      return $true
+    }
+    try { $client.Close() } catch {}
+    return $false
   } catch {
     return $false
   }
 }
 
 function Get-PortOwnerPids([int]$Port) {
-  $pids = @()
+  # Evitar Get-NetTCPConnection: en varios PCs se cuelga varios segundos/minutos.
+  $pids = New-Object System.Collections.Generic.List[int]
   try {
-    $pids = @(Get-NetTCPConnection -LocalPort $Port -State Listen -ErrorAction SilentlyContinue |
-      Select-Object -ExpandProperty OwningProcess -Unique |
-      Where-Object { $_ -and $_ -gt 0 })
-  } catch {
-    $pids = @()
-  }
-  return ,$pids
+    $out = & netstat.exe -ano -p tcp 2>$null
+    $needle = (':{0} ' -f $Port)
+    foreach ($line in $out) {
+      $s = [string]$line
+      if ($s -notmatch 'LISTENING') { continue }
+      if ($s.IndexOf($needle, [StringComparison]::OrdinalIgnoreCase) -lt 0) { continue }
+      if ($s -match '\s(\d+)\s*$') {
+        $id = [int]$Matches[1]
+        if ($id -gt 0 -and -not $pids.Contains($id)) { [void]$pids.Add($id) }
+      }
+    }
+  } catch {}
+  return , @($pids)
 }
 
 function Test-PortIsIzcApi([int]$Port) {
@@ -53,12 +74,21 @@ function Test-PortIsIzcApi([int]$Port) {
       -Method POST `
       -ContentType 'application/json' `
       -Body $body `
-      -TimeoutSec 2
+      -TimeoutSec 3
     if ($response.StatusCode -ne 200) { return $false }
     $json = $response.Content | ConvertFrom-Json
     return ($json.ok -eq $true)
   } catch {
-    return $false
+    # Fallback: si sirve HTML del cotizador, el listener IZC esta vivo.
+    try {
+      $html = Invoke-WebRequest -UseBasicParsing `
+        -Uri "http://127.0.0.1:$Port/marcas.html" `
+        -Method GET `
+        -TimeoutSec 2
+      return ($html.StatusCode -eq 200)
+    } catch {
+      return $false
+    }
   }
 }
 
@@ -92,7 +122,6 @@ function Stop-PortProcess([int]$Port) {
       Stop-Process -Id $procId -Force -ErrorAction SilentlyContinue
     }
   }
-  # Fallback: matar cualquier servidor_local.ps1 de este puerto por linea de comando
   try {
     Get-CimInstance Win32_Process -Filter "Name = 'powershell.exe' OR Name = 'pwsh.exe'" -ErrorAction SilentlyContinue |
       Where-Object {
@@ -106,16 +135,39 @@ function Stop-PortProcess([int]$Port) {
 }
 
 function Start-ServerOnPort([int]$Port) {
-  Start-Process powershell -ArgumentList @(
-    '-NoProfile',
-    '-ExecutionPolicy', 'Bypass',
-    '-File', $ServerScript,
-    '-Port', "$Port",
-    '-NoBrowser'
-  ) -WindowStyle Hidden | Out-Null
+  # Arranque via WScript (mas fiable que Start-Process Hidden: antivirus a veces niega Acceso).
+  $launcher = Join-Path $env:TEMP ("izc_servidor_port_{0}.vbs" -f $Port)
+  $ps1 = $ServerScript.Replace('\', '\\').Replace('"', '""')
+  $vbs = @(
+    'Set sh = CreateObject("WScript.Shell")',
+    ('sh.Run "powershell.exe -NoProfile -ExecutionPolicy Bypass -File ""{0}"" -Port {1} -NoBrowser", 0, False' -f $ps1, $Port)
+  ) -join "`r`n"
+  [System.IO.File]::WriteAllText($launcher, $vbs, [System.Text.UTF8Encoding]::new($false))
+  $wscript = Join-Path $env:SystemRoot 'System32\wscript.exe'
+  if (-not (Test-Path $wscript)) { $wscript = 'wscript.exe' }
+  Start-Process -FilePath $wscript -ArgumentList @('//nologo', $launcher) -WindowStyle Hidden | Out-Null
+
+  # Fallback si VBS no despacho el proceso
+  Start-Sleep -Milliseconds 400
+  if (-not (Get-IzcServerPids $Port).Count) {
+    try {
+      Start-Process -FilePath 'powershell.exe' -ArgumentList @(
+        '-NoProfile',
+        '-ExecutionPolicy', 'Bypass',
+        '-WindowStyle', 'Hidden',
+        '-File', $ServerScript,
+        '-Port', "$Port",
+        '-NoBrowser'
+      ) -WindowStyle Hidden -ErrorAction Stop | Out-Null
+    } catch {
+      # Ultimo recurso: cmd start /min
+      $cmdArgs = '/c start "IZC-$Port" /min powershell.exe -NoProfile -ExecutionPolicy Bypass -File "' + $ServerScript + '" -Port ' + $Port + ' -NoBrowser'
+      Start-Process -FilePath 'cmd.exe' -ArgumentList $cmdArgs -WindowStyle Hidden | Out-Null
+    }
+  }
 }
 
-function Wait-PortReady([int]$Port, [int]$MaxAttempts = 12) {
+function Wait-PortReady([int]$Port, [int]$MaxAttempts = 25) {
   for ($i = 0; $i -lt $MaxAttempts; $i++) {
     if ((Test-PortListening $Port) -and (Test-PortIsIzcApi $Port)) {
       return $true
@@ -129,8 +181,9 @@ function Test-PortUpToDate([int]$Port) {
   if (-not (Test-PortListening $Port)) { return $false }
   if (-not (Test-PortIsIzcApi $Port)) { return $false }
   $current = Get-ServerSignature
-  if (-not (Test-Path $SigFile)) { return $false }
+  if (-not (Test-Path $SigFile)) { return $true }
   $saved = (Get-Content $SigFile -Raw -Encoding UTF8).Trim()
+  if (-not $saved) { return $true }
   return ($saved -eq $current)
 }
 
@@ -149,7 +202,6 @@ function Ensure-Port([int]$Port) {
     }
   }
 
-  # Si tras stop sigue escuchando un IZC huerfano, intentar stop otra vez
   if ((Test-PortListening $Port) -and (Test-PortIsIzcApi $Port)) {
     Stop-PortProcess $Port
     Start-Sleep -Seconds 2
@@ -166,9 +218,8 @@ function Ensure-Port([int]$Port) {
 
 function Ensure-AllPorts {
   $ok8080 = Ensure-Port 8080
-  $ok5500 = Ensure-Port 5500
+  $null = Ensure-Port 5500
   if ($ok8080) { Save-ServerSignature }
-  # Exito si al menos 8080 (API principal) esta listo
   return $ok8080
 }
 
@@ -176,7 +227,6 @@ function Stop-AllIzcPorts {
   foreach ($port in $Ports) {
     Stop-PortProcess $port
   }
-  # Limpieza global por si quedaron instancias duplicadas
   try {
     Get-CimInstance Win32_Process -Filter "Name = 'powershell.exe' OR Name = 'pwsh.exe'" -ErrorAction SilentlyContinue |
       Where-Object { ([string]$_.CommandLine) -like '*servidor_local.ps1*' } |
@@ -191,7 +241,6 @@ function Restart-AllPorts {
   foreach ($port in $Ports) {
     if (Test-PortListening $port) {
       if (Test-PortIsIzcApi $port) {
-        # Todavia hay un IZC vivo: forzar stop otra vez
         Stop-PortProcess $port
         Start-Sleep -Seconds 2
       } else {
@@ -218,7 +267,8 @@ switch ($Action) {
     exit 0
   }
   'health' {
-    if (Test-PortUpToDate 8080) { exit 0 } else { exit 1 }
+    # ABRIR.bat solo necesita API viva; la firma se valida en ensure/restart.
+    if ((Test-PortListening 8080) -and (Test-PortIsIzcApi 8080)) { exit 0 } else { exit 1 }
   }
   'restart' {
     if (Restart-AllPorts) { exit 0 } else { exit 1 }

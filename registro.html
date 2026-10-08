@@ -1,59 +1,77 @@
 <!DOCTYPE html>
-<!-- Registro de nuevos clientes (NIT, datos de empresa). -->
+<!-- Registro de nuevos clientes (empresa, NIT, contacto y contrase&#241;a). -->
 <html lang="es">
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Registrarse - IZC MAYORISTA</title>
+  <title>Registrarse - IZC / VALTECH</title>
   <link rel="icon" href="assets/logo/iconoizc.png" type="image/png">
-  <link rel="stylesheet" href="assets/css/index.css?v=29">
-  <link rel="stylesheet" href="assets/css/auth.css?v=9">
-  <script>
-    if (location.protocol === 'file:') {
-      location.replace('http://127.0.0.1:8080/registro.html');
-    }
-  </script>
-  <script src="assets/js/auth.js?v=32" defer></script>
+  <link rel="stylesheet" href="assets/css/index.css?v=36">
+  <link rel="stylesheet" href="assets/css/auth.css?v=15">
+  <link rel="stylesheet" href="assets/css/login.css?v=13">
+  <script src="assets/js/file-boot.js?v=2"></script>
+  <script src="assets/js/auth.js?v=91" defer></script>
   <script src="assets/js/index.js?v=3" defer></script>
 </head>
-<body>
-  <div class="top-bar">
-    <div class="top-bar-inner">
-      <a href="https://api.whatsapp.com/send?phone=573144355391" target="_blank">Soporte Técnico</a>
-    </div>
+<body class="login-empresa-body login-force-motion">
+  <div class="login-bg" aria-hidden="true">
+    <span class="login-bg-orb login-bg-orb--a"></span>
+    <span class="login-bg-orb login-bg-orb--b"></span>
+    <span class="login-bg-orb login-bg-orb--c"></span>
+    <span class="login-bg-orb login-bg-orb--d"></span>
+    <span class="login-bg-grid"></span>
+    <span class="login-bg-sheen"></span>
+    <span class="login-bg-dust">
+      <span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span><span></span>
+    </span>
   </div>
+  <div class="top-bar"></div>
 
-  <header class="main-header">
+  <header class="main-header login-empresa-header">
     <div class="main-header-inner">
-      <a class="logo" href="index.html">
-        <img src="assets/logo/logoizc.png" alt="IZC Mayorista" class="logo-img">
-      </a>
+      <span class="logo" aria-hidden="true"></span>
       <div style="flex:1"></div>
-      <a href="favoritos.html" class="header-wishlist" id="headerWishlist" title="Mis favoritos" aria-label="Mis favoritos"><span class="header-wishlist-icon" aria-hidden="true">♥</span></a>
+      <nav class="header-auth login-header-auth" id="headerAuth" aria-label="Acceso">
+        <a class="header-auth-link" href="login.html">Iniciar sesi&#243;n</a>
+        <a class="header-auth-link" href="registro.html">Registrarse</a>
+      </nav>
     </div>
   </header>
 
-  <main class="auth-page">
-    <div class="auth-card">
+  <main class="auth-page login-empresa-page">
+    <div class="auth-card login-empresa-card">
       <h1>Registrarse</h1>
-      <p class="auth-lead">Crea tu cuenta con nombre, NIT y contraseña.</p>
+      <p class="auth-lead">Crea tu cuenta con los datos de la empresa y del contacto.</p>
+
       <form id="registroForm" autocomplete="on" novalidate>
         <div class="auth-field">
-          <label for="regNombre">Nombre</label>
-          <input id="regNombre" name="nombre" type="text" placeholder="Nombre o razón social" required minlength="2" autocomplete="name">
+          <label for="regNombre">Nombre Empresa</label>
+          <input id="regNombre" name="nombre" type="text" placeholder="Raz&#243;n social o nombre de la empresa" required minlength="2" autocomplete="organization">
         </div>
         <div class="auth-field">
           <label for="regNit">NIT</label>
           <input id="regNit" name="nit" type="text" inputmode="numeric" placeholder="Ej: 900123456" required autocomplete="off">
         </div>
         <div class="auth-field">
-          <label for="regPassword">Contraseña</label>
-          <input id="regPassword" name="password" type="password" placeholder="Mínimo 4 caracteres" required minlength="4" autocomplete="new-password">
+          <label for="regContactoTelefono">N&#250;mero Contacto</label>
+          <input id="regContactoTelefono" name="contacto_telefono" type="tel" inputmode="tel" placeholder="Ej: 3001234567" required minlength="7" autocomplete="tel">
         </div>
-        <p id="authMessage" class="auth-message" role="status"></p>
+        <div class="auth-field">
+          <label for="regContactoNombre">Nombre Contacto</label>
+          <input id="regContactoNombre" name="contacto_nombre" type="text" placeholder="Persona de contacto" required minlength="2" autocomplete="name">
+        </div>
+        <div class="auth-field">
+          <label for="regPassword">Contrase&#241;a</label>
+          <input id="regPassword" name="password" type="password" placeholder="M&#237;nimo 4 caracteres" required minlength="4" autocomplete="new-password">
+        </div>
+
         <button class="auth-submit" type="submit">Crear cuenta</button>
+        <p id="authMessage" class="auth-message" role="status"></p>
       </form>
-      <p class="auth-switch">¿Ya tienes cuenta? <a href="login.html">Inicia sesión</a></p>
+
+      <p class="auth-switch">&#191;Ya tienes cuenta? <a href="login.html">Inicia sesi&#243;n</a></p>
     </div>
   </main>
 </body>

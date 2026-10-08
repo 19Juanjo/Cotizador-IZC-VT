@@ -1,0 +1,20 @@
+[
+    {
+        "nit": "03166122778",
+        "nombre": "Oscar",
+        "password_hash": "pbkdf2$100000$o+ILSNyWt\/14lmG27Gd9Hg==$CVC+vfGkCOkebdKzk5Yi67mm4Kb09iWD8oP+BBUQdoM=",
+        "created_at": "2026-08-03T14:50:26.7286061-05:00"
+    },
+    {
+        "nit": "3108721135",
+        "nombre": "Valentina Zambrano",
+        "password_hash": "pbkdf2$100000$K5UzERgdmUztaMuyjq2Ecw==$6z3gVTGfmTg0bARafYVAAPLdiPWIElrrksuODUjxiTs=",
+        "created_at": "2026-09-01T10:17:06-05:00"
+    },
+    {
+        "nit": "000000001",
+        "nombre": "Oscar II",
+        "password_hash": "pbkdf2$100000$UmTOR2F8kJFGVb840T9dFQ==$1\/P90+rRrZvDLBgQSx3hE6LD8HPaJNpDmtBtra4tR0g=",
+        "created_at": "2026-09-14T11:32:21-05:00"
+    }
+]

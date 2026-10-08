@@ -24,6 +24,13 @@
   margin-bottom: 18px;
 }
 
+.cotizador-head-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: flex-end;
+}
+
 .cotizador-head h1 {
   margin: 0 0 6px;
   font-size: 1.5rem;
@@ -41,6 +48,14 @@
   flex-direction: column;
   gap: 6px;
   min-width: 180px;
+}
+
+.cotizador-fecha-cierre {
+  min-width: 160px;
+}
+
+.cotizador-fecha-cierre input[type="date"] {
+  min-height: 42px;
 }
 
 .cotizador-trm label {
@@ -88,11 +103,130 @@
 }
 
 .cotizador-field-sku {
-  flex: 2 1 280px;
+  flex: 1 1 560px;
+  min-width: 320px;
+  max-width: none;
+  position: relative;
+}
+
+.cotizador-sku-wrap {
+  position: relative;
+  width: 100%;
+}
+
+.cotizador-field-sku .cotizador-sku-wrap input,
+.cotizador-field-sku > input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.cotizador-sku-suggest {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% + 2px);
+  z-index: 40;
+  margin: 0;
+  padding: 4px 0;
+  list-style: none;
+  max-height: 280px;
+  overflow-y: auto;
+  background: #fff;
+  border: 1px solid #c2d1e5;
+  border-radius: 4px;
+  box-shadow: 0 8px 22px rgba(22, 51, 90, 0.16);
+}
+
+.cotizador-sku-suggest[hidden] {
+  display: none !important;
+}
+
+.cotizador-sku-suggest-item {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  padding: 8px 12px;
+  cursor: pointer;
+  color: #16233f;
+}
+
+.cotizador-sku-suggest-item:hover,
+.cotizador-sku-suggest-item.is-active {
+  background: #eaf2fb;
+}
+
+.cotizador-sku-suggest-main {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+}
+
+.cotizador-sku-suggest-code {
+  flex: 0 0 auto;
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: #1653a0;
+}
+
+.cotizador-sku-suggest-name {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 0.8rem;
+  line-height: 1.3;
+  color: #3d4f6c;
+}
+
+.cotizador-sku-suggest-ref {
+  flex: 0 1 auto;
+  font-size: 0.74rem;
+  color: #6a7b94;
+}
+
+.cotizador-sku-suggest-ref::before {
+  content: '·';
+  margin: 0 4px;
+  color: #9aa8bc;
+}
+
+.cotizador-sku-suggest-stock {
+  flex: 0 0 auto;
+  max-width: 38%;
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1.25;
+  text-align: right;
+  color: #1b7a3c;
+  white-space: normal;
+}
+
+.cotizador-sku-suggest-stock-line {
+  display: block;
+}
+
+.cotizador-sku-suggest-stock-line.is-total {
+  font-weight: 700;
+}
+
+.cotizador-sku-suggest-stock.is-agotado {
+  color: #c62828;
+  font-weight: 700;
+  font-size: 0.78rem;
 }
 
 .cotizador-field-qty {
   flex: 0 0 110px;
+}
+
+.cotizador-field-lp {
+  flex: 0 0 160px;
 }
 
 .cotizador-field label {
@@ -101,12 +235,15 @@
   color: #3d4f6c;
 }
 
-.cotizador-field input {
+.cotizador-field input,
+.cotizador-field select {
   padding: 10px 12px;
   border: 1px solid #c2d1e5;
   border-radius: 4px;
   font-size: 1rem;
   color: #16233f;
+  background: #fff;
+  height: 42px;
 }
 
 .cotizador-sku-name {
@@ -126,6 +263,10 @@
   color: #c03939;
 }
 
+.cotizador-sku-name.is-warn {
+  color: #9a6b00;
+}
+
 .cotizador-add-btn {
   border: 0;
   border-radius: 4px;
@@ -139,6 +280,91 @@
 
 .cotizador-add-btn:hover {
   background: #1d72db;
+}
+
+.cotizador-inventario {
+  margin: 4px 0 14px;
+  max-width: 640px;
+  overflow-x: auto;
+}
+
+.cotizador-inventario-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-size: 12px;
+  text-align: center;
+  color: #fff;
+}
+
+.cotizador-inventario-table th,
+.cotizador-inventario-table td {
+  border: 1px solid #16365d;
+  padding: 4px 2px;
+  line-height: 1.2;
+}
+
+.cotizador-inventario-title {
+  background: #16365d;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 7px 8px;
+}
+
+.cotizador-inventario-empresa,
+.cotizador-inventario-table thead th.is-izc,
+.cotizador-inventario-table thead th.is-valtech {
+  font-style: italic;
+  font-weight: 700;
+}
+
+.cotizador-inventario-table thead th.is-izc {
+  background: #1f4e79;
+}
+
+.cotizador-inventario-table thead th.is-valtech {
+  background: #2e75b6;
+}
+
+.cotizador-inventario-total-h {
+  background: #c00000;
+  font-style: italic;
+  font-weight: 700;
+  width: 12%;
+}
+
+.cotizador-inventario-table tbody td {
+  background: #fff2cc;
+  color: #bf8f00;
+  font-weight: 700;
+}
+
+.cotizador-inventario-table tbody td.has-stock {
+  background: #fff;
+  color: #111;
+}
+
+.cotizador-inventario-total {
+  background: #fff !important;
+  color: #111 !important;
+}
+
+.cotizador-inventario-empresa-cell {
+  background: #1f4e79 !important;
+  color: #fff !important;
+  font-style: italic;
+  font-weight: 700;
+}
+
+.cotizador-inventario-empresa-cell.is-valtech {
+  background: #3a4046 !important;
+}
+
+.cotizador-inventario-legend {
+  margin: 4px 0 0;
+  font-size: 11px;
+  color: #5a6b85;
 }
 
 .cotizador-message {
@@ -171,6 +397,36 @@
   min-width: 1020px;
 }
 
+.cotizador-table.cotizador-table-asesor {
+  width: auto;
+  min-width: 3080px;
+  max-width: none;
+  font-size: 0.82rem;
+  table-layout: fixed;
+}
+
+.cotizador-table-asesor col.col-num { width: 36px; }
+.cotizador-table-asesor col.col-inv { width: 36px; }
+.cotizador-table-asesor col.col-inv-total { width: 44px; }
+.cotizador-table-asesor col.col-lp { width: 140px; }
+.cotizador-table-asesor col.col-flete { width: 210px; }
+.cotizador-table-asesor col.col-ciudad { width: 160px; }
+.cotizador-table-asesor:not(.is-ciudades-on) col.col-ciudad,
+.cotizador-table-asesor:not(.is-ciudades-on) .cotizador-th-ciudades,
+.cotizador-table-asesor:not(.is-ciudades-on) .cotizador-ciudad-cell {
+  display: none;
+}
+.cotizador-table-asesor col.col-sku { width: 88px; }
+.cotizador-table-asesor col.col-name { width: 220px; }
+.cotizador-table-asesor col.col-ref { width: 120px; }
+.cotizador-table-asesor col.col-qty { width: 64px; }
+.cotizador-table-asesor col.col-money-unit { width: 104px; }
+.cotizador-table-asesor col.col-money-pv { width: 100px; }
+.cotizador-table-asesor col.col-money-iva { width: 168px; }
+.cotizador-table-asesor col.col-money-total { width: 148px; }
+.cotizador-table-asesor col.col-money-grand { width: 168px; }
+.cotizador-table-asesor col.col-actions { width: 72px; }
+
 .cotizador-table th,
 .cotizador-table td {
   padding: 11px 12px;
@@ -188,15 +444,240 @@
   white-space: nowrap;
 }
 
-.cotizador-table td:nth-child(2) {
+.cotizador-table-asesor th {
+  background: #1653a0;
+  color: #fff;
+  font-size: 0.72rem;
+  text-transform: none;
+  letter-spacing: 0;
+  font-weight: 700;
+  white-space: normal;
+}
+
+.cotizador-table-asesor .cotizador-th-money {
+  line-height: 1.2;
+  text-align: center;
+  vertical-align: middle;
+  padding: 10px 4px;
+  font-size: 0.68rem;
+  overflow: hidden;
+}
+
+.cotizador-table-asesor .cotizador-th-money.is-wide {
+  min-width: 168px;
+}
+
+.cotizador-table-asesor .cotizador-th-money.is-mid {
+  min-width: 148px;
+}
+
+.cotizador-table-asesor .cotizador-th-money.is-3l {
+  line-height: 1.15;
+  font-size: 0.64rem;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.cotizador-table-asesor .cotizador-th-num,
+.cotizador-table-asesor .cotizador-num-cell {
+  text-align: center;
+  padding-left: 6px;
+  padding-right: 6px;
+}
+
+.cotizador-table:not(.cotizador-table-asesor):not(.cotizador-table-cliente) td:nth-child(2) {
   white-space: normal;
   min-width: 220px;
   max-width: 360px;
   line-height: 1.35;
 }
 
-.cotizador-table td:not(:nth-child(2)) {
+.cotizador-table:not(.cotizador-table-asesor):not(.cotizador-table-cliente) td:not(:nth-child(2)) {
   white-space: nowrap;
+}
+
+.cotizador-table-asesor .cotizador-line-select-cell {
+  text-align: center;
+}
+
+.cotizador-table-asesor .cotizador-line-select-cell .cotizador-line-select {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+.cotizador-table-asesor .cotizador-name-cell {
+  white-space: normal;
+  line-height: 1.35;
+}
+
+.cotizador-table-asesor .cotizador-ref-cell {
+  white-space: normal;
+  line-height: 1.3;
+  font-size: 0.8rem;
+  color: #3d4f6c;
+}
+
+/* Inventario: IZC / VALTECH — anchos fijos y colores suaves */
+.cotizador-table-asesor .cotizador-inv-empresa {
+  text-align: center;
+  letter-spacing: 0.04em;
+  padding: 8px 4px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.cotizador-table-asesor .cotizador-inv-empresa.is-izc,
+.cotizador-table-asesor .cotizador-inv-subhead th.is-izc {
+  background: #1e4d7b;
+  color: #fff;
+}
+
+.cotizador-table-asesor .cotizador-inv-empresa.is-valtech,
+.cotizador-table-asesor .cotizador-inv-subhead th.is-valtech {
+  background: #2f6f9e;
+  color: #fff;
+}
+
+.cotizador-table-asesor .cotizador-inv-total-h {
+  background: #9b2c2c;
+  color: #fff;
+  text-align: center;
+  padding: 6px 4px;
+}
+
+.cotizador-table-asesor .cotizador-inv-subhead th {
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 5px 2px !important;
+  text-align: center;
+  letter-spacing: 0.02em;
+}
+
+.cotizador-table-asesor .cotizador-inv-cell,
+.cotizador-table-asesor .cotizador-inv-total-cell {
+  text-align: center;
+  font-weight: 700;
+  font-size: 0.78rem;
+  font-variant-numeric: tabular-nums;
+  padding: 6px 2px !important;
+  border-bottom: 1px solid #e8eef5;
+  overflow: hidden;
+}
+
+.cotizador-table-asesor .cotizador-inv-cell {
+  background: #f0f3f7;
+  color: #7a8799;
+}
+
+.cotizador-table-asesor .cotizador-inv-cell.has-stock {
+  background: #eaf6ee;
+  color: #1b6b3a;
+}
+
+.cotizador-table-asesor .cotizador-inv-total-cell {
+  background: #f7fafc;
+  color: #3d4f6c;
+  border-left: 2px solid #9b2c2c;
+}
+
+.cotizador-table-asesor .cotizador-inv-total-cell.has-stock {
+  background: #eaf6ee;
+  color: #1b6b3a;
+}
+
+.cotizador-table-asesor td.cotizador-inv-cell.is-izc-bodega {
+  border-left: 0;
+}
+
+.cotizador-table-cliente {
+  min-width: 1180px;
+}
+
+.cotizador-table-cliente col.col-inv { width: 42px; }
+.cotizador-table-cliente col.col-inv-total { width: 52px; }
+.cotizador-table-cliente col.col-sku { width: 88px; }
+.cotizador-table-cliente col.col-name { width: auto; }
+.cotizador-table-cliente col.col-qty { width: 72px; }
+.cotizador-table-cliente col.col-actions { width: 78px; }
+
+.cotizador-table-cliente .cotizador-inv-empresa,
+.cotizador-table-cliente .cotizador-inv-subhead th,
+.cotizador-table-cliente .cotizador-inv-total-h {
+  text-transform: none;
+  letter-spacing: 0.02em;
+  text-align: center;
+  color: #fff;
+  font-weight: 700;
+  padding: 6px 2px;
+}
+
+.cotizador-table-cliente .cotizador-inv-empresa {
+  letter-spacing: 0.04em;
+  padding: 8px 4px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.cotizador-table-cliente .cotizador-inv-empresa.is-izc,
+.cotizador-table-cliente .cotizador-inv-subhead th.is-izc {
+  background: #1e4d7b;
+}
+
+.cotizador-table-cliente .cotizador-inv-empresa.is-valtech,
+.cotizador-table-cliente .cotizador-inv-subhead th.is-valtech {
+  background: #2f6f9e;
+}
+
+.cotizador-table-cliente .cotizador-inv-total-h {
+  background: #9b2c2c;
+  vertical-align: middle;
+}
+
+.cotizador-table-cliente .cotizador-inv-subhead th {
+  font-size: 0.68rem;
+  line-height: 1.2;
+}
+
+.cotizador-table-cliente .cotizador-inv-cell,
+.cotizador-table-cliente .cotizador-inv-total-cell {
+  text-align: center;
+  font-weight: 700;
+  font-size: 0.78rem;
+  font-variant-numeric: tabular-nums;
+  padding: 8px 2px;
+  white-space: nowrap;
+}
+
+.cotizador-table-cliente .cotizador-inv-cell {
+  background: #f0f3f7;
+  color: #7a8799;
+}
+
+.cotizador-table-cliente .cotizador-inv-cell.has-stock {
+  background: #eaf6ee;
+  color: #1b6b3a;
+}
+
+.cotizador-table-cliente .cotizador-inv-total-cell {
+  background: #f7fafc;
+  color: #3d4f6c;
+  border-left: 2px solid #9b2c2c;
+}
+
+.cotizador-table-cliente .cotizador-inv-total-cell.has-stock {
+  background: #eaf6ee;
+  color: #1b6b3a;
+}
+
+.cotizador-table-cliente .cotizador-name-cell {
+  white-space: normal;
+  line-height: 1.35;
+}
+
+.cotizador-num-cell {
+  text-align: center;
+  width: 36px;
+  color: #3d4f6c;
+  font-weight: 600;
 }
 
 .cotizador-empty-row td {
@@ -242,6 +723,285 @@
   box-shadow: 0 0 0 2px rgba(22, 83, 160, 0.15);
 }
 
+.cotizador-price-cell {
+  padding-top: 6px !important;
+  padding-bottom: 6px !important;
+  min-width: 110px;
+}
+
+.cotizador-price-input {
+  width: 100%;
+  min-width: 96px;
+  max-width: 140px;
+  padding: 6px 8px;
+  border: 1px solid #c2d1e5;
+  border-radius: 4px;
+  font-size: 0.84rem;
+  color: #16233f;
+  text-align: right;
+  background: #fffef8;
+}
+
+.cotizador-sku-input {
+  min-width: 72px;
+  max-width: 110px;
+  text-align: left;
+}
+
+.cotizador-ciudad-input {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+.cotizador-price-input:focus {
+  outline: none;
+  border-color: #1653a0;
+  box-shadow: 0 0 0 2px rgba(22, 83, 160, 0.15);
+  background: #fff;
+}
+
+.cotizador-table-asesor .cotizador-unit-price-cell,
+.cotizador-table-asesor .cotizador-price-cell,
+.cotizador-table-asesor .cotizador-money-cell {
+  text-align: center;
+}
+
+.cotizador-table-asesor .cotizador-unit-price-cell .cotizador-price-input,
+.cotizador-table-asesor .cotizador-price-cell .cotizador-price-input {
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+.cotizador-unit-price-cell {
+  white-space: nowrap;
+  font-weight: 600;
+  min-width: 110px;
+}
+
+.cotizador-money-cell {
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  color: #16233f;
+  min-width: 0;
+  padding-left: 6px !important;
+  padding-right: 6px !important;
+  font-size: 0.8rem;
+}
+
+.cotizador-line-select-cell {
+  padding: 6px 8px !important;
+  vertical-align: middle;
+  overflow: hidden;
+}
+
+.cotizador-line-select {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 5px 6px;
+  border: 1px solid #c2d1e5;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  color: #16233f;
+  background: #fffef8;
+}
+
+.cotizador-line-select:focus {
+  outline: none;
+  border-color: #1653a0;
+  box-shadow: 0 0 0 2px rgba(22, 83, 160, 0.15);
+  background: #fff;
+}
+
+.cotizador-table-asesor .cotizador-sku-cell {
+  padding: 8px !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 600;
+  color: #16233f;
+}
+
+.cotizador-meta-input {
+  width: 100%;
+  min-width: 120px;
+  padding: 6px 8px;
+  border: 1px solid #c2d1e5;
+  border-radius: 4px;
+  font-size: 0.84rem;
+  color: #16233f;
+  background: #fffef8;
+}
+
+.cotizador-meta-input:focus {
+  outline: none;
+  border-color: #1653a0;
+  box-shadow: 0 0 0 2px rgba(22, 83, 160, 0.15);
+  background: #fff;
+}
+
+.cotizador-manual-tag {
+  display: inline-block;
+  margin-left: 4px;
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #7a5a00;
+  background: #ffe9a8;
+  vertical-align: middle;
+}
+
+.cotizador-table tr.is-manual-item td,
+.cotizador-table-asesor tr.is-manual-item td {
+  background: #fffdf5;
+}
+
+.cotizador-trm select {
+  padding: 8px 10px;
+  border: 1px solid #c2d1e5;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  color: #16233f;
+  background: #fff7d6;
+  min-width: 160px;
+  height: 40px;
+}
+
+
+.cotizador-empresa select {
+  min-width: 220px;
+  background: #eef8e8;
+}
+
+.cotizador-empresa select:disabled {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: none;
+  cursor: default;
+  opacity: 1;
+}
+
+.cotizador-empresa select:disabled::-ms-expand {
+  display: none;
+}
+
+.cotizador-totals-row td {
+  border-bottom: 0;
+  vertical-align: top;
+  padding: 10px 6px;
+  background: #f4f8fc;
+}
+
+.cotizador-totals-spacer {
+  text-align: right;
+  vertical-align: middle !important;
+}
+
+.cotizador-totals-label {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #1653a0;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.cotizador-total-under {
+  min-width: 0;
+}
+
+.cotizador-total-under .cotizador-excel-total-card {
+  margin: 0;
+  padding: 8px 4px;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.cotizador-total-under .cotizador-excel-total-card span {
+  font-size: 0.62rem;
+  margin-bottom: 4px;
+  line-height: 1.2;
+  white-space: normal;
+  display: block;
+}
+
+.cotizador-total-under .cotizador-excel-total-card strong {
+  font-size: 0.76rem;
+  white-space: nowrap;
+  display: block;
+  font-variant-numeric: tabular-nums;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cotizador-total-under .cotizador-flete-input {
+  font-size: 0.82rem;
+  padding: 5px 6px;
+}
+
+.cotizador-excel-totals {
+  display: none;
+}
+
+.cotizador-excel-total-card {
+  background: #e8f2fb;
+  border: 1px solid #c5d8f0;
+  border-radius: 6px;
+  padding: 12px 14px;
+  text-align: center;
+}
+
+.cotizador-excel-total-card span {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #1653a0;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  margin-bottom: 6px;
+  line-height: 1.25;
+}
+
+.cotizador-excel-total-card strong {
+  display: block;
+  font-size: 1.02rem;
+  color: #16233f;
+  font-weight: 700;
+  word-break: break-word;
+}
+
+.cotizador-flete-input {
+  display: block;
+  width: 100%;
+  margin-top: 2px;
+  padding: 6px 8px;
+  border: 1px solid #c2d1e5;
+  border-radius: 4px;
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: #16233f;
+  text-align: center;
+  background: #fffef8;
+  box-sizing: border-box;
+}
+
+.cotizador-flete-input:focus {
+  outline: none;
+  border-color: #1653a0;
+  box-shadow: 0 0 0 2px rgba(22, 83, 160, 0.15);
+  background: #fff;
+}
+
 .cotizador-totals {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -281,6 +1041,60 @@
   flex-wrap: wrap;
 }
 
+.cotizador-legal {
+  margin-top: 22px;
+  border: 1px solid #c5d4e8;
+  border-radius: 6px;
+  overflow: hidden;
+  background: #eef3f8;
+  color: #2a3648;
+  font-size: 0.86rem;
+  line-height: 1.45;
+}
+
+.cotizador-legal-validity {
+  margin: 0;
+  padding: 14px 16px 12px;
+  font-style: italic;
+  color: #6b7a90;
+}
+
+.cotizador-legal-brand {
+  background: #1653a0;
+  color: #fff;
+  text-align: center;
+  padding: 10px 14px;
+  font-style: italic;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.cotizador-legal-policy {
+  padding: 14px 16px 16px;
+  background: #f7fafc;
+}
+
+.cotizador-legal-policy h2 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+  color: #16233f;
+}
+
+.cotizador-legal-policy h3 {
+  margin: 14px 0 4px;
+  font-size: 0.92rem;
+  color: #16233f;
+}
+
+.cotizador-legal-policy p {
+  margin: 0;
+  color: #3a4658;
+}
+
+.cotizador-legal-intro {
+  margin-bottom: 4px !important;
+}
+
 .cotizador-finish {
   border: 0;
   border-radius: 4px;
@@ -289,6 +1103,25 @@
   font-weight: 700;
   padding: 11px 18px;
   cursor: pointer;
+}
+
+.cotizador-pdf {
+  border: 1px solid #1653a0;
+  border-radius: 4px;
+  background: #fff;
+  color: #1653a0;
+  font-weight: 700;
+  padding: 10px 16px;
+  cursor: pointer;
+}
+
+.cotizador-pdf:hover {
+  background: #eef4fb;
+}
+
+.cotizador-pdf:disabled {
+  opacity: 0.55;
+  cursor: default;
 }
 
 .cotizador-finish:disabled {
@@ -406,15 +1239,72 @@
   background: #c03939;
 }
 
+/* body.is-sat-cotizador: inventario solo VALTECH (sin columnas IZC) */
+body.is-sat-cotizador .cotizador-table-asesor.is-sat-valtech-only .cotizador-inv-empresa.is-izc,
+body.is-sat-cotizador .cotizador-table-asesor.is-sat-valtech-only .cotizador-inv-subhead th.is-izc {
+  display: none !important;
+}
+
 .cotizador-client-card {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid !important;
+  grid-template-columns: 1fr 1fr;
+  align-items: end;
   gap: 18px 36px;
   margin: 0 0 18px;
   padding: 14px 16px;
   background: #f3f7fc;
   border: 1px solid #c5d8ef;
   border-radius: 6px;
+}
+
+.cotizador-client-card:has(.cotizador-vendedor-field:not([hidden])) {
+  grid-template-columns: 1.2fr 0.9fr 0.9fr;
+}
+
+.cotizador-vendedor-select {
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.cotizador-client-field {
+  position: relative;
+  display: block;
+  width: 100%;
+  min-width: 0;
+  max-width: none;
+}
+
+.cotizador-client-field .cotizador-client-input,
+.cotizador-client-field .cotizador-client-nombre-wrap {
+  width: 100%;
+  max-width: none;
+}
+
+.cotizador-client-input {
+  display: block;
+  width: 100%;
+  max-width: none;
+  padding: 8px 10px;
+  border: 1px solid #c2d1e5;
+  border-radius: 4px;
+  font-size: 1.02rem;
+  font-weight: 700;
+  color: #16233f;
+  background: #fff;
+  box-sizing: border-box;
+}
+
+@media (max-width: 900px) {
+  .cotizador-client-card:has(.cotizador-vendedor-field:not([hidden])) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .cotizador-client-card,
+  .cotizador-client-card:has(.cotizador-vendedor-field:not([hidden])) {
+    grid-template-columns: 1fr;
+  }
 }
 
 .cotizador-client-label {
@@ -429,6 +1319,69 @@
 .cotizador-client-card strong {
   font-size: 1.05rem;
   color: #16233f;
+}
+
+.cotizador-client-nombre-wrap {
+  position: relative;
+  width: 100%;
+}
+
+.cotizador-client-suggest {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% + 4px);
+  z-index: 80;
+  margin: 0;
+  padding: 4px 0;
+  list-style: none;
+  max-height: 240px;
+  overflow: auto;
+  background: #fff;
+  border: 1px solid #c2d1e5;
+  border-radius: 4px;
+  box-shadow: 0 8px 20px rgba(22, 35, 63, 0.12);
+  max-width: 360px;
+}
+
+.cotizador-client-suggest[hidden] {
+  display: none !important;
+}
+
+.cotizador-client-suggest-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  width: 100%;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  padding: 8px 12px;
+  cursor: pointer;
+  color: #16233f;
+}
+
+.cotizador-client-suggest-item:hover,
+.cotizador-client-suggest-item.is-active {
+  background: #e8f1fb;
+}
+
+.cotizador-client-suggest-name {
+  font-weight: 700;
+  font-size: 0.92rem;
+}
+
+.cotizador-client-suggest-nit {
+  font-size: 0.78rem;
+  color: #5a6b85;
+  font-weight: 600;
+}
+
+.cotizador-client-suggest-empty {
+  padding: 10px 12px;
+  color: #5a6b85;
+  font-size: 0.88rem;
 }
 
 @media (max-width: 700px) {

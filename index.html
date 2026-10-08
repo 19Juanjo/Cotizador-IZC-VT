@@ -6,12 +6,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>IZC MAYORISTA</title>
   <link rel="icon" href="assets/logo/iconoizc.png" type="image/png">
+  <script src="assets/js/file-boot.js?v=2"></script>
   <meta http-equiv="refresh" content="0; url=marcas.html">
   <script>
-    location.replace((location.protocol === 'file:' ? 'http://127.0.0.1:8080/' : '') + 'marcas.html' + location.search + location.hash);
+    if (location.protocol !== 'file:') {
+      location.replace('marcas.html' + location.search + location.hash);
+    }
   </script>
 </head>
 <body>
-  <p>Redirigiendo a <a href="marcas.html">Marcas</a>…</p>
+  <p>Redirigiendo a <a href="marcas.html">Marcas</a>&#8230;</p>
 </body>
 </html>

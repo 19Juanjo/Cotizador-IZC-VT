@@ -3,6 +3,7 @@
   'use strict';
   
   var catalog = null;
+  var productDetails = null;
   var grid = null;
   var titleEl = null;
   var subtitleEl = null;
@@ -185,7 +186,20 @@
       return norm.indexOf(word) !== -1;
     }) ? 30 : 0;
   }
-  
+
+  function productScore(query, product) {
+    if (window.IZCSearch && window.IZCSearch.scoreProductMatch) {
+      return window.IZCSearch.scoreProductMatch(query, product);
+    }
+    var text = [
+      product.sku,
+      product.name,
+      product.referencia,
+      product.brandName
+    ].filter(Boolean).join(' ');
+    return textScore(query, text);
+  }
+
   function filterProducts(query) {
     if (!catalog) return [];
     
@@ -259,15 +273,15 @@
         return false;
       });
     }
-    
+
+    var words = String(query || '').trim().split(/\s+/);
+    var isCodeQuery = words.length === 1 && /[a-z]/i.test(words[0]) && /\d/.test(words[0]);
+    var minScore = isCodeQuery ? 40 : 16;
+
     return catalog.products.filter(function (product) {
-      var nameScore = textScore(query, product.name + ' ' + (product.brandName || ''));
-      var skuExact = String(product.sku || '') === String(query || '').trim();
-      var score = skuExact ? Math.max(nameScore, 50) : nameScore;
-      return score >= 20;
+      return productScore(query, product) >= minScore;
     }).sort(function (a, b) {
-      return textScore(query, b.name + ' ' + (b.brandName || '')) -
-        textScore(query, a.name + ' ' + (a.brandName || ''));
+      return productScore(query, b) - productScore(query, a);
     });
   }
   
@@ -279,17 +293,37 @@
       .replace(/"/g, '&quot;');
   }
   
+  function productImage(product) {
+    var sku = String((product && product.sku) || '');
+    var detail = productDetails && productDetails[sku];
+    if (detail && detail.images && detail.images.length) {
+      var first = detail.images[0];
+      return first.img || first.full || first.thumb || '';
+    }
+    var img = (product && product.img) || '';
+    if (/iconoizc|logo\/icono/i.test(img)) return '';
+    return img;
+  }
+
   function renderProductCard(product) {
-    var brandPage = product.brandPage || (product.brand + '.html');
     var link = 'producto.html?sku=' + encodeURIComponent(product.sku);
+    var img = productImage(product);
+    var logo = product.brandLogo || 'iconoizc.png';
+    var fallback = 'assets/imgmarcas/' + logo;
+    var src = img || fallback;
+    // alt vacío + onerror una sola vez: evita que el nombre parpadee en la zona de imagen
+    var onErr = "this.onerror=null;this.alt='';this.src='" + escapeHtml(fallback) + "'";
     return (
       '<div class="product-card">' +
         '<button class="wishlist-btn" type="button">&#9825;</button>' +
         '<div class="product-img">' +
-          '<img src="' + escapeHtml(product.img) + '" alt="' + escapeHtml(product.name) + '" onerror="this.src=\'assets/imgmarcas/' + escapeHtml(product.brandLogo) + '\'">' +
+          '<img src="' + escapeHtml(src) + '" alt="" loading="lazy" onerror="' + onErr + '">' +
         '</div>' +
         '<div class="product-info">' +
           '<span class="sku">Sku: ' + escapeHtml(product.sku) + '</span>' +
+          (product.referencia
+            ? '<span class="sku">Ref: ' + escapeHtml(product.referencia) + '</span>'
+            : '') +
           '<span class="price">$ 0.00</span>' +
           '<h4 class="product-title">' +
             '<a href="' + link + '">' + escapeHtml(product.name) + '</a>' +
@@ -310,6 +344,18 @@
     }
   }
   
+  function hideSatCats() {
+    // Solo tienda IZC clientes: ocultar chips de categorías solo-SAT.
+    if (window.IZCCatalogScope && typeof IZCCatalogScope.isIzcClientStorefront === 'function') {
+      return IZCCatalogScope.isIzcClientStorefront();
+    }
+    return !(
+      window.IZCCatalogScope &&
+      typeof IZCCatalogScope.allowSatOnCurrentPage === 'function' &&
+      IZCCatalogScope.allowSatOnCurrentPage()
+    );
+  }
+
   function renderTypeTags(activeQuery) {
     var container = document.getElementById('searchTypeTags');
     if (!container) return;
@@ -319,9 +365,19 @@
     if (activeSubtype === 'mini-pc') activeType = 'minipc';
     if (activeSubtype === 'cajones') activeType = 'cajones';
 
+    var hideSat = hideSatCats();
+
     container.innerHTML = Object.keys(PRODUCT_TYPES).map(function (id) {
       var type = PRODUCT_TYPES[id];
       var hrefId = id === 'minipc' ? 'mini-pc' : id;
+      if (hideSat && window.IZCCatalogScope && typeof IZCCatalogScope.isSatOnlyNavQuery === 'function') {
+        if (IZCCatalogScope.isSatOnlyNavQuery(hrefId) || IZCCatalogScope.isSatOnlyNavQuery(id)) {
+          return '';
+        }
+      }
+      if (hideSat && catalog && Array.isArray(catalog.products)) {
+        if (!filterProducts(hrefId).length) return '';
+      }
       var active = activeType === id ? ' active' : '';
       return '<a href="buscar.html?q=' + encodeURIComponent(hrefId) + '" class="' + active.trim() + '">' + type.label + '</a>';
     }).join('');
@@ -335,6 +391,31 @@
 
   function renderResults(query) {
     if (!grid) return;
+
+    var hideSatCats = (window.IZCCatalogScope && typeof IZCCatalogScope.isIzcClientStorefront === 'function')
+      ? IZCCatalogScope.isIzcClientStorefront()
+      : !(
+        window.IZCCatalogScope &&
+        typeof IZCCatalogScope.allowSatOnCurrentPage === 'function' &&
+        IZCCatalogScope.allowSatOnCurrentPage()
+      );
+    var qNorm = String(query || '').trim().toLowerCase();
+    if (
+      hideSatCats &&
+      window.IZCCatalogScope &&
+      typeof IZCCatalogScope.isSatOnlyNavQuery === 'function' &&
+      IZCCatalogScope.isSatOnlyNavQuery(qNorm)
+    ) {
+      // Categoría solo-SAT: no dejar al cliente en un listado vacío.
+      if (titleEl) titleEl.textContent = 'Categoría no disponible';
+      if (subtitleEl) {
+        subtitleEl.textContent = 'Esta categoría pertenece a productos VALTECH / SAT. Elige otra categoría IZC.';
+      }
+      grid.innerHTML = '';
+      updateCount(0);
+      renderTypeTags('');
+      return;
+    }
 
     var products = filterProducts(query);
     var subtypeId = resolveSubtype(query);
@@ -412,6 +493,13 @@
   }
 
   function loadCatalogJson() {
+    // Preferir catálogo ya enriquecido por search.js (productos + referencias).
+    if (window.IZCSearch && typeof window.IZCSearch.getCatalog === 'function') {
+      var shared = window.IZCSearch.getCatalog();
+      if (shared && Array.isArray(shared.products) && shared.products.length) {
+        return Promise.resolve(shared);
+      }
+    }
     if (window.IZCData && typeof window.IZCData.loadJson === 'function') {
       return window.IZCData.loadJson('assets/files/catalogo.json');
     }
@@ -421,10 +509,42 @@
     });
   }
 
-  loadCatalogJson()
+  function waitForSharedCatalog(attemptsLeft) {
+    if (window.IZCSearch && typeof window.IZCSearch.getCatalog === 'function') {
+      var shared = window.IZCSearch.getCatalog();
+      if (shared && Array.isArray(shared.products) && shared.products.length) {
+        return Promise.resolve(shared);
+      }
+    }
+    if (attemptsLeft <= 0) return loadCatalogJson();
+    return new Promise(function (resolve) {
+      window.setTimeout(function () {
+        resolve(waitForSharedCatalog(attemptsLeft - 1));
+      }, 40);
+    });
+  }
+
+  waitForSharedCatalog(25)
     .then(function (data) {
-      catalog = data;
-      startApp();
+      catalog = data || { products: [] };
+      if (window.IZCCatalogScope && typeof IZCCatalogScope.filterProducts === 'function') {
+        catalog.products = IZCCatalogScope.filterProducts(catalog.products || []);
+      } else if (Array.isArray(catalog.products)) {
+        catalog.products = catalog.products.filter(function (p) {
+          var blob = [p && p.name, p && p.referencia, p && p.sku].join(' ').toUpperCase();
+          return !/(?:^|[^A-Z0-9])DEMO(?:[^A-Z0-9]|$)/.test(blob);
+        });
+      }
+      var detailsPromise = window.IZCData && typeof window.IZCData.loadJson === 'function'
+        ? window.IZCData.loadJson('assets/files/product_details.json')
+        : fetch('assets/files/product_details.json').then(function (r) {
+            if (!r.ok) throw new Error('no details');
+            return r.json();
+          });
+      return detailsPromise.catch(function () { return {}; }).then(function (details) {
+        productDetails = details && typeof details === 'object' ? details : {};
+        startApp();
+      });
     })
     .catch(function () {
       startApp();

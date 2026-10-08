@@ -1,4 +1,4 @@
-/* Estilos de la pagina de marcas. */
+﻿/* Estilos de la pagina de marcas. */
 
 /* Estilos de la página de listado de marcas. */
 /* ==========================================
@@ -659,7 +659,7 @@ nav.main-nav { background: var(--blue-deep); }
 
 .solutions-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   background: #fff;
   border: 1px solid #c5d4e8;
   border-top: none;

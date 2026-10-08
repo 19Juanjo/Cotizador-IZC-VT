@@ -1,0 +1,13 @@
+[
+    {
+        "codigo": "GP0",
+        "nombre": "Oscar",
+        "password_hash": "pbkdf2$100000$Y9Wa0trsAKdxG5GM0HizDA==$3vlat0vCb7IzE1ghlqjh7BmaLeRfgZsHZtpFVP9+SyQ=",
+        "bitrix_id": "",
+        "email": "",
+        "created_at": "2026-09-30T09:01:12-05:00",
+        "password_default": false,
+        "self_registered": true,
+        "source": "registro"
+    }
+]

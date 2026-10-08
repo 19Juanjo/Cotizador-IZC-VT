@@ -28,7 +28,7 @@ def clean_nit(title):
     t=(title or '').strip()
     if not t: return ''
     m=re.match(r'^(\d{6,15})(-\d)?\b', t)
-    if m: return m.group(0)
+    if m: return m.group(1)  # sin dígito de verificación
     digits=re.sub(r'\D','',t)
     return digits if 6 <= len(digits) <= 15 else ''
 

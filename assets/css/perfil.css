@@ -29,6 +29,57 @@
   text-align: center;
 }
 
+.asesor-name-edit {
+  margin: 0 0 18px;
+  text-align: left;
+}
+
+.asesor-name-edit-label {
+  display: block;
+  margin: 0 0 6px;
+  font-size: 0.88rem;
+  color: #5a6b85;
+  font-weight: 600;
+}
+
+.asesor-name-edit-row {
+  display: flex;
+  gap: 8px;
+  align-items: stretch;
+}
+
+.asesor-name-edit-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 10px 12px;
+  border: 1px solid #c5d3e6;
+  border-radius: 6px;
+  font: inherit;
+  color: #16233f;
+  background: #fff;
+}
+
+.asesor-name-edit-input:focus {
+  outline: 2px solid #2f6fed;
+  outline-offset: 1px;
+  border-color: #2f6fed;
+}
+
+.asesor-name-edit-save {
+  flex: 0 0 auto;
+  width: auto;
+  min-width: 6.5rem;
+  margin: 0;
+  padding: 10px 14px;
+}
+
+.asesor-name-edit-status {
+  margin: 8px 0 0;
+  min-height: 1.1em;
+  text-align: left;
+}
+
 .profile-lead {
   margin: 0 0 24px;
   color: #5a6b85;
@@ -146,12 +197,12 @@
 .profile-modal-dialog {
   position: relative;
   z-index: 1;
-  width: min(640px, 100%);
-  max-height: min(80vh, 720px);
+  width: min(900px, 100%);
+  max-height: min(85vh, 800px);
   overflow: auto;
   background: #fff;
   border-radius: 8px;
-  padding: 22px 20px 18px;
+  padding: 22px 24px 18px;
 }
 
 .profile-modal-dialog h3 {
@@ -166,19 +217,45 @@
   font-size: 0.9rem;
 }
 
+.profile-quote-detail {
+  overflow-x: auto;
+}
+
 .profile-quote-detail-table {
   width: 100%;
   border-collapse: collapse;
   font-size: 0.88rem;
   margin-bottom: 12px;
+  table-layout: fixed;
 }
 
 .profile-quote-detail-table th,
 .profile-quote-detail-table td {
-  padding: 8px 6px;
+  padding: 8px 10px;
   border-bottom: 1px solid #e4eaf3;
   text-align: left;
   color: #16233f;
+  vertical-align: top;
+}
+
+.profile-quote-detail-table th:nth-child(1),
+.profile-quote-detail-table td:nth-child(1) {
+  width: 4.5rem;
+  white-space: nowrap;
+}
+
+.profile-quote-detail-table th:nth-child(3),
+.profile-quote-detail-table td:nth-child(3) {
+  width: 3.25rem;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.profile-quote-detail-table th:nth-child(4),
+.profile-quote-detail-table td:nth-child(4) {
+  width: 9.5rem;
+  text-align: right;
+  white-space: nowrap;
 }
 
 .profile-quote-total {
@@ -197,6 +274,138 @@
 
 .profile-modal-close:hover {
   background: #f3f6fb;
+}
+
+.profile-name-card {
+  position: relative;
+}
+
+.profile-asesor-box {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border: 1px solid #d7e3f2;
+  border-radius: 8px;
+  background: #f7fbff;
+}
+
+.profile-asesor-title {
+  margin: 0 0 6px;
+  font-size: 0.95rem;
+  color: #1653a0;
+  font-weight: 700;
+}
+
+.profile-asesor-name {
+  margin: 0 0 4px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1a2b44;
+}
+
+.profile-asesor-line {
+  margin: 0 0 2px;
+  font-size: 0.9rem;
+  color: #334155;
+}
+
+.profile-asesor-line a {
+  color: #1653a0;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.profile-asesor-line a:hover {
+  text-decoration: underline;
+}
+
+.profile-asesor-wa {
+  display: inline-block;
+  margin-top: 8px;
+  padding: 7px 12px;
+  border-radius: 4px;
+  background: #128c7e;
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.profile-asesor-wa:hover {
+  background: #0e7368;
+  color: #fff;
+}
+
+.profile-asesor-empty {
+  margin: 4px 0 0;
+  font-size: 0.88rem;
+  color: #64748b;
+}
+
+.profile-name-pencil {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #8a9bb5;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-name-pencil:hover,
+.profile-name-pencil[aria-pressed="true"] {
+  background: #e8f0fa;
+  color: #1653a0;
+}
+
+.profile-name-pencil svg {
+  width: 15px;
+  height: 15px;
+  display: block;
+}
+
+.profile-name-inline {
+  display: none;
+  width: 100%;
+  max-width: 260px;
+  margin: 0 auto 8px;
+  box-sizing: border-box;
+  padding: 8px 10px;
+  border: 1px solid #c2d1e5;
+  border-radius: 6px;
+  font: inherit;
+  font-size: 1.05rem;
+  font-weight: 600;
+  text-align: center;
+  color: #16233f;
+  background: #fff;
+}
+
+.profile-name-card.is-editing-name .profile-name-inline {
+  display: block;
+}
+
+.profile-name-inline:focus {
+  outline: 2px solid rgba(22, 83, 160, 0.35);
+  outline-offset: 1px;
+  border-color: #1653a0;
+}
+
+.profile-name-card.is-editing-name .profile-greeting {
+  display: none;
+}
+
+.profile-name-status {
+  margin: 0 0 10px;
+  min-height: 1em;
+  font-size: 0.82rem;
+  text-align: center;
 }
 
 @media (max-width: 640px) {

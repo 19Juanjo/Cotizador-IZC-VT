@@ -29,6 +29,7 @@
     }
     var amount = typeof entry === 'object' ? entry.amount : entry;
     if (amount == null) return null;
+    if (window.IZCMoney) return IZCMoney.formatUsd(amount);
     return '$ ' + Number(amount).toLocaleString('en-US', {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2
@@ -166,6 +167,15 @@
     }
     priceEl.classList.remove('price-locked');
 
+    var quoteUsd = Number(qs('usd'));
+    if (isFinite(quoteUsd) && quoteUsd > 0) {
+      var quoteText = formatPriceEntry({ amount: quoteUsd, currency: 'USD' });
+      if (quoteText) {
+        priceEl.textContent = quoteText;
+        return;
+      }
+    }
+
     if (window.IZCPrices && typeof window.IZCPrices.get === 'function') {
       var cached = window.IZCPrices.get(sku);
       var cachedText = formatPriceEntry(cached);
@@ -220,7 +230,7 @@
     if (root) root.style.display = 'block';
 
     detail = detail || {};
-    var name = detail.name || product.name || '';
+    var name = (product.zktecoOverlay && product.name) ? product.name : (detail.name || product.name || '');
     var sku = String(product.sku);
     var brandPage = product.brandPage || ((product.brand || '') + '.html');
     var images = (detail.images && detail.images.length)
@@ -298,9 +308,14 @@
       return;
     }
 
+    var overlayReady = window.IZCZktecoOverlay && typeof IZCZktecoOverlay.load === 'function'
+      ? IZCZktecoOverlay.load()
+      : Promise.resolve(null);
+
     Promise.all([
       loadJson('assets/files/catalogo.json'),
-      loadJson('assets/files/product_details.json').catch(function () { return {}; })
+      loadJson('assets/files/product_details.json').catch(function () { return {}; }),
+      overlayReady
     ])
       .then(function (results) {
         var catalog = results[0];
@@ -308,8 +323,26 @@
         var product = (catalog.products || []).find(function (item) {
           return String(item.sku) === String(sku);
         });
+        if (window.IZCZktecoOverlay) {
+          if (product && typeof IZCZktecoOverlay.applyToProduct === 'function') {
+            product = IZCZktecoOverlay.applyToProduct(product);
+          } else if (!product && typeof IZCZktecoOverlay.get === 'function') {
+            var ov = IZCZktecoOverlay.get(sku);
+            if (ov && typeof IZCZktecoOverlay.toCatalogProduct === 'function') {
+              product = IZCZktecoOverlay.toCatalogProduct(ov);
+            }
+          }
+        }
+        if (
+          product &&
+          window.IZCCatalogScope &&
+          typeof IZCCatalogScope.isDemoProduct === 'function' &&
+          IZCCatalogScope.isDemoProduct(product)
+        ) {
+          product = null;
+        }
         state.catalogProduct = product || null;
-        state.detail = details[String(sku)] || null;
+        state.detail = product ? (details[String(sku)] || null) : null;
         render(state.catalogProduct, state.detail);
       })
       .catch(function (err) {

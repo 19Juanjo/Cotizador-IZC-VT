@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<!-- Tienda VALTECH: cat&#225;logo SAT con identidad visual propia. -->
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VALTECH Mayorista</title>
+  <link rel="icon" href="assets/logo/valtech.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/auth.css?v=15">
+  <link rel="stylesheet" href="assets/css/valtech.css?v=1">
+  <script src="assets/js/file-boot.js?v=2"></script>
+  <script src="assets/js/data-loader.js?v=21" defer></script>
+  <script src="assets/js/prices.js?v=12" defer></script>
+  <script src="assets/js/wishlist.js?v=6" defer></script>
+  <script src="assets/js/quote-cart.js?v=9" defer></script>
+  <script src="assets/js/auth.js?v=91" defer></script>
+  <script src="assets/js/brand_catalog.js?v=15" defer></script>
+  <script src="assets/js/valtech.js?v=1" defer></script>
+  <link rel="stylesheet" href="assets/css/quote-cart.css?v=7">
+</head>
+<body class="valtech-body" data-brand="sat" data-store="valtech">
+  <header class="vt-top">
+    <div class="vt-top-inner">
+      <a class="vt-logo-link" href="valtech.html" aria-label="VALTECH Mayorista">
+        <img src="assets/logo/valtech.png" alt="VALTECH Mayorista" class="vt-logo">
+      </a>
+      <nav class="vt-nav" aria-label="Navegaci&#243;n VALTECH">
+        <a href="valtech.html" class="is-active">Cat&#225;logo SAT</a>
+        <a href="cotizador-valtech.html">Cotizador</a>
+      </nav>
+      <div class="vt-top-actions">
+        <a href="favoritos.html" class="header-wishlist" id="headerWishlist" title="Mis favoritos" aria-label="Mis favoritos"><span class="header-wishlist-icon" aria-hidden="true">&#9829;</span></a>
+      </div>
+    </div>
+  </header>
+
+  <section class="vt-hero" aria-label="VALTECH">
+    <div class="vt-hero-inner">
+      <img src="assets/logo/valtech.png" alt="VALTECH Mayorista" class="vt-hero-brand">
+      <h1>Portafolio SAT para tu operaci&#243;n</h1>
+      <p>Equipos POS, lectores, impresoras, monitores touch y m&#225;s ? cat&#225;logo completo de la marca SAT.</p>
+    </div>
+  </section>
+
+  <main class="vt-main">
+    <div class="vt-toolbar">
+      <div class="vt-toolbar-left">
+        <label class="vt-sr-only" for="vtSearch">Buscar productos SAT</label>
+        <input id="vtSearch" class="vt-search" type="search" placeholder="Buscar por nombre o c&#243;digo?" autocomplete="off">
+        <span class="vt-count" id="itemCountDisplay">0 art&#237;culos</span>
+      </div>
+      <div class="vt-toolbar-right">
+        <label class="vt-sr-only" for="sortSelect">Filtrar categor&#237;a</label>
+        <select id="sortSelect" class="vt-select" aria-label="Categor&#237;a">
+          <option value="all">Todas las categor&#237;as</option>
+          <option value="equipos-pos">Equipos POS</option>
+          <option value="lectores">Lectores</option>
+          <option value="impresoras">Impresoras</option>
+          <option value="monitores-touch">Monitores Touch</option>
+          <option value="mini-pc">Mini PC</option>
+          <option value="cajones">Cajones</option>
+          <option value="balanzas">Balanzas</option>
+          <option value="energia">Energ&#237;a / UPS</option>
+          <option value="cables">Cables</option>
+          <option value="seguridad">Seguridad</option>
+          <option value="control">Control de acceso</option>
+          <option value="consumibles">Consumibles</option>
+          <option value="otros">Otros</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Sidebar m&#237;nimo: brand_catalog puede inyectar filtros aqu&#237; -->
+    <div class="vt-layout">
+      <aside class="vt-sidebar" aria-label="Filtros">
+        <div class="filter-box">
+          <div class="featured-header"><span>COMPRAR POR</span></div>
+        </div>
+      </aside>
+      <div class="vt-catalog">
+        <section class="product-grid" id="productGrid"></section>
+        <div id="noProductsMessage" class="vt-empty" style="display:none;">
+          No hay productos SAT con ese filtro.
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="vt-footer">
+    <p>VALTECH Mayorista &#183; Cat&#225;logo SAT</p>
+    <a href="elegir-empresa.html">Volver a elegir empresa</a>
+  </footer>
+</body>
+</html>

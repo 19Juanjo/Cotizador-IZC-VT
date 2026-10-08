@@ -1,0 +1,1134 @@
+[
+    {
+        "id": "202610051646555.8707-900700114",
+        "nit": "900700114",
+        "nombre": "900700114",
+        "created_at": "2026-10-05T16:46:55-05:00",
+        "items": [
+            {
+                "sku": "",
+                "name": "Productos cotizados",
+                "referencia": "Bitrix #17938",
+                "qty": 1,
+                "currency": "USD",
+                "usdIva": 6073.49,
+                "totalUsdIva": 6073.49
+            }
+        ],
+        "totals": {
+            "hasUsd": true,
+            "hasCop": false,
+            "usdIva": 6073.49,
+            "qty": 1,
+            "empresa": "VALTECH MAYORISTA S.A.S."
+        },
+        "bitrix_deal_id": "17938",
+        "assigned_by_id": "1741",
+        "seller_codigo": "V7",
+        "seller_name": "IZC V7 Brayan Estiven Pinilla",
+        "asesor_estado": "cotizado",
+        "quote_source": "izc",
+        "synced_from_bitrix": true,
+        "empresa": "VALTECH MAYORISTA S.A.S.",
+        "fecha_cierre": "2026-10-13"
+    },
+    {
+        "id": "202610051550244.1867-804000673",
+        "nit": "804000673",
+        "nombre": "HARDWARE ASESORIAS SOFTWARE LTDA",
+        "created_at": "2026-10-05T15:50:24-05:00",
+        "items": [
+            {
+                "sku": "9181",
+                "name": "CINTA TT SAT CERA 110MMX300M OUT CX12",
+                "referencia": "CINTA TT SAT CERA 110MMX300M OUT CX12",
+                "qty": 1,
+                "currency": "USD",
+                "usdIva": 30.46,
+                "totalUsdIva": 30.46
+            }
+        ],
+        "totals": {
+            "hasUsd": true,
+            "hasCop": false,
+            "usdIva": 25.6,
+            "qty": 1,
+            "empresa": "VALTECH MAYORISTA S.A.S."
+        },
+        "bitrix_deal_id": "17932",
+        "assigned_by_id": "205",
+        "seller_codigo": "V45",
+        "seller_name": "V45 ELIANA DONADO",
+        "asesor_estado": "cotizado",
+        "quote_source": "izc",
+        "synced_from_bitrix": true,
+        "empresa": "VALTECH MAYORISTA S.A.S.",
+        "fecha_cierre": "2026-10-12",
+        "trm": 3273.49,
+        "asesor_estado_bitrix_stage": "C3:FINAL_INVOICE",
+        "asesor_estado_bitrix_for": "cotizado",
+        "asesor_estado_bitrix_at": "2026-10-06T08:01:59-05:00"
+    },
+    {
+        "id": "202610051551222.4918-800217129",
+        "nit": "800217129",
+        "nombre": "ACCESAR LTDA",
+        "created_at": "2026-10-05T15:51:22-05:00",
+        "items": [
+            {
+                "sku": "",
+                "name": "Productos cotizados",
+                "referencia": "Bitrix #17926",
+                "qty": 1,
+                "currency": "USD",
+                "usdIva": 1380.05,
+                "totalUsdIva": 1380.05
+            }
+        ],
+        "totals": {
+            "hasUsd": true,
+            "hasCop": false,
+            "usdIva": 1380.05,
+            "qty": 1,
+            "empresa": "VALTECH MAYORISTA S.A.S."
+        },
+        "bitrix_deal_id": "17926",
+        "assigned_by_id": "213",
+        "seller_codigo": "V41",
+        "seller_name": "IZC V41 Nelson Cuevas",
+        "asesor_estado": "cotizado",
+        "quote_source": "izc",
+        "synced_from_bitrix": true,
+        "empresa": "VALTECH MAYORISTA S.A.S.",
+        "fecha_cierre": "2026-10-12"
+    },
+    {
+        "id": "202610051525500.1668-800217129",
+        "nit": "800217129",
+        "nombre": "ACCESAR LTDA",
+        "created_at": "2026-10-05T15:25:50-05:00",
+        "items": [
+            {
+                "sku": "",
+                "name": "Productos cotizados",
+                "referencia": "Bitrix #17922",
+                "qty": 1,
+                "currency": "USD",
+                "usdIva": 84.15,
+                "totalUsdIva": 84.15
+            }
+        ],
+        "totals": {
+            "hasUsd": true,
+            "hasCop": false,
+            "usdIva": 84.15,
+            "qty": 1,
+            "empresa": "VALTECH MAYORISTA S.A.S."
+        },
+        "bitrix_deal_id": "17922",
+        "assigned_by_id": "213",
+        "seller_codigo": "V41",
+        "seller_name": "IZC V41 Nelson Cuevas",
+        "asesor_estado": "cotizado",
+        "quote_source": "izc",
+        "synced_from_bitrix": true,
+        "empresa": "VALTECH MAYORISTA S.A.S.",
+        "fecha_cierre": "2026-10-12"
+    },
+    {
+        "id": "20261005152130690.11-901064989",
+        "nit": "901064989",
+        "nombre": "INGENIERIA COLOMBIANA PARA EL FUTURO INCOLF SAS",
+        "created_at": "2026-10-05T15:21:30-05:00",
+        "items": [
+            {
+                "sku": "",
+                "name": "Productos cotizados",
+                "referencia": "Bitrix #17920",
+                "qty": 1,
+                "currency": "USD",
+                "usdIva": 12.86,
+                "totalUsdIva": 12.86
+            }
+        ],
+        "totals": {
+            "hasUsd": true,
+            "hasCop": false,
+            "usdIva": 12.86,
+            "qty": 1,
+            "empresa": "VALTECH MAYORISTA S.A.S."
+        },
+        "bitrix_deal_id": "17920",
+        "assigned_by_id": "205",
+        "seller_codigo": "V45",
+        "seller_name": "V45 ELIANA DONADO",
+        "asesor_estado": "cotizado",
+        "quote_source": "izc",
+        "synced_from_bitrix": true,
+        "empresa": "VALTECH MAYORISTA S.A.S.",
+        "fecha_cierre": "2026-10-12",
+        "asesor_estado_bitrix_stage": "C3:FINAL_INVOICE",
+        "asesor_estado_bitrix_for": "cotizado",
+        "asesor_estado_bitrix_at": "2026-10-06T08:02:00-05:00"
+    },
+    {
+        "id": "202610051419411.6901-901785951",
+        "nit": "901785951",
+        "nombre": "901785951",
+        "created_at": "2026-10-05T14:19:41-05:00",
+        "items": [
+            {
+                "sku": "",
+                "name": "Productos cotizados",
+                "referencia": "Bitrix #17918",
+                "qty": 1,
+                "currency": "USD",
+                "usdIva": 687.14,
+                "totalUsdIva": 687.14
+            }
+        ],
+        "totals": {
+            "hasUsd": true,
+            "hasCop": false,
+            "usdIva": 687.14,
+            "qty": 1,
+            "empresa": "VALTECH MAYORISTA S.A.S."
+        },
+        "bitrix_deal_id": "17918",
+        "assigned_by_id": "1741",
+        "seller_codigo": "V7",
+        "seller_name": "IZC V7 Brayan Estiven Pinilla",
+        "asesor_estado": "cotizado",
+        "quote_source": "izc",
+        "synced_from_bitrix": true,
+        "empresa": "VALTECH MAYORISTA S.A.S.",
+        "fecha_cierre": "2026-10-12"
+    },
+    {
+        "id": "202610051347577.2084-830039524",
+        "nit": "830039524",
+        "nombre": "SOLUSISTEMAS LTDA",
+        "created_at": "2026-10-05T13:47:57-05:00",
+        "items": [
+            {
+                "sku": "",
+                "name": "Productos cotizados",
+                "referencia": "Bitrix #17916",
+                "qty": 1,
+                "currency": "USD",
+                "usdIva": 2351.59,
+                "totalUsdIva": 2351.59
+            }
+        ],
+        "totals": {
+            "hasUsd": true,
+            "hasCop": false,
+            "usdIva": 2351.59,
+            "qty": 1,
+            "empresa": "VALTECH MAYORISTA S.A.S."
+        },
+        "bitrix_deal_id": "17916",
+        "assigned_by_id": "201",
+        "seller_codigo": "",
+        "seller_name": "",
+        "asesor_estado": "cotizado",
+        "quote_source": "izc",
+        "synced_from_bitrix": true,
+        "empresa": "VALTECH MAYORISTA S.A.S.",
+        "fecha_cierre": "2026-10-12"
+    },
+    {
+        "id": "202610051341388.8189-816005590",
+        "nit": "816005590",
+        "nombre": "DISTRICOM DE COLOMBIA LTDA",
+        "created_at": "2026-10-05T13:41:38-05:00",
+        "items": [
+            {
+                "sku": "",
+                "name": "Productos cotizados",
+                "referencia": "Bitrix #17914",
+                "qty": 1,
+                "currency": "USD",
+                "usdIva": 8808.96,
+                "totalUsdIva": 8808.96
+            }
+        ],
+        "totals": {
+            "hasUsd": true,
+            "hasCop": false,
+            "usdIva": 8808.96,
+            "qty": 1,
+            "empresa": "VALTECH MAYORISTA S.A.S."
+        },
+        "bitrix_deal_id": "17914",
+        "assigned_by_id": "101",
+        "seller_codigo": "V50",
+        "seller_name": "VALTECH V50 - Ruben Tabares",
+        "asesor_estado": "cotizado",
+        "quote_source": "izc",
+        "synced_from_bitrix": true,
+        "empresa": "VALTECH MAYORISTA S.A.S.",
+        "fecha_cierre": "2026-10-12",
+        "asesor_estado_bitrix_stage": "C3:FINAL_INVOICE",
+        "asesor_estado_bitrix_for": "cotizado",
+        "asesor_estado_bitrix_at": "2026-10-06T07:35:01-05:00"
+    },
+    {
+        "id": "202610051333200.9519-816005590",
+        "nit": "816005590",
+        "nombre": "DISTRICOM DE COLOMBIA LTDA",
+        "created_at": "2026-10-05T13:33:20-05:00",
+        "items": [
+            {
+                "sku": "",
+                "name": "Productos cotizados",
+                "referencia": "Bitrix #17910",
+                "qty": 1,
+                "currency": "USD",
+                "usdIva": 9185.04,
+                "totalUsdIva": 9185.04
+            }
+        ],
+        "totals": {
+            "hasUsd": true,
+            "hasCop": false,
+            "usdIva": 9185.04,
+            "qty": 1,
+            "empresa": "VALTECH MAYORISTA S.A.S."
+        },
+        "bitrix_deal_id": "17910",
+        "assigned_by_id": "101",
+        "seller_codigo": "V50",
+        "seller_name": "VALTECH V50 - Ruben Tabares",
+        "asesor_estado": "cotizado",
+        "quote_source": "izc",
+        "synced_from_bitrix": true,
+        "empresa": "VALTECH MAYORISTA S.A.S.",
+        "fecha_cierre": "2026-10-12",
+        "asesor_estado_bitrix_stage": "C3:FINAL_INVOICE",
+        "asesor_estado_bitrix_for": "cotizado",
+        "asesor_estado_bitrix_at": "2026-10-06T07:35:02-05:00"
+    },
+    {
+        "id": "202610051200099.6571-900298074",
+        "nit": "900298074",
+        "nombre": "GVS COLOMBIA SAS",
+        "created_at": "2026-10-05T12:00:09-05:00",
+        "items": [
+            {
+                "sku": "",
+                "name": "Productos cotizados",
+                "referencia": "Bitrix #17906",
+                "qty": 1,
+                "currency": "USD",
+                "usdIva": 21173.81,
+                "totalUsdIva": 21173.81
+            }
+        ],
+        "totals": {
+            "hasUsd": true,
+            "hasCop": false,
+            "usdIva": 21173.81,
+            "qty": 1,
+            "empresa": "VALTECH MAYORISTA S.A.S."
+        },
+        "bitrix_deal_id": "17906",
+        "assigned_by_id": "217",
+        "seller_codigo": "V43",
+        "seller_name": "IZC V43 Juan Cubillos",
+        "asesor_estado": "cotizado",
+        "quote_source": "izc",
+        "synced_from_bitrix": true,
+        "empresa": "VALTECH MAYORISTA S.A.S.",
+        "fecha_cierre": "2026-10-12",
+        "is_duplicated": true,
+        "duplicated_from": "202610051159333.9815-900298074",
+        "duplicate_kind": "bitrix_same_amount"
+    },
+    {
+        "id": "202610051159333.9815-900298074",
+        "nit": "900298074",
+        "nombre": "GVS COLOMBIA SAS",
+        "created_at": "2026-10-05T11:59:33-05:00",
+        "items": [
+            {
+                "sku": "",
+                "name": "Productos cotizados",
+                "referencia": "Bitrix #17902",
+                "qty": 1,
+                "currency": "USD",
+                "usdIva": 21173.81,
+                "totalUsdIva": 21173.81
+            }
+        ],
+        "totals": {
+            "hasUsd": true,
+            "hasCop": false,
+            "usdIva": 21173.81,
+            "qty": 1,
+            "empresa": "VALTECH MAYORISTA S.A.S."
+        },
+        "bitrix_deal_id": "17902",
+        "assigned_by_id": "217",
+        "seller_codigo": "V43",
+        "seller_name": "IZC V43 Juan Cubillos",
+        "asesor_estado": "cotizado",
+        "quote_source": "izc",
+        "synced_from_bitrix": true,
+        "empresa": "VALTECH MAYORISTA S.A.S.",
+        "fecha_cierre": "2026-10-12"
+    },
+    {
+        "id": "202610051155211.1402-901200113",
+        "nit": "901200113",
+        "nombre": "TECNOLOGÍA Y AUTOMATIZACIÓN GLOBAL S.A.S",
+        "created_at": "2026-10-05T11:55:21-05:00",
+        "items": [
+            {
+                "sku": "",
+                "name": "Productos cotizados",
+                "referencia": "Bitrix #17900",
+                "qty": 1,
+                "currency": "USD",
+                "usdIva": 1375.35,
+                "totalUsdIva": 1375.35
+            }
+        ],
+        "totals": {
+            "hasUsd": true,
+            "hasCop": false,
+            "usdIva": 1375.35,
+            "qty": 1,
+            "empresa": "VALTECH MAYORISTA S.A.S."
+        },
+        "bitrix_deal_id": "17900",
+        "assigned_by_id": "257",
+        "seller_codigo": "V5",
+        "seller_name": "IZC V5 Kelly Johana Alcaraz Serna",
+        "asesor_estado": "cotizado",
+        "quote_source": "izc",
+        "synced_from_bitrix": true,
+        "empresa": "VALTECH MAYORISTA S.A.S.",
+        "fecha_cierre": "2026-10-12"
+    },
+    {
+        "id": "202610051052311.1491-1098615822",
+        "nit": "1098615822",
+        "nombre": "JUAN PABLO CARO MARTINEZ",
+        "created_at": "2026-10-05T10:52:31-05:00",
+        "items": [
+            {
+                "sku": "",
+                "name": "Productos cotizados",
+                "referencia": "Bitrix #17898",
+                "qty": 1,
+                "currency": "USD",
+                "usdIva": 449.92,
+                "totalUsdIva": 449.92
+            }
+        ],
+        "totals": {
+            "hasUsd": true,
+            "hasCop": false,
+            "usdIva": 449.92,
+            "qty": 1,
+            "empresa": "VALTECH MAYORISTA S.A.S."
+        },
+        "bitrix_deal_id": "17898",
+        "assigned_by_id": "205",
+        "seller_codigo": "V45",
+        "seller_name": "V45 ELIANA DONADO",
+        "asesor_estado": "cotizado",
+        "quote_source": "izc",
+        "synced_from_bitrix": true,
+        "empresa": "VALTECH MAYORISTA S.A.S.",
+        "fecha_cierre": "2026-10-12",
+        "asesor_estado_bitrix_stage": "C3:FINAL_INVOICE",
+        "asesor_estado_bitrix_for": "cotizado",
+        "asesor_estado_bitrix_at": "2026-10-06T08:02:00-05:00"
+    },
+    {
+        "id": "202610051042022.1792-830507707",
+        "nit": "830507707",
+        "nombre": "PC QUICK S A S",
+        "created_at": "2026-10-05T10:42:02-05:00",
+        "items": [
+            {
+                "sku": "",
+                "name": "Productos cotizados",
+                "referencia": "Bitrix #17896",
+                "qty": 1,
+                "currency": "USD",
+                "usdIva": 54.4,
+                "totalUsdIva": 54.4
+            }
+        ],
+        "totals": {
+            "hasUsd": true,
+            "hasCop": false,
+            "usdIva": 54.4,
+            "qty": 1,
+            "empresa": "VALTECH MAYORISTA S.A.S."
+        },
+        "bitrix_deal_id": "17896",
+        "assigned_by_id": "1741",
+        "seller_codigo": "V7",
+        "seller_name": "IZC V7 Brayan Estiven Pinilla",
+        "asesor_estado": "cotizado",
+        "quote_source": "izc",
+        "synced_from_bitrix": true,
+        "empresa": "VALTECH MAYORISTA S.A.S.",
+        "fecha_cierre": "2026-10-12"
+    },
+    {
+        "id": "202610051035055.8301-1088009383",
+        "nit": "1088009383",
+        "nombre": "YULY MILENA SEPULVEDA VARGAS",
+        "created_at": "2026-10-05T10:35:05-05:00",
+        "items": [
+            {
+                "sku": "",
+                "name": "Productos cotizados",
+                "referencia": "Bitrix #17894",
+                "qty": 1,
+                "currency": "USD",
+                "usdIva": 1592.53,
+                "totalUsdIva": 1592.53
+            }
+        ],
+        "totals": {
+            "hasUsd": true,
+            "hasCop": false,
+            "usdIva": 1592.53,
+            "qty": 1,
+            "empresa": "VALTECH MAYORISTA S.A.S."
+        },
+        "bitrix_deal_id": "17894",
+        "assigned_by_id": "101",
+        "seller_codigo": "V50",
+        "seller_name": "VALTECH V50 - Ruben Tabares",
+        "asesor_estado": "cotizado",
+        "quote_source": "izc",
+        "synced_from_bitrix": true,
+        "empresa": "VALTECH MAYORISTA S.A.S.",
+        "fecha_cierre": "2026-10-12",
+        "asesor_estado_bitrix_stage": "C3:FINAL_INVOICE",
+        "asesor_estado_bitrix_for": "cotizado",
+        "asesor_estado_bitrix_at": "2026-10-06T07:35:02-05:00"
+    },
+    {
+        "id": "202610051018211.5406-901200113",
+        "nit": "901200113",
+        "nombre": "TECNOLOGÍA Y AUTOMATIZACIÓN GLOBAL S.A.S",
+        "created_at": "2026-10-05T10:18:21-05:00",
+        "items": [
+            {
+                "sku": "",
+                "name": "Productos cotizados",
+                "referencia": "Bitrix #17892",
+                "qty": 1,
+                "currency": "USD",
+                "usdIva": 551.42,
+                "totalUsdIva": 551.42
+            }
+        ],
+        "totals": {
+            "hasUsd": true,
+            "hasCop": false,
+            "usdIva": 551.42,
+            "qty": 1,
+            "empresa": "VALTECH MAYORISTA S.A.S."
+        },
+        "bitrix_deal_id": "17892",
+        "assigned_by_id": "257",
+        "seller_codigo": "V5",
+        "seller_name": "IZC V5 Kelly Johana Alcaraz Serna",
+        "asesor_estado": "cotizado",
+        "quote_source": "izc",
+        "synced_from_bitrix": true,
+        "empresa": "VALTECH MAYORISTA S.A.S.",
+        "fecha_cierre": "2026-10-12"
+    },
+    {
+        "id": "202610051000544.1089-901450902",
+        "nit": "901450902",
+        "nombre": "TECNOMARKET. INK LA 33 S.A.S",
+        "created_at": "2026-10-05T10:00:54-05:00",
+        "items": [
+            {
+                "sku": "",
+                "name": "Productos cotizados",
+                "referencia": "Bitrix #17888",
+                "qty": 1,
+                "currency": "USD",
+                "usdIva": 419.48,
+                "totalUsdIva": 419.48
+            }
+        ],
+        "totals": {
+            "hasUsd": true,
+            "hasCop": false,
+            "usdIva": 419.48,
+            "qty": 1,
+            "empresa": "VALTECH MAYORISTA S.A.S."
+        },
+        "bitrix_deal_id": "17888",
+        "assigned_by_id": "205",
+        "seller_codigo": "V45",
+        "seller_name": "V45 ELIANA DONADO",
+        "asesor_estado": "cotizado",
+        "quote_source": "izc",
+        "synced_from_bitrix": true,
+        "empresa": "VALTECH MAYORISTA S.A.S.",
+        "fecha_cierre": "2026-10-12",
+        "asesor_estado_bitrix_stage": "C3:FINAL_INVOICE",
+        "asesor_estado_bitrix_for": "cotizado",
+        "asesor_estado_bitrix_at": "2026-10-06T08:02:01-05:00"
+    },
+    {
+        "id": "202610050918011.6725-901450902",
+        "nit": "901450902",
+        "nombre": "TECNOMARKET. INK LA 33 S.A.S",
+        "created_at": "2026-10-05T09:18:01-05:00",
+        "items": [
+            {
+                "sku": "",
+                "name": "Productos cotizados",
+                "referencia": "Bitrix #17886",
+                "qty": 1,
+                "currency": "USD",
+                "usdIva": 1016.81,
+                "totalUsdIva": 1016.81
+            }
+        ],
+        "totals": {
+            "hasUsd": true,
+            "hasCop": false,
+            "usdIva": 1016.81,
+            "qty": 1,
+            "empresa": "VALTECH MAYORISTA S.A.S."
+        },
+        "bitrix_deal_id": "17886",
+        "assigned_by_id": "205",
+        "seller_codigo": "V45",
+        "seller_name": "V45 ELIANA DONADO",
+        "asesor_estado": "cotizado",
+        "quote_source": "izc",
+        "synced_from_bitrix": true,
+        "empresa": "VALTECH MAYORISTA S.A.S.",
+        "fecha_cierre": "2026-10-12",
+        "asesor_estado_bitrix_stage": "C3:FINAL_INVOICE",
+        "asesor_estado_bitrix_for": "cotizado",
+        "asesor_estado_bitrix_at": "2026-10-06T08:02:01-05:00"
+    },
+    {
+        "id": "202610050915066.3977-1053802865",
+        "nit": "1053802865",
+        "nombre": "LUISA FERNANDA BECERRA CERVANTES",
+        "created_at": "2026-10-05T09:15:06-05:00",
+        "items": [
+            {
+                "sku": "",
+                "name": "Productos cotizados",
+                "referencia": "Bitrix #17884",
+                "qty": 1,
+                "currency": "USD",
+                "usdIva": 248,
+                "totalUsdIva": 248
+            }
+        ],
+        "totals": {
+            "hasUsd": true,
+            "hasCop": false,
+            "usdIva": 248,
+            "qty": 1,
+            "empresa": "VALTECH MAYORISTA S.A.S."
+        },
+        "bitrix_deal_id": "17884",
+        "assigned_by_id": "101",
+        "seller_codigo": "V50",
+        "seller_name": "VALTECH V50 - Ruben Tabares",
+        "asesor_estado": "cotizado",
+        "quote_source": "izc",
+        "synced_from_bitrix": true,
+        "empresa": "VALTECH MAYORISTA S.A.S.",
+        "fecha_cierre": "2026-10-12",
+        "asesor_estado_bitrix_stage": "C3:FINAL_INVOICE",
+        "asesor_estado_bitrix_for": "cotizado",
+        "asesor_estado_bitrix_at": "2026-10-06T07:35:04-05:00"
+    },
+    {
+        "id": "202610050901377.5992-881987853",
+        "nit": "881987853",
+        "nombre": "Dimensional de oficina",
+        "created_at": "2026-10-05T09:01:37-05:00",
+        "items": [
+            {
+                "sku": "",
+                "name": "Productos cotizados",
+                "referencia": "Bitrix #17880",
+                "qty": 1,
+                "currency": "USD",
+                "usdIva": 119.47,
+                "totalUsdIva": 119.47
+            }
+        ],
+        "totals": {
+            "hasUsd": true,
+            "hasCop": false,
+            "usdIva": 119.47,
+            "qty": 1,
+            "empresa": "VALTECH MAYORISTA S.A.S."
+        },
+        "bitrix_deal_id": "17880",
+        "assigned_by_id": "259",
+        "seller_codigo": "V48",
+        "seller_name": "IZC V48 Daniel Peña",
+        "asesor_estado": "cotizado",
+        "quote_source": "izc",
+        "synced_from_bitrix": true,
+        "empresa": "VALTECH MAYORISTA S.A.S.",
+        "fecha_cierre": "2026-10-12",
+        "asesor_estado_bitrix_stage": "C3:FINAL_INVOICE",
+        "asesor_estado_bitrix_for": "cotizado",
+        "asesor_estado_bitrix_at": "2026-10-06T08:02:02-05:00"
+    },
+    {
+        "id": "202610050856399.5314-1053802865",
+        "nit": "1053802865",
+        "nombre": "LUISA FERNANDA BECERRA CERVANTES",
+        "created_at": "2026-10-05T08:56:39-05:00",
+        "items": [
+            {
+                "sku": "",
+                "name": "Productos cotizados",
+                "referencia": "Bitrix #17878",
+                "qty": 1,
+                "currency": "USD",
+                "usdIva": 124,
+                "totalUsdIva": 124
+            }
+        ],
+        "totals": {
+            "hasUsd": true,
+            "hasCop": false,
+            "usdIva": 124,
+            "qty": 1,
+            "empresa": "VALTECH MAYORISTA S.A.S."
+        },
+        "bitrix_deal_id": "17878",
+        "assigned_by_id": "101",
+        "seller_codigo": "V50",
+        "seller_name": "VALTECH V50 - Ruben Tabares",
+        "asesor_estado": "cotizado",
+        "quote_source": "izc",
+        "synced_from_bitrix": true,
+        "empresa": "VALTECH MAYORISTA S.A.S.",
+        "fecha_cierre": "2026-10-12",
+        "asesor_estado_bitrix_stage": "C3:FINAL_INVOICE",
+        "asesor_estado_bitrix_for": "cotizado",
+        "asesor_estado_bitrix_at": "2026-10-06T07:35:05-05:00"
+    },
+    {
+        "id": "202610050843000.3479-816004029",
+        "nit": "816004029",
+        "nombre": "TES LTDA",
+        "created_at": "2026-10-05T08:43:00-05:00",
+        "items": [
+            {
+                "sku": "",
+                "name": "Productos cotizados",
+                "referencia": "Bitrix #17874",
+                "qty": 1,
+                "currency": "USD",
+                "usdIva": 95,
+                "totalUsdIva": 95
+            }
+        ],
+        "totals": {
+            "hasUsd": true,
+            "hasCop": false,
+            "usdIva": 95,
+            "qty": 1,
+            "empresa": "VALTECH MAYORISTA S.A.S."
+        },
+        "bitrix_deal_id": "17874",
+        "assigned_by_id": "101",
+        "seller_codigo": "V50",
+        "seller_name": "VALTECH V50 - Ruben Tabares",
+        "asesor_estado": "cotizado",
+        "quote_source": "izc",
+        "synced_from_bitrix": true,
+        "empresa": "VALTECH MAYORISTA S.A.S.",
+        "fecha_cierre": "2026-10-12",
+        "asesor_estado_bitrix_stage": "C3:FINAL_INVOICE",
+        "asesor_estado_bitrix_for": "cotizado",
+        "asesor_estado_bitrix_at": "2026-10-06T07:35:05-05:00"
+    },
+    {
+        "id": "202610050840177.0655-900540070",
+        "nit": "900540070",
+        "nombre": "900540070",
+        "created_at": "2026-10-05T08:40:17-05:00",
+        "items": [
+            {
+                "sku": "",
+                "name": "Productos cotizados",
+                "referencia": "Bitrix #17872",
+                "qty": 1,
+                "currency": "USD",
+                "usdIva": 58,
+                "totalUsdIva": 58
+            }
+        ],
+        "totals": {
+            "hasUsd": true,
+            "hasCop": false,
+            "usdIva": 58,
+            "qty": 1,
+            "empresa": "VALTECH MAYORISTA S.A.S."
+        },
+        "bitrix_deal_id": "17872",
+        "assigned_by_id": "1741",
+        "seller_codigo": "V7",
+        "seller_name": "IZC V7 Brayan Estiven Pinilla",
+        "asesor_estado": "cotizado",
+        "quote_source": "izc",
+        "synced_from_bitrix": true,
+        "empresa": "VALTECH MAYORISTA S.A.S.",
+        "fecha_cierre": "2026-10-12"
+    },
+    {
+        "id": "202610050830044.8681-807002365",
+        "nit": "807002365",
+        "nombre": "807002365",
+        "created_at": "2026-10-05T08:30:04-05:00",
+        "items": [
+            {
+                "sku": "",
+                "name": "Productos cotizados",
+                "referencia": "Bitrix #17870",
+                "qty": 1,
+                "currency": "USD",
+                "usdIva": 112.19,
+                "totalUsdIva": 112.19
+            }
+        ],
+        "totals": {
+            "hasUsd": true,
+            "hasCop": false,
+            "usdIva": 112.19,
+            "qty": 1,
+            "empresa": "VALTECH MAYORISTA S.A.S."
+        },
+        "bitrix_deal_id": "17870",
+        "assigned_by_id": "259",
+        "seller_codigo": "V48",
+        "seller_name": "IZC V48 Daniel Peña",
+        "asesor_estado": "cotizado",
+        "quote_source": "izc",
+        "synced_from_bitrix": true,
+        "empresa": "VALTECH MAYORISTA S.A.S.",
+        "fecha_cierre": "2026-10-12"
+    },
+    {
+        "id": "202610050804577.3221-74302214",
+        "nit": "74302214",
+        "nombre": "CARLOS ALBERTO TORRES GALINDO",
+        "created_at": "2026-10-05T08:04:57-05:00",
+        "items": [
+            {
+                "sku": "",
+                "name": "Productos cotizados",
+                "referencia": "Bitrix #17866",
+                "qty": 1,
+                "currency": "USD",
+                "usdIva": 702.2,
+                "totalUsdIva": 702.2
+            }
+        ],
+        "totals": {
+            "hasUsd": true,
+            "hasCop": false,
+            "usdIva": 702.2,
+            "qty": 1,
+            "empresa": "VALTECH MAYORISTA S.A.S."
+        },
+        "bitrix_deal_id": "17866",
+        "assigned_by_id": "257",
+        "seller_codigo": "V5",
+        "seller_name": "IZC V5 Kelly Johana Alcaraz Serna",
+        "asesor_estado": "cotizado",
+        "quote_source": "izc",
+        "synced_from_bitrix": true,
+        "empresa": "VALTECH MAYORISTA S.A.S.",
+        "fecha_cierre": "2026-10-12"
+    },
+    {
+        "id": "202610050804066.8657-74302214",
+        "nit": "74302214",
+        "nombre": "CARLOS ALBERTO TORRES GALINDO",
+        "created_at": "2026-10-05T08:04:06-05:00",
+        "items": [
+            {
+                "sku": "",
+                "name": "Productos cotizados",
+                "referencia": "Bitrix #17862",
+                "qty": 1,
+                "currency": "USD",
+                "usdIva": 234.07,
+                "totalUsdIva": 234.07
+            }
+        ],
+        "totals": {
+            "hasUsd": true,
+            "hasCop": false,
+            "usdIva": 234.07,
+            "qty": 1,
+            "empresa": "VALTECH MAYORISTA S.A.S."
+        },
+        "bitrix_deal_id": "17862",
+        "assigned_by_id": "257",
+        "seller_codigo": "V5",
+        "seller_name": "IZC V5 Kelly Johana Alcaraz Serna",
+        "asesor_estado": "cotizado",
+        "quote_source": "izc",
+        "synced_from_bitrix": true,
+        "empresa": "VALTECH MAYORISTA S.A.S.",
+        "fecha_cierre": "2026-10-12"
+    },
+    {
+        "id": "202610050734177.3263-830010792",
+        "nit": "830010792",
+        "nombre": "MAKRO OFFICE LTDA",
+        "created_at": "2026-10-05T07:34:17-05:00",
+        "items": [
+            {
+                "sku": "",
+                "name": "Productos cotizados",
+                "referencia": "Bitrix #17854",
+                "qty": 1,
+                "currency": "USD",
+                "usdIva": 491.69,
+                "totalUsdIva": 491.69
+            }
+        ],
+        "totals": {
+            "hasUsd": true,
+            "hasCop": false,
+            "usdIva": 491.69,
+            "qty": 1,
+            "empresa": "IZC MAYORISTA S.A.S."
+        },
+        "bitrix_deal_id": "17854",
+        "assigned_by_id": "145",
+        "seller_codigo": "V1",
+        "seller_name": "IZC V1 Jonathan Ramos",
+        "asesor_estado": "cotizado",
+        "quote_source": "izc",
+        "synced_from_bitrix": true,
+        "empresa": "IZC MAYORISTA S.A.S.",
+        "fecha_cierre": "2026-10-12"
+    },
+    {
+        "id": "2026100507335535.372-830010792",
+        "nit": "830010792",
+        "nombre": "MAKRO OFFICE LTDA",
+        "created_at": "2026-10-05T07:33:55-05:00",
+        "items": [
+            {
+                "sku": "",
+                "name": "Productos cotizados",
+                "referencia": "Bitrix #17850",
+                "qty": 1,
+                "currency": "USD",
+                "usdIva": 73.68,
+                "totalUsdIva": 73.68
+            }
+        ],
+        "totals": {
+            "hasUsd": true,
+            "hasCop": false,
+            "usdIva": 73.68,
+            "qty": 1,
+            "empresa": "VALTECH MAYORISTA S.A.S."
+        },
+        "bitrix_deal_id": "17850",
+        "assigned_by_id": "145",
+        "seller_codigo": "V1",
+        "seller_name": "IZC V1 Jonathan Ramos",
+        "asesor_estado": "cotizado",
+        "quote_source": "izc",
+        "synced_from_bitrix": true,
+        "empresa": "VALTECH MAYORISTA S.A.S.",
+        "fecha_cierre": "2026-10-12"
+    },
+    {
+        "id": "202610050730400.6494-830089581",
+        "nit": "830089581",
+        "nombre": "Arc Software  S.a.S",
+        "created_at": "2026-10-05T07:30:40-05:00",
+        "items": [
+            {
+                "sku": "",
+                "name": "Productos cotizados",
+                "referencia": "Bitrix #17846",
+                "qty": 1,
+                "currency": "USD",
+                "usdIva": 36.84,
+                "totalUsdIva": 36.84
+            }
+        ],
+        "totals": {
+            "hasUsd": true,
+            "hasCop": false,
+            "usdIva": 36.84,
+            "qty": 1,
+            "empresa": "VALTECH MAYORISTA S.A.S."
+        },
+        "bitrix_deal_id": "17846",
+        "assigned_by_id": "145",
+        "seller_codigo": "V1",
+        "seller_name": "IZC V1 Jonathan Ramos",
+        "asesor_estado": "cotizado",
+        "quote_source": "izc",
+        "synced_from_bitrix": true,
+        "empresa": "VALTECH MAYORISTA S.A.S.",
+        "fecha_cierre": "2026-10-12"
+    },
+    {
+        "id": "202610050721111.7128-900389650",
+        "nit": "900389650",
+        "nombre": "CAPITAL COLOMBIA COM S A S",
+        "created_at": "2026-10-05T07:21:11-05:00",
+        "items": [
+            {
+                "sku": "",
+                "name": "Productos cotizados",
+                "referencia": "Bitrix #17842",
+                "qty": 1,
+                "currency": "USD",
+                "usdIva": 962,
+                "totalUsdIva": 962
+            }
+        ],
+        "totals": {
+            "hasUsd": true,
+            "hasCop": false,
+            "usdIva": 962,
+            "qty": 1,
+            "empresa": "IZC MAYORISTA S.A.S."
+        },
+        "bitrix_deal_id": "17842",
+        "assigned_by_id": "145",
+        "seller_codigo": "V1",
+        "seller_name": "IZC V1 Jonathan Ramos",
+        "asesor_estado": "cotizado",
+        "quote_source": "izc",
+        "synced_from_bitrix": true,
+        "empresa": "IZC MAYORISTA S.A.S.",
+        "fecha_cierre": "2026-10-12"
+    },
+    {
+        "id": "202610031454266.4479-1098766866",
+        "nit": "1098766866",
+        "nombre": "HERNEY JOHAN TELLEZ ORTEGA",
+        "created_at": "2026-10-03T14:54:26-05:00",
+        "items": [
+            {
+                "sku": "",
+                "name": "Productos cotizados",
+                "referencia": "Bitrix #17838",
+                "qty": 1,
+                "currency": "USD",
+                "usdIva": 17.92,
+                "totalUsdIva": 17.92
+            }
+        ],
+        "totals": {
+            "hasUsd": true,
+            "hasCop": false,
+            "usdIva": 17.92,
+            "qty": 1,
+            "empresa": "IZC MAYORISTA S.A.S."
+        },
+        "bitrix_deal_id": "17838",
+        "assigned_by_id": "205",
+        "seller_codigo": "V45",
+        "seller_name": "V45 ELIANA DONADO",
+        "asesor_estado": "cotizado",
+        "quote_source": "izc",
+        "synced_from_bitrix": true,
+        "empresa": "IZC MAYORISTA S.A.S.",
+        "fecha_cierre": "2026-10-10",
+        "asesor_estado_bitrix_stage": "C3:FINAL_INVOICE",
+        "asesor_estado_bitrix_for": "cotizado",
+        "asesor_estado_bitrix_at": "2026-10-06T08:02:04-05:00"
+    },
+    {
+        "id": "202610021608555.4673-901307283",
+        "nit": "901307283",
+        "nombre": "VAILCOM SAS",
+        "created_at": "2026-10-02T16:08:55-05:00",
+        "items": [
+            {
+                "sku": "",
+                "name": "Productos cotizados",
+                "referencia": "Bitrix #17832",
+                "qty": 1,
+                "currency": "USD",
+                "usdIva": 71.81,
+                "totalUsdIva": 71.81
+            }
+        ],
+        "totals": {
+            "hasUsd": true,
+            "hasCop": false,
+            "usdIva": 71.81,
+            "qty": 1,
+            "empresa": "VALTECH MAYORISTA S.A.S."
+        },
+        "bitrix_deal_id": "17832",
+        "assigned_by_id": "257",
+        "seller_codigo": "V5",
+        "seller_name": "IZC V5 Kelly Johana Alcaraz Serna",
+        "asesor_estado": "cotizado",
+        "quote_source": "izc",
+        "synced_from_bitrix": true,
+        "empresa": "VALTECH MAYORISTA S.A.S.",
+        "fecha_cierre": "2026-10-10"
+    },
+    {
+        "id": "202610021604144.6373-900987428",
+        "nit": "900987428",
+        "nombre": "DRACOPRINT TECHNOLOGY SAS",
+        "created_at": "2026-10-02T16:04:14-05:00",
+        "items": [
+            {
+                "sku": "",
+                "name": "Productos cotizados",
+                "referencia": "Bitrix #17828",
+                "qty": 1,
+                "currency": "USD",
+                "usdIva": 438.34,
+                "totalUsdIva": 438.34
+            }
+        ],
+        "totals": {
+            "hasUsd": true,
+            "hasCop": false,
+            "usdIva": 438.34,
+            "qty": 1,
+            "empresa": "VALTECH MAYORISTA S.A.S."
+        },
+        "bitrix_deal_id": "17828",
+        "assigned_by_id": "1741",
+        "seller_codigo": "V7",
+        "seller_name": "IZC V7 Brayan Estiven Pinilla",
+        "asesor_estado": "cotizado",
+        "quote_source": "izc",
+        "synced_from_bitrix": true,
+        "empresa": "VALTECH MAYORISTA S.A.S.",
+        "fecha_cierre": "2026-10-10"
+    }
+]

@@ -72,6 +72,21 @@ ul { list-style: none; margin: 0; padding: 0; }
   object-fit: contain;
 }
 
+.header-logos {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 16px;
+  flex-shrink: 0;
+  width: auto;
+}
+
+.header-logos .logo {
+  padding-right: 0;
+  width: auto;
+}
+
 .search-bar {
   flex: 1 1 auto;
   display: flex;
@@ -421,47 +436,206 @@ nav.main-nav { background: var(--blue-deep); }
   text-transform: uppercase;
 }
 
-.featured-brands-box .brands-carousel-wrapper {
-  min-height: 0;
-  height: auto;
-  overflow: hidden;
-  touch-action: pan-y;
-  cursor: grab;
-  user-select: none;
-  transition: height 0.35s ease;
+/* Layout marca: sidebar izquierdo + contenido */
+.page-container {
+  max-width: 1280px;
+  margin: 20px auto;
+  padding: 0 24px;
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  box-sizing: border-box;
 }
 
-.featured-brands-box .brands-carousel-wrapper:active {
-  cursor: grabbing;
+.page-container > .sidebar {
+  width: 250px;
+  flex: 0 0 250px;
+  max-width: 250px;
+}
+
+.page-container > .content-area {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+/* Marcas destacadas: una hoja completa (4+3+3) + flechas entre hojas */
+.featured-brands-box {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  overflow: hidden;
+}
+
+.featured-brands-box .featured-header {
+  background: #1653a0;
+  color: #fff;
+  font-size: 13px;
+  font-weight: bold;
+  padding: 10px 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.featured-brands-box .brand-arrows {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.featured-brands-box .arrow-btn {
+  background: transparent;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+  padding: 2px 6px;
+}
+
+.featured-brands-box .arrow-btn:hover {
+  opacity: 0.85;
+}
+
+.featured-brands-box .arrow-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.featured-brands-box .brands-carousel-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
 }
 
 .featured-brands-box .brands-carousel-track {
-  display: flex;
-  transition: transform 0.4s ease-in-out;
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
   width: 100%;
+  gap: 0;
+  will-change: transform;
 }
 
-.featured-brands-box .brand-column {
-  flex: 0 0 50%;
-  width: 50%;
+.featured-brands-box .brands-sheet {
+  flex: 0 0 100% !important;
+  width: 100% !important;
+  max-width: 100% !important;
   box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding: 12px 6px;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px;
+  padding: 10px 8px 12px;
+}
+
+.featured-brands-box .brand-row {
+  display: grid !important;
+  gap: 6px !important;
+  width: 100% !important;
+  margin: 0 !important;
+}
+
+.featured-brands-box .brand-row-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+}
+
+.featured-brands-box .brand-row-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
 }
 
 .featured-brands-box .brand-item {
-  height: 110px;
-  padding: 12px;
+  height: 56px;
+  padding: 0;
+  border: 1px solid #f0f0f0;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-width: 0;
+  width: auto;
+  background: #fff;
+  overflow: hidden;
 }
 
+/* Las PNG de marca traen mucho padding interno: zoom sin agrandar el recuadro */
 .featured-brands-box .brand-item img {
-  max-width: 100%;
-  max-height: 86px;
-  width: auto;
-  height: auto;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: none !important;
+  max-height: none !important;
+  padding: 0 !important;
+  box-sizing: border-box;
   object-fit: contain;
+  object-position: center;
+  transform: scale(2.0);
+  transform-origin: center center;
+}
+
+.featured-brands-box .brand-item img[alt="Elo"],
+.featured-brands-box .brand-item img[alt="Topaz"],
+.featured-brands-box .brand-item img[alt="HID"] {
+  transform: scale(2.5);
+}
+
+.featured-brands-box .brand-item img[alt="IMOU"],
+.featured-brands-box .brand-item img[alt="Datalogic"],
+.featured-brands-box .brand-item img[alt="ZKTeco"] {
+  transform: scale(2.15);
+}
+
+/* Cliente IZC: ocultar SAT (columna 4) */
+body.hide-sat-brand .featured-brands-box .brand-item.brand-sat,
+body.hide-sat-brand .featured-brands-box a.brand-sat,
+body.hide-sat-brand .featured-brands-box a[href="sat.html"],
+body.hide-sat-brand .featured-brands-box a[href="./sat.html"],
+body.hide-sat-brand .featured-brands-box a[href$="/sat.html"],
+body.hide-sat-brand .featured-brands-box .brand-column-sat,
+body.hide-sat-brand .brands-section .brand-card:has(a[href="sat.html"]),
+body.hide-sat-brand .brands-section a[href="sat.html"][hidden],
+body.hide-sat-brand .brands-section li[hidden] {
+  display: none !important;
+}
+
+body.hide-sat-brand .featured-brands-box .brand-row-4 {
+  grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+}
+
+/* Carrusel: 2 columnas visibles; avanza de a 1 hasta SAT (4ª) */
+.featured-brands-box .brand-column {
+  flex: 0 0 50% !important;
+  width: 50% !important;
+  min-width: 50% !important;
+  max-width: 50% !important;
+  box-sizing: border-box;
+  display: flex !important;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px 6px 12px;
+}
+
+.featured-brands-box .brand-column-sat {
+  justify-content: flex-start;
+}
+
+/* sat.html: carrusel solo con sesión admin/asesor */
+.featured-brands-staff-only[hidden],
+body.hide-sat-brand .featured-brands-staff-only {
+  display: none !important;
+}
+
+body.is-admin-session .featured-brands-staff-only:not([hidden]),
+body.is-asesor-session .featured-brands-staff-only:not([hidden]) {
+  display: block !important;
+}
+
+.featured-brands-box .brands-grid {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+  padding: 10px 8px 12px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .product-carddatalogic {
@@ -493,14 +667,22 @@ nav.main-nav { background: var(--blue-deep); }
   width: 100% !important;
   max-width: 100% !important;
   height: auto !important;
-  min-height: 140px !important;
+  min-height: 0 !important;
   max-height: none !important;
-  object-fit: contain !important;
+  aspect-ratio: 1200 / 316 !important;
+  object-fit: cover !important;
+  object-position: center !important;
   margin: 0 !important;
   padding: 0 !important;
   border: none !important;
   box-shadow: none !important;
   background: #f5f5f5 !important;
+}
+
+body[data-brand="honeywell"] .brand-hero-banner,
+body[data-brand="honeywell"] .product-imgdatalogic > img.brand-hero-banner,
+body[data-brand="honeywell"] .product-imgelo > img.brand-hero-banner {
+  object-position: center top !important;
 }
 
 /* Logo cuadrado a la izquierda, montado sobre el borde inferior del banner */
@@ -704,20 +886,19 @@ img.brand-hero-logo,
   outline-offset: 2px;
 }
 
-/* Mobile: sidebar full width — larger brand logos + full-width banner */
+/* Mobile: sidebar full width — keep compact brand grid */
 @media (max-width: 992px) {
-  .featured-brands-box .brands-carousel-wrapper {
-    min-height: 0;
-  }
-
   .featured-brands-box .brand-item {
-    height: 110px;
-    padding: 12px;
+    height: 72px;
+    padding: 0;
   }
 
   .featured-brands-box .brand-item img {
-    max-height: 86px;
-    max-width: 95%;
+    width: 100% !important;
+    height: 100% !important;
+    max-height: 100% !important;
+    max-width: 100% !important;
+    padding: 4px;
   }
 
   .product-carddatalogic {
@@ -744,10 +925,17 @@ img.brand-hero-logo,
     max-width: 100% !important;
     height: auto !important;
     max-height: none !important;
-    object-fit: contain !important;
+    aspect-ratio: 1200 / 316 !important;
+    object-fit: cover !important;
+    object-position: center !important;
     padding: 0 !important;
     border: none !important;
     box-shadow: none !important;
+  }
+
+  body[data-brand="honeywell"] .brand-hero-banner,
+  body[data-brand="honeywell"] .product-imgdatalogic > img.brand-hero-banner {
+    object-position: center top !important;
   }
 
   .brand-hero-logo,
@@ -813,6 +1001,14 @@ img.brand-hero-logo,
     width: 100%;
     justify-content: center;
     padding-right: 0;
+  }
+
+  .header-logos {
+    width: auto;
+  }
+
+  .header-logos .logo {
+    width: auto !important;
   }
 
   .logo-img {
@@ -927,12 +1123,16 @@ img.brand-hero-logo,
   }
 
   .featured-brands-box .brand-item {
-    height: 110px;
-    padding: 12px;
+    height: 68px;
+    padding: 0;
   }
 
   .featured-brands-box .brand-item img {
-    max-height: 86px;
+    width: 100% !important;
+    height: 100% !important;
+    max-height: 100% !important;
+    max-width: 100% !important;
+    padding: 3px;
   }
 }
 
@@ -942,7 +1142,90 @@ img.brand-hero-logo,
   }
 
   .featured-brands-box .brand-item {
-    height: 110px;
+    height: 60px;
   }
 }
 
+
+
+/* IZC clientes: ocultar categorías solo-SAT en el menú */
+body.hide-sat-brand .flyout-group:has(a[href*="q=balanzas"]),
+body.hide-sat-brand .flyout-group:has(a[href*="q=cajones"]),
+body.hide-sat-brand .flyout-group:has(a[href*="q=seguridad"]),
+body.hide-sat-brand li:has(> a[href*="q=balanzas"]),
+body.hide-sat-brand li:has(> a[href*="q=cajones"]),
+body.hide-sat-brand li:has(> a[href*="q=seguridad"]),
+body.hide-sat-brand a[href*="q=balanzas"][hidden],
+body.hide-sat-brand a[href*="q=cajones"][hidden],
+body.hide-sat-brand a[href*="q=seguridad"][hidden] {
+  display: none !important;
+}
+
+/* Buscador: aviso sin resultados (reemplaza alert nativo) */
+.izc-search-modal[hidden] {
+  display: none !important;
+}
+
+.izc-search-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.izc-search-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 35, 70, 0.5);
+}
+
+.izc-search-modal-dialog {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 420px;
+  background: #fff;
+  border: 1px solid #d9e4f2;
+  border-radius: 10px;
+  box-shadow: 0 18px 42px rgba(22, 83, 160, 0.25);
+  padding: 26px 24px 20px;
+  text-align: center;
+}
+
+.izc-search-modal-dialog h3 {
+  margin: 0 0 10px;
+  font-size: 1.2rem;
+  color: #163a74;
+  font-weight: 700;
+}
+
+.izc-search-modal-dialog p {
+  margin: 0 0 18px;
+  font-size: 0.98rem;
+  line-height: 1.45;
+  color: #334155;
+}
+
+.izc-search-modal-actions {
+  display: flex;
+  justify-content: center;
+}
+
+.izc-search-modal-ok {
+  min-width: 120px;
+  border: none;
+  border-radius: 6px;
+  background: #1653a0;
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 10px 18px;
+  cursor: pointer;
+}
+
+.izc-search-modal-ok:hover {
+  background: #0f3f7c;
+}

@@ -31,16 +31,21 @@
     return '';
   }
 
+  function isValtech() {
+    return !!(window.IZCWishlist && IZCWishlist.isValtechStore && IZCWishlist.isValtechStore());
+  }
+
   function renderCard(product) {
     var brandPage = product.brandPage || ((product.brand || '') + '.html');
     var logo = product.brandLogo || ((product.brandName || product.brand || 'brand') + '.png');
     var link = 'producto.html?sku=' + encodeURIComponent(product.sku);
     var img = product.img || ('assets/imgmarcas/' + logo);
+    var mark = (window.IZCWishlist && IZCWishlist.FULL) ? IZCWishlist.FULL : '♥';
     return (
       '<div class="product-card" data-sku="' + escapeHtml(product.sku) + '">' +
-        '<button class="wishlist-btn" type="button" aria-pressed="true">♥</button>' +
+        '<button class="wishlist-btn" type="button" aria-pressed="true">' + mark + '</button>' +
         '<div class="product-img">' +
-          '<img src="' + escapeHtml(img) + '" alt="' + escapeHtml(product.name) + '" onerror="this.src=\'assets/imgmarcas/' + escapeHtml(logo) + '\'">' +
+          '<img src="' + escapeHtml(img) + '" alt="" loading="lazy" onerror="this.onerror=null;this.alt=\'\';this.src=\'assets/imgmarcas/' + escapeHtml(logo) + '\'">' +
         '</div>' +
         '<div class="product-info">' +
           '<span class="sku">Sku: ' + escapeHtml(product.sku) + '</span>' +
@@ -77,7 +82,7 @@
 
   function renderLoggedOut() {
     if (!grid) return;
-    if (titleEl) titleEl.textContent = 'Mis favoritos';
+    if (titleEl) titleEl.textContent = isValtech() ? 'Mis favoritos VALTECH' : 'Mis favoritos';
     if (subtitleEl) {
       subtitleEl.innerHTML =
         'Inicia sesión con tu NIT para ver tu panel de favoritos. ' +
@@ -85,6 +90,14 @@
     }
     grid.innerHTML = '';
     updateCount(0);
+  }
+
+  function catalogProducts(catalog) {
+    var list = (catalog && catalog.products) || [];
+    if (window.IZCZktecoOverlay && typeof IZCZktecoOverlay.mergeIntoCatalog === 'function') {
+      return IZCZktecoOverlay.mergeIntoCatalog(list);
+    }
+    return list;
   }
 
   function renderFavorites(catalog) {
@@ -97,22 +110,29 @@
 
     var liked = window.IZCWishlist ? window.IZCWishlist.getAll() : [];
     var bySku = {};
-    (catalog.products || []).forEach(function (product) {
-      bySku[String(product.sku)] = product;
+    catalogProducts(catalog).forEach(function (product) {
+      var k = String(product.sku || '');
+      if (!k) return;
+      bySku[k] = product;
+      bySku[k.toUpperCase()] = product;
     });
 
     var products = liked
       .map(function (sku) {
-        return bySku[String(sku)];
+        var s = String(sku || '');
+        return bySku[s] || bySku[s.toUpperCase()];
       })
       .filter(Boolean);
 
-    var nit = currentNit();
-    if (titleEl) titleEl.textContent = 'Mis favoritos';
+    if (titleEl) titleEl.textContent = isValtech() ? 'Mis favoritos VALTECH' : 'Mis favoritos';
     if (subtitleEl) {
-      subtitleEl.textContent = products.length
-        ?  products.length + ' producto(s) guardados.'
-        : ' aún no has marcado productos con el corazón.';
+      if (products.length) {
+        subtitleEl.textContent = products.length + ' producto(s) guardados.';
+      } else {
+        subtitleEl.textContent = isValtech()
+          ? 'Aún no has marcado productos con la estrella.'
+          : 'Aún no has marcado productos con el corazón.';
+      }
     }
 
     grid.innerHTML = products.map(renderCard).join('');
@@ -138,6 +158,12 @@
         });
 
     loadCatalog
+      .then(function (catalog) {
+        if (window.IZCZktecoOverlay && typeof IZCZktecoOverlay.load === 'function') {
+          return IZCZktecoOverlay.load().then(function () { return catalog; }).catch(function () { return catalog; });
+        }
+        return catalog;
+      })
       .then(function (catalog) {
         catalogCache = catalog;
         renderFavorites(catalog);

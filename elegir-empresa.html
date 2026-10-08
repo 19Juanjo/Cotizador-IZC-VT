@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<!-- Tras login de cliente: elegir tienda IZC o VALTECH. -->
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Elegir empresa - IZC / VALTECH</title>
+  <link rel="icon" href="assets/logo/iconoizc.png" type="image/png">
+  <link rel="stylesheet" href="assets/css/index.css?v=36">
+  <link rel="stylesheet" href="assets/css/auth.css?v=15">
+  <link rel="stylesheet" href="assets/css/login.css?v=2">
+  <script src="assets/js/file-boot.js?v=2"></script>
+  <script src="assets/js/auth.js?v=91" defer></script>
+  <script src="assets/js/elegir-empresa.js?v=1" defer></script>
+</head>
+<body>
+  <div class="top-bar">
+    <div class="top-bar-inner">
+      <a href="https://api.whatsapp.com/send?phone=573144355391" target="_blank">Soporte T&#233;cnico</a>
+    </div>
+  </div>
+
+  <header class="main-header">
+    <div class="main-header-inner">
+      <span class="logo" aria-hidden="true">
+        <img src="assets/logo/logoizc.png" alt="" class="logo-img">
+      </span>
+      <div style="flex:1"></div>
+      <a href="favoritos.html" class="header-wishlist" id="headerWishlist" title="Mis favoritos" aria-label="Mis favoritos"><span class="header-wishlist-icon" aria-hidden="true">&#9829;</span></a>
+    </div>
+  </header>
+
+  <main class="auth-page empresa-choice-page">
+    <div class="auth-card empresa-choice-card">
+      <h1>&#191;Con qu&#233; empresa quieres continuar?</h1>
+      <p class="auth-lead">Elige IZC o VALTECH. Cada una abre su propia tienda.</p>
+
+      <div class="empresa-choice-grid" role="navigation" aria-label="Elegir empresa">
+        <a class="empresa-choice-btn" id="choiceIzc" href="marcas.html" data-empresa="izc">
+          <img src="assets/logo/logoizc.png" alt="IZC Mayorista" class="empresa-choice-logo">
+          <span class="empresa-choice-label">Continuar con IZC</span>
+        </a>
+        <a class="empresa-choice-btn" id="choiceValtech" href="valtech.html" data-empresa="valtech">
+          <img src="assets/logo/valtech.png" alt="VALTECH Mayorista" class="empresa-choice-logo">
+          <span class="empresa-choice-label">Continuar con VALTECH</span>
+        </a>
+      </div>
+
+      <p id="empresaChoiceMessage" class="auth-message" role="status"></p>
+      <p class="auth-switch"><a href="perfil.html">Ir a mi perfil</a></p>
+    </div>
+  </main>
+</body>
+</html>

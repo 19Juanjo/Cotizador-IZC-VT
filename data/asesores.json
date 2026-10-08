@@ -1,14 +1,109 @@
 [
   {
     "codigo": "V1",
-    "nombre": "IZC Jonathan Ramos",
-    "password_hash": "pbkdf2$100000$UP8OavJdnm0btdFd0fVM9A==$4Bws1L/27OgBENivzpASL+SSxz4JaPLRmK2+cpCl3aM=",
-    "created_at": "2026-08-13T11:03:02.7527993-05:00"
+    "nombre": "Jonathan Ramos",
+    "password_hash": "pbkdf2$100000$jtcv6P2kH8LXMjDQ+qOuoQ==$c94S6OuF5oeITLHgBiu7dTKCgJ4+rgiYpsTA0qGxTnI=",
+    "created_at": "2026-08-19T15:27:16.319077-05:00"
   },
   {
     "codigo": "V2",
-    "nombre": "IZC Yaqueline",
-    "password_hash": "pbkdf2$100000$erUmZ425YN3VENaN4mXzPA==$RNMmFmWBCBHPKvcuYwJ7GLo9qoHge42ZfXdyjD5Ckxg=",
-    "created_at": "2026-08-14T11:50:04.9405153-05:00"
+    "nombre": "Yaqueline Corzo",
+    "password_hash": "pbkdf2$100000$miRUfnttYjzpQipIKNRMCw==$/GDrRMRjdBP9PvgwZ4HGRihN29PEGocO64il3ghnu8I=",
+    "created_at": "2026-08-19T15:27:16.319077-05:00"
+  },
+  {
+    "codigo": "V3",
+    "nombre": "Mauricio Morales",
+    "password_hash": "pbkdf2$100000$W7K5Fe5rorbvOo4rAHZLWA==$ajvTxRDzDJTwyJJEliTF++f5Vs/XrT+hRIpOReHN6xM=",
+    "created_at": "2026-08-19T15:27:16.319077-05:00"
+  },
+  {
+    "codigo": "V4",
+    "nombre": "Edward Celis",
+    "password_hash": "pbkdf2$100000$g/tljXlIgfUHl0nE+h4/cw==$kt1IQLewk53YIHNewBvrE1s2sUSJfsNyH72vX2LRWZs=",
+    "created_at": "2026-08-19T15:27:16.319077-05:00"
+  },
+  {
+    "codigo": "V5",
+    "nombre": "Kelly Alcaraz",
+    "password_hash": "pbkdf2$100000$h5wDYLsdRiFZHHIadyt7pQ==$PTZ6ShhzF08J9aIhECM8SEmfpJCTM6ybhUVe/9LlqlM=",
+    "created_at": "2026-08-19T15:27:16.319077-05:00"
+  },
+  {
+    "codigo": "V7",
+    "nombre": "Brayan Pinilla",
+    "password_hash": "pbkdf2$100000$HUtIyV4UcZOEuwwF9G1NQg==$nvdLSCXKr6XmtGDDb1wX4tx8cgK0U7wmMFrEw53Urf0=",
+    "created_at": "2026-08-19T15:27:16.319077-05:00"
+  },
+  {
+    "codigo": "V31",
+    "nombre": "Edgar Caicedo",
+    "password_hash": "pbkdf2$100000$+SgueH6tTpwL0qnuFI7K+A==$MpZOpdlNW7fP6X3qPb7yd9hNUGPOPfU9iY9SK6Zh5kI=",
+    "created_at": "2026-08-19T15:27:16.319077-05:00"
+  },
+  {
+    "codigo": "V41",
+    "nombre": "Nelson Cuevas",
+    "password_hash": "pbkdf2$100000$/koTU8YmMJ3Xo5I6KI9ztQ==$WVPt7RSRKNcXfqlLRpRLqIbaABIY80zJcAi9bmRkITo=",
+    "created_at": "2026-08-19T15:27:16.319077-05:00"
+  },
+  {
+    "codigo": "V43",
+    "nombre": "Juan Cubillos",
+    "password_hash": "pbkdf2$100000$CVeywNUncijwYEW8CFl6+Q==$TEy7wYroeD3y3OmWohr3Chg2I1jLiv2sGPzJdfGmJHo=",
+    "created_at": "2026-08-19T15:27:16.319077-05:00"
+  },
+  {
+    "codigo": "V44",
+    "nombre": "Estiven Graciano",
+    "password_hash": "pbkdf2$100000$R+lhgHQ+LzpLD/Qtaui6fg==$M35TeLoj/5ZkHa6hRiZDBEnglzPDVjJ5Vu0xYapXe4s=",
+    "created_at": "2026-08-19T15:27:16.319077-05:00"
+  },
+  {
+    "codigo": "V45",
+    "nombre": "Eliana Donado",
+    "password_hash": "pbkdf2$100000$MOaww0dy59uC25fqyxgoIA==$frxuKGYBFetmejYz5Z6U94KhjalJuU31FyDwChRdvyU=",
+    "created_at": "2026-08-19T15:27:16.319077-05:00"
+  },
+  {
+    "codigo": "V46",
+    "nombre": "Brahian Guarin",
+    "password_hash": "pbkdf2$100000$FBUah8aikPAge7dMgz9sMQ==$xhMESxcX1W456IGkZp65+RpmJCOrQhKmmUjshkAxJ1w=",
+    "created_at": "2026-08-19T15:27:16.319077-05:00"
+  },
+  {
+    "codigo": "V47",
+    "nombre": "Omar Rosas",
+    "password_hash": "pbkdf2$100000$R6SpRiMNJbd9rb66lCgKsQ==$CAHMkmk0I2PPQMOOj0jnHcQ7y5ib+8UjYZcCDjL8LfM=",
+    "created_at": "2026-08-19T15:27:16.319077-05:00"
+  },
+  {
+    "codigo": "V48",
+    "nombre": "Daniel Peña",
+    "password_hash": "pbkdf2$100000$00AZKS6LR1oTCjPwpl0E+g==$ww+qEyxxh8i4hnpiyE1J7BSsouXBwnUYqL+R5enHz9A=",
+    "created_at": "2026-08-19T15:27:16.319077-05:00"
+  },
+  {
+    "codigo": "V49",
+    "nombre": "Bairon Lopez",
+    "password_hash": "pbkdf2$100000$tBmoelLt9lWg64O5c0aVOw==$HoL0mGQ+nmuGI6N5YCJoiKj807dQ3ovgZd0nnts2wMc=",
+    "created_at": "2026-08-19T15:27:16.319077-05:00"
+  },
+  {
+    "codigo": "V50",
+    "nombre": "Ruben Tabares",
+    "password_hash": "pbkdf2$100000$OoB2Ft66fwdZBOAH864wRA==$gO+Y3d3XX1laRgb33WYp7gYMwNIeF+z5cSYcnrBn/HU=",
+    "created_at": "2026-08-19T15:27:16.319077-05:00"
+  },
+  {
+    "codigo": "ADV",
+    "nombre": "Mariana Lopez",
+    "password_hash": "pbkdf2$100000$dbmeaY3LmmY03Gz2RgxJbA==$QIFvgIOZUrR3anN4S4xWQn7A3seF7xRwlQHt3V8dLQg=",
+    "codigos_extra": [
+      "V6",
+      "V28"
+    ],
+    "created_at": "2026-10-05T13:41:30.897111-05:00",
+    "updated_at": "2026-10-05T13:41:30.897111-05:00"
   }
 ]

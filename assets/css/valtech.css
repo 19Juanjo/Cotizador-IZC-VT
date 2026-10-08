@@ -1,0 +1,1094 @@
+/* Tienda VALTECH — mezcla de grises + verde (sin negro puro). */
+
+:root {
+  --vt-ink: #2f3438;
+  --vt-panel: #3a4046;
+  --vt-panel-2: #454c53;
+  --vt-line: rgba(255, 255, 255, 0.14);
+  --vt-text: #f2f3f4;
+  --vt-muted: #c4c9ce;
+  --vt-accent: #2f9e44;
+  --vt-accent-2: #1e7a32;
+  --vt-accent-soft: #e8f5eb;
+  --vt-gray: #6b7280;
+  --vt-gray-mid: #5a6169;
+  --vt-gray-soft: #f3f4f6;
+  --vt-card: #ffffff;
+  --vt-card-ink: #2f3438;
+}
+
+* { box-sizing: border-box; }
+
+.valtech-body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: 'IBM Plex Sans', 'Segoe UI', sans-serif;
+  color: var(--vt-text);
+  background:
+    radial-gradient(1100px 480px at 8% -8%, rgba(47, 158, 68, 0.16), transparent 55%),
+    radial-gradient(900px 420px at 92% 4%, rgba(156, 163, 175, 0.28), transparent 52%),
+    linear-gradient(180deg, #4a5158 0%, #5a6169 38%, #4e555c 72%, #454c53 100%);
+}
+
+a { color: inherit; text-decoration: none; }
+ul { list-style: none; margin: 0; padding: 0; }
+
+.vt-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+.vt-top {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  backdrop-filter: blur(10px);
+  background: rgba(58, 64, 70, 0.92);
+  border-bottom: 1px solid var(--vt-line);
+}
+
+.vt-top-inner {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.vt-logo {
+  height: 54px;
+  width: auto;
+  display: block;
+}
+
+.vt-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin-left: 8px;
+  flex: 1;
+}
+
+.vt-nav a {
+  font-family: Manrope, 'IBM Plex Sans', sans-serif;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--vt-muted);
+  padding: 6px 2px;
+  border-bottom: 2px solid transparent;
+}
+
+.vt-nav a:hover,
+.vt-nav a.is-active {
+  color: #fff;
+  border-bottom-color: var(--vt-accent);
+}
+
+.vt-top-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+}
+
+.vt-hero {
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--vt-line);
+}
+
+.vt-hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(105deg, rgba(58, 64, 70, 0.78) 10%, rgba(90, 97, 105, 0.4) 48%, rgba(69, 76, 83, 0.72) 100%),
+    url('https://izc.com.co/pub/media/codazon_cache/brand/1200x/codazon/brand/SAT-PCS.jpg') center/cover no-repeat;
+  opacity: 0.95;
+}
+
+.vt-hero-inner {
+  position: relative;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 56px 24px 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.vt-hero-brand {
+  height: 64px;
+  width: auto;
+  background: #fff;
+  border-radius: 10px;
+  padding: 8px 14px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+}
+
+.vt-hero h1 {
+  margin: 0;
+  max-width: 16ch;
+  font-family: Manrope, 'IBM Plex Sans', sans-serif;
+  font-size: clamp(1.8rem, 4vw, 2.7rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+
+.vt-hero p {
+  margin: 0;
+  max-width: 42ch;
+  font-size: 1.02rem;
+  line-height: 1.45;
+  color: #d4d8d4;
+}
+
+.vt-main {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 28px 24px 64px;
+}
+
+.vt-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding: 14px 16px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+}
+
+.vt-toolbar-left,
+.vt-toolbar-right {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+.vt-search {
+  min-width: min(100%, 280px);
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: #4a5158;
+  color: #fff;
+  font: inherit;
+}
+
+.vt-search::placeholder { color: #b8bec4; }
+
+.vt-count {
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--vt-muted);
+}
+
+.vt-select {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: #4a5158;
+  color: #fff;
+  font: inherit;
+}
+
+.vt-layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 22px;
+  align-items: start;
+}
+
+.vt-sidebar .filter-box {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.vt-sidebar .featured-header {
+  padding: 12px 14px;
+  font-family: Manrope, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--vt-muted);
+  border-bottom: 1px solid var(--vt-line);
+}
+
+.vt-sidebar .filter-group {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--vt-line);
+}
+
+.vt-sidebar .filter-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #d5dbd5;
+  cursor: pointer;
+}
+
+.vt-sidebar .filter-list {
+  margin-top: 8px;
+}
+
+.vt-sidebar .filter-list a {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 4px 0;
+  font-size: 0.8rem;
+  color: var(--vt-muted);
+}
+
+.vt-sidebar .filter-list a:hover,
+.vt-sidebar .filter-list a.is-active {
+  color: #fff;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 16px;
+}
+
+.product-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--vt-card);
+  color: var(--vt-card-ink);
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid #d1d5db;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+  position: relative;
+  min-height: 320px;
+}
+
+.product-card .wishlist-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+  width: 34px;
+  height: 34px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.product-card .product-img {
+  height: 170px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, #f7f8f7, #eef1ee);
+  padding: 16px;
+}
+
+.product-card .product-img img {
+  max-width: 100%;
+  max-height: 140px;
+  object-fit: contain;
+}
+
+.product-card .product-info {
+  padding: 14px 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+.product-card .product-title {
+  margin: 0;
+  font-family: Manrope, sans-serif;
+  font-size: 0.92rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: #111111;
+}
+
+.product-card .product-sku,
+.product-card .product-meta,
+.product-card .sku {
+  font-size: 0.78rem;
+  color: #6b7280;
+}
+
+.product-card .product-price,
+.product-card .price {
+  margin-top: auto;
+  font-weight: 700;
+  color: var(--vt-accent-2);
+}
+
+.vt-empty {
+  padding: 48px 20px;
+  text-align: center;
+  color: var(--vt-muted);
+  font-size: 0.98rem;
+}
+
+.vt-footer {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 24px 40px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--vt-muted);
+  font-size: 0.86rem;
+}
+
+.vt-footer a {
+  color: #b7e0c0;
+  font-weight: 600;
+  border-bottom: 1px solid rgba(183, 224, 192, 0.4);
+}
+
+@media (max-width: 900px) {
+  .vt-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .vt-sidebar {
+    order: 2;
+  }
+
+  .vt-hero-inner {
+    padding-top: 40px;
+    padding-bottom: 36px;
+  }
+
+  .vt-nav {
+    width: 100%;
+    order: 3;
+    margin-left: 0;
+  }
+
+  .vt-top-inner {
+    flex-wrap: wrap;
+  }
+}
+
+/* Cotizador VALTECH: panel claro sobre fondo negro/gris */
+.vt-cotizador-page {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 28px 24px 48px;
+}
+
+.vt-cotizador-wrap {
+  background: #fff;
+  color: #111111;
+  border-radius: 14px;
+  border: 1px solid #c5cbc5;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.4);
+  padding: 22px 22px 18px;
+}
+
+.vt-cotizador-wrap .cotizador-head h1 {
+  color: #111111;
+  font-family: Manrope, 'IBM Plex Sans', sans-serif;
+}
+
+.vt-cotizador-wrap .cotizador-lead {
+  color: #6b7280;
+}
+
+.vt-cotizador-wrap .cotizador-add-btn,
+.vt-cotizador-wrap .cotizador-finish {
+  background: #2f9e44;
+  border-color: #2f9e44;
+}
+
+.vt-cotizador-wrap .cotizador-add-btn:hover,
+.vt-cotizador-wrap .cotizador-finish:hover {
+  background: #1e7a32;
+  border-color: #1e7a32;
+}
+
+.vt-cotizador-wrap .cotizador-finish:disabled {
+  background: #9aa39a;
+  border-color: #9aa39a;
+}
+
+.vt-cotizador-wrap .cotizador-empresa select:disabled {
+  opacity: 1;
+  color: #111111;
+  background: #f3f4f6;
+  border-color: #c5cbc5;
+  cursor: default;
+}
+
+.vt-cotizador-wrap .cotizador-table th {
+  background: #f3f4f6;
+  color: #374151;
+}
+
+.vt-cotizador-wrap .cotizador-table-cliente .cotizador-inv-empresa.is-valtech,
+.vt-cotizador-wrap .cotizador-table-cliente .cotizador-inv-subhead th.is-valtech {
+  background: #3a4046;
+  color: #fff;
+}
+
+.vt-cotizador-wrap .cotizador-table-cliente .cotizador-inv-total-h {
+  background: #8b1e1e;
+  color: #fff;
+}
+
+.vt-cotizador-wrap .cotizador-total-card {
+  background: #f3f4f6;
+  border-color: #d1d5db;
+}
+
+.vt-cotizador-wrap .cotizador-total-card.is-iva {
+  background: #e8f5eb;
+  border-color: #a7d4b2;
+}
+
+.vt-cotizador-wrap .cotizador-legal {
+  border-color: #c5cbc5;
+  background: #f3f4f6;
+  color: #1f2937;
+}
+
+.vt-cotizador-wrap .cotizador-legal-brand {
+  background: #3a4046;
+  color: #f2f3f4;
+}
+
+.vt-cotizador-wrap .cotizador-legal-policy {
+  background: #fafafa;
+}
+
+.vt-cotizador-wrap .cotizador-legal-policy h2,
+.vt-cotizador-wrap .cotizador-legal-policy h3 {
+  color: #111111;
+}
+
+.vt-cotizador-wrap .cotizador-inventario-table th,
+.vt-cotizador-wrap .cotizador-inventario-table td {
+  border-color: #3a4046;
+}
+
+.vt-cotizador-wrap .cotizador-inventario-title {
+  background: #2a2f35;
+}
+
+.vt-cotizador-wrap .cotizador-inventario-empresa,
+.vt-cotizador-wrap .cotizador-inventario-table thead th.is-valtech {
+  background: #3a4046;
+}
+
+.vt-cotizador-wrap .cotizador-inventario-total-h {
+  background: #8b1e1e;
+}
+
+.vt-cotizador-wrap .cotizador-inventario-legend {
+  color: #5b635c;
+}
+
+.cotizador-valtech-body .cotizador-gate {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--vt-line);
+  color: var(--vt-text);
+}
+
+.cotizador-valtech-body .cotizador-gate a {
+  color: #7dcc8c;
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+/* Header VALTECH: favoritos / perfil en gris-negro */
+.valtech-body .header-auth.is-valtech {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: 8px;
+}
+
+.valtech-body .header-auth.is-valtech .header-auth-link {
+  background: #2f9e44;
+  border: 1px solid #1e7a32;
+  color: #fff;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-family: Manrope, 'IBM Plex Sans', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.valtech-body .header-auth.is-valtech .header-auth-link:hover {
+  background: #1e7a32;
+}
+
+.valtech-body.is-logged-in .header-auth.is-valtech {
+  display: none !important;
+}
+
+
+.valtech-body .header-wishlist:hover,
+.valtech-body .header-wishlist.has-items {
+  color: #2f9e44;
+}
+
+.valtech-body .header-wishlist.is-valtech {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.08);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.valtech-body .header-wishlist.is-valtech:hover,
+.valtech-body .header-wishlist.is-valtech.has-items {
+  border-color: #2f9e44;
+  background: rgba(47, 158, 68, 0.18);
+  color: #7dcc8c;
+}
+
+.valtech-body .product-card .wishlist-btn.is-liked {
+  color: #2f9e44 !important;
+  background: #e8f5eb;
+}
+
+/* Página favoritos VALTECH */
+.vt-favoritos-page {
+  padding-top: 8px;
+}
+
+.vt-favoritos-head {
+  margin-bottom: 22px;
+}
+
+.vt-favoritos-head h1 {
+  margin: 0 0 6px;
+  font-family: Manrope, 'IBM Plex Sans', sans-serif;
+  font-size: 1.7rem;
+  font-weight: 800;
+  color: #fff;
+}
+
+.vt-favoritos-head p {
+  margin: 0 0 10px;
+  color: var(--vt-muted);
+}
+
+.vt-favoritos-head .vt-count {
+  display: inline-block;
+}
+
+.valtech-body .header-profile {
+  border-color: #9aa3ad;
+  background: #4a5158;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.valtech-body .header-profile:hover {
+  background: #5a6169;
+  border-color: #2f9e44;
+}
+
+.valtech-body .header-profile.is-valtech {
+  border: 2px solid #2f9e44;
+  background: transparent;
+  width: 40px;
+  height: 40px;
+}
+
+.valtech-body .header-profile-vt {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+}
+
+.valtech-body .header-profile-vt svg {
+  display: block;
+}
+
+/* Página perfil VALTECH — dashboard oscuro (distinto al perfil IZC blanco) */
+.perfil-valtech-body {
+  background:
+    radial-gradient(900px 420px at 0% 0%, rgba(47, 158, 68, 0.22), transparent 55%),
+    radial-gradient(700px 360px at 100% 12%, rgba(156, 163, 175, 0.2), transparent 50%),
+    linear-gradient(180deg, #3a4046 0%, #454c53 45%, #3a4046 100%);
+}
+
+.vt-profile-hero {
+  border-bottom: 1px solid var(--vt-line);
+  background:
+    linear-gradient(120deg, rgba(47, 158, 68, 0.28) 0%, rgba(58, 64, 70, 0.92) 42%, rgba(69, 76, 83, 0.95) 100%);
+}
+
+.vt-profile-hero-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 36px 24px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.vt-profile-kicker {
+  margin: 0 0 6px;
+  font-family: Manrope, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #9fd4ad;
+}
+
+.vt-profile-greeting,
+.perfil-valtech-body #profileGreeting {
+  margin: 0;
+  font-family: Manrope, sans-serif;
+  font-size: clamp(1.75rem, 4vw, 2.35rem);
+  font-weight: 800;
+  line-height: 1.15;
+  color: #fff;
+}
+
+.vt-profile-tagline {
+  margin: 10px 0 0;
+  max-width: 34rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #d1d5db;
+}
+
+.vt-profile-hero-mark {
+  flex-shrink: 0;
+  width: 112px;
+  height: 112px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.22);
+}
+
+.vt-profile-hero-logo {
+  width: 78px;
+  height: auto;
+  display: block;
+}
+
+.vt-profile-shell {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 28px 24px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.vt-profile-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: 22px;
+  align-items: start;
+}
+
+.vt-profile-panel {
+  background: rgba(47, 52, 56, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 18px;
+  padding: 24px 22px;
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.22);
+  backdrop-filter: blur(8px);
+}
+
+.vt-profile-account {
+  border-left: 4px solid var(--vt-accent);
+}
+
+.vt-profile-panel-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.vt-profile-panel-title {
+  margin: 0;
+  font-family: Manrope, sans-serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.vt-profile-panel-lead {
+  margin: 6px 0 0;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: var(--vt-muted);
+}
+
+.vt-profile-badge {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #d7f0dd;
+  background: rgba(47, 158, 68, 0.22);
+  border: 1px solid rgba(125, 204, 140, 0.35);
+}
+
+.vt-profile-fields {
+  display: grid;
+  gap: 14px;
+}
+
+.vt-profile-field label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #9fd4ad;
+}
+
+.vt-profile-field input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 10px;
+  font: inherit;
+  font-size: 1rem;
+  color: #f3f4f6;
+  background: rgba(0, 0, 0, 0.22);
+}
+
+.vt-profile-field input:focus {
+  outline: 2px solid rgba(47, 158, 68, 0.55);
+  outline-offset: 1px;
+  border-color: rgba(125, 204, 140, 0.5);
+}
+
+.vt-profile-message,
+.perfil-valtech-body .auth-message {
+  min-height: 1.25em;
+  margin: 14px 0 0;
+  font-size: 0.9rem;
+  color: var(--vt-muted);
+}
+
+.vt-profile-message.is-ok,
+.perfil-valtech-body .auth-message.is-ok {
+  color: #7dcc8c;
+}
+
+.vt-profile-message.is-error,
+.perfil-valtech-body .auth-message.is-error {
+  color: #f5a5a5;
+}
+
+.vt-profile-logout {
+  width: 100%;
+  margin-top: 18px;
+  padding: 13px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 10px;
+  background: transparent;
+  color: #f3f4f6;
+  font-family: Manrope, sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.vt-profile-logout:hover {
+  background: rgba(239, 68, 68, 0.16);
+  border-color: rgba(248, 113, 113, 0.45);
+  color: #fecaca;
+}
+
+.vt-profile-shortcuts .vt-profile-panel-title {
+  margin-bottom: 4px;
+}
+
+.vt-profile-shortcut-list {
+  list-style: none;
+  margin: 18px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.vt-profile-shortcut {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.04);
+  color: #f3f4f6;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+}
+
+.vt-profile-shortcut:hover {
+  background: rgba(47, 158, 68, 0.14);
+  border-color: rgba(125, 204, 140, 0.35);
+  transform: translateY(-1px);
+}
+
+.vt-profile-shortcut-icon {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  font-family: Manrope, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  background: rgba(47, 158, 68, 0.2);
+  color: #b7e0c0;
+}
+
+.vt-profile-shortcut-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.vt-profile-shortcut-text strong {
+  font-family: Manrope, sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.vt-profile-shortcut-text small {
+  font-size: 0.8rem;
+  color: var(--vt-muted);
+}
+
+.vt-profile-history-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.vt-profile-table-wrap {
+  overflow-x: auto;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.perfil-valtech-body .vt-profile-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.perfil-valtech-body .vt-profile-table th,
+.perfil-valtech-body .vt-profile-table td {
+  padding: 12px 14px;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  color: #e5e7eb;
+}
+
+.perfil-valtech-body .vt-profile-table th {
+  font-family: Manrope, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #9fd4ad;
+  background: rgba(0, 0, 0, 0.18);
+}
+
+.perfil-valtech-body .vt-profile-table tbody tr:hover td {
+  background: rgba(47, 158, 68, 0.08);
+}
+
+.perfil-valtech-body .profile-quotes-empty {
+  text-align: center;
+  color: var(--vt-muted);
+  padding: 28px 14px !important;
+}
+
+.perfil-valtech-body .profile-view-quote {
+  border: 0;
+  background: var(--vt-accent);
+  color: #fff;
+  padding: 7px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.perfil-valtech-body .profile-view-quote:hover {
+  background: var(--vt-accent-2);
+}
+
+.perfil-valtech-body .profile-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.perfil-valtech-body .profile-modal[hidden] {
+  display: none !important;
+}
+
+.perfil-valtech-body .vt-profile-modal-backdrop,
+.perfil-valtech-body .profile-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 20, 24, 0.72);
+}
+
+.perfil-valtech-body .vt-profile-modal-dialog,
+.perfil-valtech-body .profile-modal-dialog {
+  position: relative;
+  z-index: 1;
+  width: min(900px, 100%);
+  max-height: min(85vh, 800px);
+  overflow: auto;
+  padding: 22px 24px 18px;
+  background: #2f3438;
+  color: #f3f4f6;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+}
+
+.perfil-valtech-body .profile-modal-dialog h3 {
+  color: #fff;
+  font-family: Manrope, sans-serif;
+}
+
+.perfil-valtech-body .profile-quote-meta {
+  color: var(--vt-muted);
+}
+
+.perfil-valtech-body .profile-quote-detail {
+  overflow-x: auto;
+}
+
+.perfil-valtech-body .profile-quote-detail-table {
+  table-layout: fixed;
+}
+
+.perfil-valtech-body .profile-quote-detail-table th,
+.perfil-valtech-body .profile-quote-detail-table td {
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+  color: #e5e7eb;
+  padding: 8px 10px;
+  vertical-align: top;
+}
+
+.perfil-valtech-body .profile-quote-detail-table th:nth-child(1),
+.perfil-valtech-body .profile-quote-detail-table td:nth-child(1) {
+  width: 4.5rem;
+  white-space: nowrap;
+}
+
+.perfil-valtech-body .profile-quote-detail-table th:nth-child(3),
+.perfil-valtech-body .profile-quote-detail-table td:nth-child(3) {
+  width: 3.25rem;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.perfil-valtech-body .profile-quote-detail-table th:nth-child(4),
+.perfil-valtech-body .profile-quote-detail-table td:nth-child(4) {
+  width: 9.5rem;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.perfil-valtech-body .profile-quote-detail-table th {
+  color: #9fd4ad;
+}
+
+.perfil-valtech-body .profile-quote-total {
+  color: #fff;
+}
+
+.perfil-valtech-body .vt-profile-modal-close,
+.perfil-valtech-body .profile-modal-close {
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: transparent;
+  color: #f3f4f6;
+  border-radius: 8px;
+}
+
+.perfil-valtech-body .vt-profile-modal-close:hover,
+.perfil-valtech-body .profile-modal-close:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+@media (max-width: 860px) {
+  .vt-profile-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .vt-profile-hero-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .vt-profile-hero-mark {
+    width: 88px;
+    height: 88px;
+  }
+
+  .vt-profile-hero-logo {
+    width: 62px;
+  }
+}

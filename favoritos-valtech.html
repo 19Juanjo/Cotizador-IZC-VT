@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<!-- Favoritos VALTECH: lista aparte del coraz&#243;n IZC (estrella + carrito propio). -->
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Favoritos - VALTECH Mayorista</title>
+  <link rel="icon" href="assets/logo/valtech.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/auth.css?v=15">
+  <link rel="stylesheet" href="assets/css/valtech.css?v=7">
+  <script src="assets/js/file-boot.js?v=2"></script>
+  <script src="assets/js/data-loader.js?v=5" defer></script>
+  <script src="assets/js/prices.js?v=12" defer></script>
+  <script src="assets/js/wishlist.js?v=6" defer></script>
+  <script src="assets/js/quote-cart.js?v=9" defer></script>
+  <script src="assets/js/auth.js?v=91" defer></script>
+  <script src="assets/js/favoritos.js?v=7" defer></script>
+  <link rel="stylesheet" href="assets/css/quote-cart.css?v=7">
+</head>
+<body class="valtech-body favoritos-valtech-body" data-store="valtech" data-brand="sat">
+  <header class="vt-top">
+    <div class="vt-top-inner">
+      <a class="vt-logo-link" href="valtech.html" aria-label="VALTECH Mayorista">
+        <img src="assets/logo/valtech.png" alt="VALTECH Mayorista" class="vt-logo">
+      </a>
+      <nav class="vt-nav" aria-label="Navegaci&#243;n VALTECH">
+        <a href="valtech.html">Cat&#225;logo SAT</a>
+        <a href="cotizador-valtech.html">Cotizador</a>
+      </nav>
+      <div class="vt-top-actions">
+        <a href="favoritos-valtech.html" class="header-wishlist is-valtech" id="headerWishlist" title="Mis favoritos" aria-label="Mis favoritos"><span class="header-wishlist-icon" aria-hidden="true">?</span></a>
+      </div>
+    </div>
+  </header>
+
+  <main class="vt-main vt-favoritos-page">
+    <section class="vt-favoritos-head">
+      <h1 id="searchResultsTitle">Mis favoritos VALTECH</h1>
+      <p id="searchResultsSubtitle">Productos SAT que marcaste con la estrella.</p>
+      <span class="vt-count" id="itemCountDisplay">0 art&#237;culos</span>
+    </section>
+
+    <section class="product-grid" id="productGrid"></section>
+
+    <div id="noProductsMessage" class="vt-empty" style="display:none;">
+      No tienes favoritos VALTECH todav&#237;a. Marca la estrella en cualquier tarjeta SAT para guardarlos aqu&#237;.
+    </div>
+  </main>
+
+  <footer class="vt-footer">
+    <p>VALTECH Mayorista &#183; Favoritos</p>
+    <a href="valtech.html">Volver al cat&#225;logo</a>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<!-- Registro p&#250;blico de Gerentes de Producto SAT (GP + nombre + contrase&#241;a). -->
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Registro GP - VALTECH / SAT</title>
+  <link rel="icon" href="assets/logo/valtech.png" type="image/png">
+  <link rel="stylesheet" href="assets/css/index.css?v=36">
+  <link rel="stylesheet" href="assets/css/auth.css?v=19">
+  <link rel="stylesheet" href="assets/css/login.css?v=13">
+  <script src="assets/js/file-boot.js?v=2"></script>
+  <script src="assets/js/auth.js?v=91" defer></script>
+  <script src="assets/js/index.js?v=3" defer></script>
+</head>
+<body class="login-empresa-body login-force-motion">
+  <div class="login-bg" aria-hidden="true">
+    <span class="login-bg-orb login-bg-orb--a"></span>
+    <span class="login-bg-orb login-bg-orb--b"></span>
+    <span class="login-bg-orb login-bg-orb--c"></span>
+    <span class="login-bg-orb login-bg-orb--d"></span>
+    <span class="login-bg-grid"></span>
+    <span class="login-bg-sheen"></span>
+    <span class="login-bg-dust">
+      <span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span><span></span>
+    </span>
+  </div>
+  <div class="top-bar"></div>
+
+  <header class="main-header login-empresa-header">
+    <div class="main-header-inner">
+      <span class="logo" aria-hidden="true"></span>
+      <div style="flex:1"></div>
+      <nav class="header-auth login-header-auth" id="headerAuth" aria-label="Acceso">
+        <a class="header-auth-link" href="login.html">Iniciar sesi&#243;n</a>
+        <a class="header-auth-link is-active" href="registro-gp.html">Registro GP</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="auth-page login-empresa-page">
+    <div class="auth-card login-empresa-card">
+      <h1>Registro GP</h1>
+      <p class="auth-lead">Crea o recupera tu cuenta GP (c&#243;digo, nombre y contrase&#241;a). Si ya exist&#237;a, se actualiza la contrase&#241;a.</p>
+
+      <form id="registroGpForm" autocomplete="on" novalidate>
+        <div class="auth-field">
+          <label for="regGpCodigo">GP</label>
+          <input id="regGpCodigo" name="gp" type="text" placeholder="Ej: GP1, GP23, GP44" required autocomplete="username" autocapitalize="characters" spellcheck="false">
+        </div>
+        <div class="auth-field">
+          <label for="regGpNombre">Nombre</label>
+          <input id="regGpNombre" name="nombre" type="text" placeholder="Tu nombre completo" required minlength="2" autocomplete="name">
+        </div>
+        <div class="auth-field">
+          <label for="regGpPassword">Contrase&#241;a</label>
+          <input id="regGpPassword" name="password" type="password" placeholder="M&#237;nimo 4 caracteres" required minlength="4" autocomplete="new-password">
+        </div>
+
+        <button class="auth-submit" type="submit">Crear cuenta</button>
+        <p id="authMessage" class="auth-message" role="status"></p>
+      </form>
+
+      <p class="auth-switch">&#191;Ya tienes cuenta? <a href="login.html">Inicia sesi&#243;n</a></p>
+    </div>
+  </main>
+</body>
+</html>

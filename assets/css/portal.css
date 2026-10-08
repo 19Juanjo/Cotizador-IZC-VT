@@ -1,0 +1,305 @@
+/* Página portal anónima (blanco y negro, sin logos ni marcas). */
+:root {
+  --welcome-ink: #0a0a0a;
+  --welcome-paper: #f7f7f7;
+  --welcome-muted: rgba(20, 20, 20, 0.68);
+  --welcome-line: rgba(0, 0, 0, 0.12);
+  --font-display: "Syne", "Segoe UI", sans-serif;
+  --font-body: "Figtree", "Segoe UI", sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+.welcome-body {
+  min-height: 100vh;
+  color: var(--welcome-ink);
+  font-family: var(--font-body);
+  background:
+    radial-gradient(1000px 620px at 8% -8%, rgba(0, 0, 0, 0.06), transparent 55%),
+    radial-gradient(900px 560px at 100% 12%, rgba(0, 0, 0, 0.05), transparent 52%),
+    linear-gradient(165deg, #ffffff 0%, #f4f4f4 48%, #ebebeb 100%);
+  overflow-x: hidden;
+  position: relative;
+}
+
+.welcome-atmosphere {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.welcome-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(52px);
+  opacity: 0.5;
+  animation: welcomeFloat 14s ease-in-out infinite;
+}
+
+.welcome-glow--a {
+  width: min(48vw, 480px);
+  height: min(48vw, 480px);
+  left: -10%;
+  top: 16%;
+  background: radial-gradient(circle, rgba(0, 0, 0, 0.1), transparent 70%);
+}
+
+.welcome-glow--b {
+  width: min(40vw, 400px);
+  height: min(40vw, 400px);
+  right: -8%;
+  bottom: 6%;
+  background: radial-gradient(circle, rgba(0, 0, 0, 0.08), transparent 70%);
+  animation-delay: -5s;
+}
+
+.welcome-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse at center, #000 30%, transparent 78%);
+  opacity: 0.7;
+}
+
+.welcome-beam {
+  position: absolute;
+  left: 52%;
+  top: -22%;
+  width: 1px;
+  height: 140%;
+  transform: translateX(-50%) rotate(16deg);
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(0, 0, 0, 0.14) 40%,
+    rgba(0, 0, 0, 0.22) 50%,
+    transparent 100%
+  );
+  animation: welcomeBeam 9s ease-in-out infinite;
+}
+
+.welcome-main {
+  position: relative;
+  z-index: 1;
+  width: min(1080px, calc(100% - 40px));
+  margin: 0 auto;
+  padding: clamp(48px, 9vh, 96px) 0 clamp(40px, 6vh, 72px);
+}
+
+.welcome-hero {
+  min-height: min(78vh, 720px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+  padding: clamp(28px, 5vw, 48px) 0 clamp(36px, 6vw, 64px);
+  animation: welcomeRise 0.9s ease-out both;
+}
+
+.welcome-kicker {
+  margin: 0;
+  font-size: 0.84rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(10, 10, 10, 0.55);
+}
+
+.welcome-title {
+  margin: 0;
+  max-width: 14ch;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2.35rem, 6.2vw, 4.4rem);
+  line-height: 0.98;
+  letter-spacing: -0.03em;
+  color: #0a0a0a;
+}
+
+.welcome-title span {
+  color: #1a1a1a;
+  background: linear-gradient(105deg, #000 0%, #333 55%, #111 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.welcome-lead {
+  margin: 0;
+  max-width: 36rem;
+  font-size: clamp(1.05rem, 2.1vw, 1.28rem);
+  line-height: 1.55;
+  font-weight: 500;
+  color: var(--welcome-muted);
+}
+
+.welcome-cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 22px;
+  margin-top: 8px;
+  animation: welcomeRise 1s ease-out 0.15s both;
+}
+
+.welcome-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  padding: 0 28px;
+  border-radius: 999px;
+  border: 0;
+  background: #0a0a0a;
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 1.02rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.welcome-btn:hover {
+  transform: translateY(-2px);
+  background: #000;
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.28);
+}
+
+.welcome-btn:focus-visible {
+  outline: 2px solid #000;
+  outline-offset: 3px;
+}
+
+.welcome-link {
+  color: rgba(10, 10, 10, 0.72);
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.28);
+  padding-bottom: 2px;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.welcome-link:hover {
+  color: #000;
+  border-color: rgba(0, 0, 0, 0.7);
+}
+
+.welcome-promise {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: clamp(12px, 3vh, 28px);
+  padding-top: clamp(24px, 4vh, 40px);
+  border-top: 1px solid var(--welcome-line);
+  animation: welcomeRise 1.05s ease-out 0.28s both;
+}
+
+.welcome-point {
+  padding: 8px 4px 4px;
+}
+
+.welcome-point h2 {
+  margin: 0 0 8px;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #0a0a0a;
+}
+
+.welcome-point p {
+  margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.5;
+  color: var(--welcome-muted);
+}
+
+.welcome-foot {
+  position: relative;
+  z-index: 1;
+  width: min(1080px, calc(100% - 40px));
+  margin: 0 auto;
+  padding: 0 0 28px;
+}
+
+.welcome-foot p {
+  margin: 0;
+  font-size: 0.82rem;
+  color: rgba(10, 10, 10, 0.42);
+}
+
+@keyframes welcomeRise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes welcomeFloat {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(18px, -22px, 0) scale(1.06);
+  }
+}
+
+@keyframes welcomeBeam {
+  0%,
+  100% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+
+@media (max-width: 820px) {
+  .welcome-promise {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .welcome-hero {
+    min-height: auto;
+    padding-top: 36px;
+  }
+
+  .welcome-title {
+    max-width: 12ch;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .welcome-glow,
+  .welcome-beam,
+  .welcome-hero,
+  .welcome-cta,
+  .welcome-promise {
+    animation: none !important;
+  }
+}

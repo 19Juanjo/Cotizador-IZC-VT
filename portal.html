@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bienvenida &#183; Plataforma de cotizaciones</title>
+  <meta name="description" content="Bienvenido a tu plataforma de cotizaciones: cotiza, explora el cat&#225;logo y gestiona tu negocio en un solo lugar.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/portal.css?v=3">
+  <link rel="stylesheet" href="assets/css/portal-videos.css?v=4">
+  <script src="assets/js/file-boot.js?v=2"></script>
+  <script src="assets/js/portal.js?v=6" defer></script>
+</head>
+<body class="welcome-body">
+  <div class="welcome-atmosphere" aria-hidden="true">
+    <span class="welcome-glow welcome-glow--a"></span>
+    <span class="welcome-glow welcome-glow--b"></span>
+    <span class="welcome-grid"></span>
+    <span class="welcome-beam"></span>
+  </div>
+
+  <main class="welcome-main">
+    <section class="welcome-hero" aria-labelledby="welcomeTitle">
+      <p class="welcome-kicker">Plataforma de cotizaciones</p>
+      <h1 id="welcomeTitle" class="welcome-title">
+        Bienvenido a tu<br>
+        <span>espacio de cotizaci&#243;n</span>
+      </h1>
+      <p class="welcome-lead">
+        Aqu&#237; podr&#225;s cotizar productos, revisar precios y acompa&#241;ar cada negociaci&#243;n
+        con la agilidad que tu negocio necesita.
+      </p>
+      <div class="welcome-cta">
+        <div class="welcome-cta-row">
+          <a class="welcome-btn" href="login.html">Ingresar a la plataforma</a>
+          <button type="button" class="welcome-btn-secondary" id="portalOpenVideos">
+            Ver videos instructivos
+          </button>
+        </div>
+        <a class="welcome-link" href="registro.html">&#191;A&#250;n no tienes cuenta? Reg&#237;strate</a>
+      </div>
+    </section>
+
+    <section class="welcome-promise" aria-label="Qu&#233; puedes hacer">
+      <article class="welcome-point">
+        <h2>Cotiza en minutos</h2>
+        <p>Arma cotizaciones claras en COP o USD, con TRM y totales listos para compartir.</p>
+      </article>
+      <article class="welcome-point">
+        <h2>Cat&#225;logo actualizado</h2>
+        <p>Explora referencias y precios para encontrar exactamente lo que estas buscando.</p>
+      </article>
+      <article class="welcome-point">
+        <h2>Tu historial a la mano</h2>
+        <p>Consulta cotizaciones previas, favoritos y el seguimiento de cada oportunidad.</p>
+      </article>
+    </section>
+  </main>
+
+  <footer class="welcome-foot">
+    <p>Plataforma exclusiva para clientes y distribuidores</p>
+  </footer>
+
+  <!-- Lista de los 2 videos -->
+  <div class="portal-modal" id="portalListModal" hidden>
+    <div class="portal-modal-backdrop" aria-hidden="true"></div>
+    <div class="portal-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="portalListTitle">
+      <div class="portal-modal-head">
+        <div>
+          <h2 id="portalListTitle">Videos instructivos</h2>
+          <p class="portal-modal-lead">Elige un video y pulsa <strong>Ver</strong> para reproducirlo.</p>
+        </div>
+        <button type="button" class="portal-modal-close" data-close-modal aria-label="Cerrar">&times;</button>
+      </div>
+      <div class="portal-video-list" id="portalVideoList"></div>
+    </div>
+  </div>
+
+  <!-- Reproductor emergente mediano -->
+  <div class="portal-modal" id="portalPlayerModal" hidden>
+    <div class="portal-modal-backdrop" aria-hidden="true"></div>
+    <div class="portal-modal-dialog is-player" role="dialog" aria-modal="true" aria-labelledby="portalPlayerCaption">
+      <div class="portal-modal-head">
+        <div>
+          <h2>Reproduciendo</h2>
+        </div>
+        <button type="button" class="portal-modal-close" data-close-modal aria-label="Cerrar">&times;</button>
+      </div>
+      <div class="portal-player-frame">
+        <video id="portalPlayerVideo" controls playsinline preload="auto" controlslist="nodownload"></video>
+      </div>
+      <p class="portal-player-caption" id="portalPlayerCaption"></p>
+    </div>
+  </div>
+</body>
+</html>

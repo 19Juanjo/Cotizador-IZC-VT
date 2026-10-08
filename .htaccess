@@ -1,0 +1,20 @@
+AddDefaultCharset UTF-8
+AddType text/html .html
+AddType text/css .css
+AddType application/javascript .js
+AddType application/javascript .mjs
+AddType application/json .json
+
+<IfModule mod_mime.c>
+  AddCharset UTF-8 .html .htm .css .js .mjs .json .txt .php
+</IfModule>
+
+<IfModule mod_php.c>
+  php_value default_charset UTF-8
+</IfModule>
+<IfModule mod_php7.c>
+  php_value default_charset UTF-8
+</IfModule>
+<IfModule mod_php8.c>
+  php_value default_charset UTF-8
+</IfModule>

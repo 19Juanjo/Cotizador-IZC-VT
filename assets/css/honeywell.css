@@ -1,4 +1,4 @@
-/* Estilos de la pagina de marca Honeywell. */
+﻿/* Estilos de la pagina de marca Honeywell. */
 
 /* Estilos específicos de la página de marca Honeywell. */
 :root {
@@ -238,7 +238,7 @@ ul { list-style: none; }
 /* GRILLA DE PRODUCTOS */
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 15px;
 }
 
@@ -291,12 +291,20 @@ ul { list-style: none; }
   max-width: 100%;
   height: auto;
   max-height: none;
-  object-fit: contain;
+  aspect-ratio: 1200 / 316;
+  object-fit: cover;
+  /* Anclar arriba: el sello "Honeywell" del PNG no se corta */
+  object-position: center top;
   margin: 0;
   padding: 0;
   border: none;
   box-shadow: none;
-  background: transparent;
+  background: #f5f5f5;
+}
+
+body[data-brand="honeywell"] .brand-hero-banner,
+body[data-brand="honeywell"] .product-imgdatalogic > img.brand-hero-banner {
+  object-position: center top !important;
 }
 
 .brand-hero-logo {
@@ -494,7 +502,9 @@ img.brand-hero-logo,
     max-width: 100%;
     height: auto;
     max-height: none;
-    object-fit: contain;
+    aspect-ratio: 1200 / 316;
+    object-fit: cover;
+    object-position: center top;
     position: static;
     padding: 0;
     border: none;

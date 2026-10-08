@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<!-- Panel Administrador SAT: historial gerentes, cotizaciones clientes GP y gerentes de producto. -->
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Administrador SAT - VALTECH Mayorista</title>
+  <link rel="icon" href="assets/logo/valtech.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/auth.css?v=19">
+  <link rel="stylesheet" href="assets/css/perfil.css?v=6">
+  <link rel="stylesheet" href="assets/css/admin.css?v=60">
+  <link rel="stylesheet" href="assets/css/valtech.css?v=11">
+  <link rel="stylesheet" href="assets/css/sat-admin.css?v=6">
+  <script src="assets/js/file-boot.js?v=2"></script>
+  <script src="assets/js/data-loader.js?v=22" defer></script>
+  <script src="assets/js/auth.js?v=91" defer></script>
+  <script src="assets/js/panel-sat.js?v=12" defer></script>
+</head>
+<body class="valtech-body is-sat-admin sat-admin-body" data-brand="sat" data-store="valtech">
+  <header class="vt-top">
+    <div class="vt-top-inner">
+      <a class="vt-logo-link" href="valtech.html" aria-label="Catalogo SAT VALTECH">
+        <img src="assets/logo/valtech.png" alt="VALTECH Mayorista" class="vt-logo">
+      </a>
+      <nav class="vt-nav" aria-label="Navegacion Administrador SAT">
+        <a href="valtech.html">Catalogo SAT</a>
+        <a href="cotizador-sat.html">Cotizador Admin SAT</a>
+      </nav>
+      <div class="vt-top-actions"></div>
+    </div>
+  </header>
+
+  <main class="sat-admin-main admin-page profile-page sat-admin-page">
+    <div class="auth-card profile-name-card">
+      <button type="button" class="profile-name-pencil" id="satNombreToggle" title="Editar nombre" aria-label="Editar nombre" aria-pressed="false">
+        <svg class="profile-name-icon is-pencil" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 20h9"></path>
+          <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"></path>
+        </svg>
+        <svg class="profile-name-icon is-check" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" hidden>
+          <path d="M20 6 9 17l-5-5"></path>
+        </svg>
+      </button>
+      <h1 class="profile-greeting" id="profileGreeting">Hola</h1>
+      <input
+        type="text"
+        id="satNombreInput"
+        class="profile-name-inline"
+        maxlength="80"
+        autocomplete="name"
+        placeholder="Tu nombre"
+        hidden
+      >
+      <p class="profile-lead">Panel Administrador SAT</p>
+      <p id="satNombreStatus" class="auth-message profile-name-status" role="status"></p>
+      <p id="satAdminMessage" class="auth-message" role="status"></p>
+      <button class="auth-submit" type="button" id="profileLogout">Cerrar sesion</button>
+    </div>
+
+    <div class="admin-card profile-admin-card">
+      <div class="admin-card-head">
+        <div>
+          <h2>Administrador SAT</h2>
+          <p class="admin-lead">Historial de cotizaciones, clientes de GP y gerentes de producto de la marca SAT.</p>
+        </div>
+      </div>
+
+      <div class="admin-stats sat-admin-stats" role="tablist" aria-label="Secciones Administrador SAT">
+        <button type="button" class="admin-stat is-tab is-active" data-tab="quotes-gerentes" id="satTabQuotesGerentes" role="tab" aria-selected="true">
+          <span class="admin-stat-label">Historial de cotizaciones gerentes</span>
+          <strong id="satQuoteGerentesCount">0</strong>
+        </button>
+        <button type="button" class="admin-stat is-tab" data-tab="quotes-client" id="satTabQuotesClient" role="tab" aria-selected="false">
+          <span class="admin-stat-label">Cotizaciones clientes</span>
+          <strong id="satQuoteClientCount">0</strong>
+        </button>
+        <button type="button" class="admin-stat is-tab" data-tab="gerentes" id="satTabGerentes" role="tab" aria-selected="false">
+          <span class="admin-stat-label">Gerentes de Producto</span>
+          <strong id="satGerentesCount">0</strong>
+        </button>
+      </div>
+
+      <p id="satPanelMessage" class="auth-message" role="status"></p>
+
+      <div class="sat-report-toolbar" id="satReportToolbar">
+        <div class="sat-report-dates">
+          <label for="satReportFrom">Desde</label>
+          <input type="date" id="satReportFrom" class="sat-report-date" aria-label="Fecha desde">
+          <label for="satReportTo">Hasta</label>
+          <input type="date" id="satReportTo" class="sat-report-date" aria-label="Fecha hasta">
+        </div>
+        <button type="button" class="admin-report-btn" id="satReportDownloadBtn">Descargar reporte Excel</button>
+        <p id="satReportMeta" class="admin-filter-meta" hidden></p>
+      </div>
+
+      <div class="admin-panel" id="satPanelQuotesGerentes">
+        <p class="admin-panel-hint">Cotizaciones hechas por gerentes de producto (GP) y Admin SAT en el Cotizador GP / Admin SAT.</p>
+        <div class="admin-table-wrap">
+          <table class="admin-table" id="satQuotesGerentesTable">
+            <thead>
+              <tr>
+                <th>Estado</th>
+                <th>Fecha</th>
+                <th>GP / Responsable</th>
+                <th>Cliente</th>
+                <th>NIT</th>
+                <th>Productos</th>
+                <th>Total</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="satQuotesGerentesBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="admin-panel" id="satPanelQuotesClient" hidden>
+        <p class="admin-panel-hint">Cotizaciones del portal hechas por clientes de los GP (no de asesores V#). Las de vendedores van al Admin IZC.</p>
+        <div class="admin-table-wrap">
+          <table class="admin-table" id="satQuotesClientTable">
+            <thead>
+              <tr>
+                <th>Estado</th>
+                <th>Fecha</th>
+                <th>Cliente</th>
+                <th>NIT</th>
+                <th>Productos</th>
+                <th>Total</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="satQuotesClientBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="admin-panel" id="satPanelGerentes" hidden>
+        <p class="admin-panel-hint">Listado de gerentes de producto registrados en registro-gp.html.</p>
+        <div class="admin-table-wrap">
+          <table class="admin-table" id="satGerentesTable">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>GP</th>
+                <th>Nombre</th>
+                <th>Bitrix ID</th>
+                <th>Registro</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="satGerentesBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div class="admin-modal" id="satQuoteDetailModal" hidden>
+    <div class="admin-modal-backdrop" data-modal-close></div>
+    <div class="admin-modal-dialog admin-modal-dialog-wide" role="dialog" aria-modal="true" aria-labelledby="satQuoteDetailTitle">
+      <h3 id="satQuoteDetailTitle">Detalle de cotizacion</h3>
+      <p id="satQuoteDetailMeta" class="admin-quote-meta"></p>
+      <div class="admin-quote-detail-wrap" id="satQuoteDetailBody"></div>
+      <div class="admin-modal-actions">
+        <button type="button" class="admin-modal-cancel" data-modal-close>Cerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="admin-modal" id="satGpDeleteModal" hidden>
+    <div class="admin-modal-backdrop" data-gp-delete-close></div>
+    <div class="admin-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="satGpDeleteTitle">
+      <h3 id="satGpDeleteTitle">Eliminar gerente</h3>
+      <p id="satGpDeleteText">&#191;Seguro que quieres eliminar este gerente de producto?</p>
+      <div class="admin-modal-actions">
+        <button type="button" class="admin-modal-cancel" id="satGpDeleteCancel" data-gp-delete-close>No, cancelar</button>
+        <button type="button" class="admin-modal-confirm" id="satGpDeleteConfirm">S&#237;, eliminar</button>
+      </div>
+    </div>
+  </div>
+
+  <footer class="vt-footer">
+    <p>VALTECH Mayorista &#183; Administrador SAT</p>
+    <a href="valtech.html">Ir al catalogo SAT</a>
+  </footer>
+</body>
+</html>

@@ -6,24 +6,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Perfil administrador - IZC MAYORISTA</title>
   <link rel="icon" href="assets/logo/iconoizc.png" type="image/png">
-  <link rel="stylesheet" href="assets/css/index.css?v=29">
-  <link rel="stylesheet" href="assets/css/auth.css?v=9">
-  <link rel="stylesheet" href="assets/css/perfil.css?v=3">
-  <link rel="stylesheet" href="assets/css/admin.css?v=15">
-  <script>
-    if (location.protocol === 'file:') {
-      location.replace('http://127.0.0.1:8080/admin.html');
-    }
-  </script>
-  <script src="assets/js/auth.js?v=34" defer></script>
-  <script src="assets/js/wishlist.js?v=4" defer></script>
-  <script src="assets/js/admin.js?v=20" defer></script>
+  <link rel="stylesheet" href="assets/css/index.css?v=36">
+  <link rel="stylesheet" href="assets/css/auth.css?v=20">
+  <link rel="stylesheet" href="assets/css/perfil.css?v=6">
+  <link rel="stylesheet" href="assets/css/admin.css?v=50">
+  <script src="assets/js/file-boot.js?v=2"></script>
+  <script src="assets/js/data-loader.js?v=23" defer></script>
+  <script src="assets/js/auth.js?v=91" defer></script>
+  <script src="assets/js/wishlist.js?v=8" defer></script>
+  <script src="assets/js/money.js?v=2" defer></script>
+  <script src="assets/js/live-sync.js?v=1" defer></script>
+  <script src="assets/js/vendor/jspdf.umd.min.js"></script>
+  <script src="assets/js/vendor/jspdf.plugin.autotable.min.js"></script>
+  <script src="assets/js/cotizacion-pdf.js?v=105" defer></script>
+  <script src="assets/js/admin.js?v=114" defer></script>
   <script src="assets/js/index.js?v=3" defer></script>
 </head>
 <body>
   <div class="top-bar">
     <div class="top-bar-inner">
-      <a href="https://api.whatsapp.com/send?phone=573144355391" target="_blank">Soporte Técnico</a>
+      <a href="https://api.whatsapp.com/send?phone=573144355391" target="_blank">Soporte T&#233;cnico</a>
     </div>
   </div>
 
@@ -46,8 +48,8 @@
             <div class="flyout-sidebar">
               <ul>
                 <li class="flyout-cat active" data-panel="pos">Punto de Venta</li>
-                <li class="flyout-cat" data-panel="marcacion">Marcación y Etiquetado</li>
-                <li class="flyout-cat" data-panel="seguridad">Seguridad Electrónica</li>
+                <li class="flyout-cat" data-panel="marcacion">Marcaci&#243;n y Etiquetado</li>
+                <li class="flyout-cat" data-panel="seguridad">Seguridad Electr&#243;nica</li>
                 <li class="flyout-cat" data-panel="conectividad">Cables y conectividad</li>
                 <li class="flyout-cat" data-panel="movilidad">Movilidad</li>
               </ul>
@@ -57,16 +59,16 @@
               <div class="flyout-panel-content active" data-panel="pos">
                 <div class="flyout-col">
                   <div class="flyout-group">
-                    <a href="buscar.html?q=lectores" class="flyout-group-title"><span class="icon">▤</span>Lectores de Códigos de Barras</a>
+                    <a href="buscar.html?q=lectores" class="flyout-group-title"><span class="icon">&#9656;</span>Lectores de C&#243;digos de Barras</a>
                     <ul>
                       <li><a href="buscar.html?q=lectores-de-mano">De Mano</a></li>
-                      <li><a href="buscar.html?q=lectores-inalambricos">Inalámbricos</a></li>
+                      <li><a href="buscar.html?q=lectores-inalambricos">Inal&#225;mbricos</a></li>
                       <li><a href="buscar.html?q=lectores-de-mesa">De Mesa</a></li>
                       <li><a href="buscar.html?q=lectores-empotrables">Empotrables</a></li>
                     </ul>
                   </div>
                   <div class="flyout-group">
-                    <a href="buscar.html?q=digitalizadores" class="flyout-group-title"><span class="icon">▭</span>Periféricos POS</a>
+                    <a href="buscar.html?q=digitalizadores" class="flyout-group-title"><span class="icon">&#9656;</span>Perif&#233;ricos POS</a>
                     <ul>
                       <li><a href="buscar.html?q=digitalizadores">Digitalizadoras de Firmas</a></li>
                     </ul>
@@ -74,19 +76,19 @@
                 </div>
                 <div class="flyout-col">
                   <div class="flyout-group">
-                    <a href="buscar.html?q=equipos-pos" class="flyout-group-title"><span class="icon">🖳</span>Equipos para Punto de Venta</a>
+                    <a href="buscar.html?q=equipos-pos" class="flyout-group-title"><span class="icon">&#9656;</span>Equipos para Punto de Venta</a>
                   </div>
                   <div class="flyout-group">
-                    <a href="buscar.html?q=monitores-touch" class="flyout-group-title"><span class="icon">🖥</span>Monitores Touch</a>
+                    <a href="buscar.html?q=monitores-touch" class="flyout-group-title"><span class="icon">&#128421;</span>Monitores Touch</a>
                   </div>
                   <div class="flyout-group">
-                    <a href="buscar.html?q=mini-pc" class="flyout-group-title"><span class="icon">🖨</span>Mini PC</a>
+                    <a href="buscar.html?q=mini-pc" class="flyout-group-title"><span class="icon">&#128424;</span>Mini PC</a>
                   </div>
                   <div class="flyout-group">
-                    <a href="buscar.html?q=balanzas" class="flyout-group-title"><span class="icon">⚖</span>Balanzas</a>
+                    <a href="buscar.html?q=balanzas" class="flyout-group-title"><span class="icon">&#9656;</span>Balanzas</a>
                   </div>
                   <div class="flyout-group">
-                    <a href="buscar.html?q=cajones" class="flyout-group-title"><span class="icon">🏷</span>Cajones monederos</a>
+                    <a href="buscar.html?q=cajones" class="flyout-group-title"><span class="icon">&#127991;</span>Cajones monederos</a>
                   </div>
                 </div>
               </div>
@@ -94,7 +96,7 @@
               <div class="flyout-panel-content" data-panel="marcacion">
                 <div class="flyout-col">
                   <div class="flyout-group">
-                    <a href="buscar.html?q=impresoras" class="flyout-group-title"><span class="icon">🏷</span>Impresoras de Etiquetas</a>
+                    <a href="buscar.html?q=impresoras" class="flyout-group-title"><span class="icon">&#127991;</span>Impresoras de Etiquetas</a>
                     <ul>
                       <li><a href="buscar.html?q=impresoras-escritorio">De escritorio</a></li>
                       <li><a href="buscar.html?q=impresoras-semi-industriales">Semi industriales</a></li>
@@ -102,24 +104,24 @@
                     </ul>
                   </div>
                   <div class="flyout-group">
-                    <a href="buscar.html?q=impresoras-carnet" class="flyout-group-title"><span class="icon">▭</span>Impresoras de carnet</a>
+                    <a href="buscar.html?q=impresoras-carnet" class="flyout-group-title"><span class="icon">&#9656;</span>Impresoras de carnet</a>
                   </div>
                   <div class="flyout-group">
-                    <a href="buscar.html?q=impresoras-manillas" class="flyout-group-title"><span class="icon">▭</span>Impresoras de manillas</a>
+                    <a href="buscar.html?q=impresoras-manillas" class="flyout-group-title"><span class="icon">&#9656;</span>Impresoras de manillas</a>
                   </div>
                 </div>
                 <div class="flyout-col">
                   <div class="flyout-group">
-                    <a href="buscar.html?q=consumibles" class="flyout-group-title"><span class="icon">▭</span>Consumibles</a>
+                    <a href="buscar.html?q=consumibles" class="flyout-group-title"><span class="icon">&#9656;</span>Consumibles</a>
                     <ul>
                       <li><a href="buscar.html?q=consumibles-etiquetas">Etiquetas adhesivas</a></li>
                       <li><a href="buscar.html?q=consumibles-ribbons">Ribbons o Cintas</a></li>
-                      <li><a href="buscar.html?q=consumibles">Manillas para identificación</a></li>
+                      <li><a href="buscar.html?q=consumibles">Manillas para identificaci&#243;n</a></li>
                       <li><a href="buscar.html?q=consumibles-kits">Kits de limpieza</a></li>
                     </ul>
                   </div>
                   <div class="flyout-group">
-                    <a href="buscar.html?q=impresoras" class="flyout-group-title"><span class="icon">▭</span>Flexografía</a>
+                    <a href="buscar.html?q=impresoras" class="flyout-group-title"><span class="icon">&#9656;</span>Flexograf&#237;a</a>
                   </div>
                 </div>
               </div>
@@ -127,27 +129,27 @@
               <div class="flyout-panel-content" data-panel="seguridad">
                 <div class="flyout-col">
                   <div class="flyout-group">
-                    <a href="buscar.html?q=control-acceso" class="flyout-group-title"><span class="icon">📷</span>CONTROL Y VIGILANCIA</a>
+                    <a href="buscar.html?q=control-acceso" class="flyout-group-title"><span class="icon">&#128247;</span>CONTROL Y VIGILANCIA</a>
                     <ul>
                       <li><a href="buscar.html?q=control-acceso">Controles de Acceso y Asistencia</a></li>
                       <li><a href="buscar.html?q=accesorios-acceso">Accesorios de Control de Acceso</a></li>
-                      <li><a href="buscar.html?q=huella">Lectores de Huella Biométricos</a></li>
+                      <li><a href="buscar.html?q=huella">Lectores de Huella Biom&#233;tricos</a></li>
                       <li><a href="buscar.html?q=seguridad">Alarmas</a></li>
                     </ul>
                   </div>
                   <div class="flyout-group">
-                    <a href="buscar.html?q=camaras" class="flyout-group-title"><span class="icon">📷</span>CÁMARAS CCTV</a>
+                    <a href="buscar.html?q=camaras" class="flyout-group-title"><span class="icon">&#128247;</span>C&#193;MARAS CCTV</a>
                     <ul>
-                      <li><a href="buscar.html?q=camaras-ip">Cámaras IP</a></li>
-                      <li><a href="buscar.html?q=camaras-wifi">Cámaras WIFI</a></li>
+                      <li><a href="buscar.html?q=camaras-ip">C&#225;maras IP</a></li>
+                      <li><a href="buscar.html?q=camaras-wifi">C&#225;maras WIFI</a></li>
                     </ul>
                   </div>
                 </div>
                 <div class="flyout-col">
                   <div class="flyout-group">
-                    <a href="buscar.html?q=grabadores" class="flyout-group-title"><span class="icon">🔒</span>GRABADORES CCTV</a>
+                    <a href="buscar.html?q=grabadores" class="flyout-group-title"><span class="icon">&#128274;</span>GRABADORES CCTV</a>
                     <ul>
-                      <li><a href="buscar.html?q=grabadores-analogo">Grabadores Análogos</a></li>
+                      <li><a href="buscar.html?q=grabadores-analogo">Grabadores An&#225;logos</a></li>
                       <li><a href="buscar.html?q=grabadores-ip">Grabadores IP</a></li>
                     </ul>
                   </div>
@@ -163,7 +165,7 @@
               <div class="flyout-panel-content" data-panel="conectividad">
                 <div class="flyout-col">
                   <div class="flyout-group">
-                    <a href="buscar.html?q=red" class="flyout-group-title"><span class="icon">📡</span>CONECTIVIDAD INALÁMBRICA</a>
+                    <a href="buscar.html?q=red" class="flyout-group-title"><span class="icon">&#128225;</span>CONECTIVIDAD INAL&#193;MBRICA</a>
                     <ul>
                       <li><a href="buscar.html?q=access-point">Access Point</a></li>
                       <li><a href="buscar.html?q=radio-enlaces">Radio Enlaces</a></li>
@@ -173,7 +175,7 @@
                 </div>
                 <div class="flyout-col">
                   <div class="flyout-group">
-                    <a href="buscar.html?q=switch-poe" class="flyout-group-title"><span class="icon">🔌</span>SWITCH POE</a>
+                    <a href="buscar.html?q=switch-poe" class="flyout-group-title"><span class="icon">&#128268;</span>SWITCH POE</a>
                   </div>
                 </div>
               </div>
@@ -181,10 +183,10 @@
               <div class="flyout-panel-content" data-panel="movilidad">
                 <div class="flyout-col">
                   <div class="flyout-group">
-                    <a href="buscar.html?q=terminales-moviles" class="flyout-group-title"><span class="icon">📱</span>MOVILIDAD</a>
+                    <a href="buscar.html?q=terminales-moviles" class="flyout-group-title"><span class="icon">&#128241;</span>MOVILIDAD</a>
                     <ul>
-                      <li><a href="buscar.html?q=impresoras-portatiles">Impresoras Portátiles</a></li>
-                      <li><a href="buscar.html?q=terminales-moviles">Terminales Móviles</a></li>
+                      <li><a href="buscar.html?q=impresoras-portatiles">Impresoras Port&#225;tiles</a></li>
+                      <li><a href="buscar.html?q=terminales-moviles">Terminales M&#243;viles</a></li>
                     </ul>
                   </div>
                 </div>
@@ -194,24 +196,42 @@
         </li>
 
         <li class="nav-item"><a href="marcas.html">Marcas</a></li>
-        <li class="nav-item"><a href="cotizador.html">Cotizador</a></li>
+        <li class="nav-item"><a href="cotizador-asesor.html">Cotizador</a></li>
       </ul>
     </div>
   </nav>
 
   <main class="admin-page profile-page">
-    <div class="auth-card">
+    <div class="auth-card profile-name-card">
+      <button type="button" class="profile-name-pencil" id="adminNombreToggle" title="Editar nombre" aria-label="Editar nombre" aria-pressed="false">
+        <svg class="profile-name-icon is-pencil" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 20h9"></path>
+          <path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"></path>
+        </svg>
+        <svg class="profile-name-icon is-check" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" hidden>
+          <path d="M20 6 9 17l-5-5"></path>
+        </svg>
+      </button>
       <h1 class="profile-greeting" id="profileGreeting">Hola</h1>
-      <p class="profile-lead">Aquí puedes gestionar el sistema</p>
-
-      <button class="auth-submit" type="button" id="profileLogout">Cerrar sesión</button>
+      <input
+        type="text"
+        id="adminNombreInput"
+        class="profile-name-inline"
+        maxlength="80"
+        autocomplete="name"
+        placeholder="Nombre"
+        hidden
+      >
+      <p class="profile-lead">Aqu&#237; puedes gestionar el sistema</p>
+      <p id="adminNombreStatus" class="auth-message profile-name-status" role="status"></p>
+      <button class="auth-submit" type="button" id="profileLogout">Cerrar sesi&#243;n</button>
     </div>
 
     <div class="admin-card profile-admin-card" id="adminContent">
       <div class="admin-card-head">
         <div>
-          <h2>Panel de administración</h2>
-          <p class="admin-lead">Gestión de clientes registrados y cotizaciones.</p>
+          <h2>Panel de administraci&#243;n</h2>
+          <p class="admin-lead">Gesti&#243;n de clientes registrados y cotizaciones.</p>
         </div>
       </div>
 
@@ -220,13 +240,25 @@
           <span class="admin-stat-label">Clientes registrados</span>
           <strong id="adminUserCount">0</strong>
         </button>
+        <button type="button" class="admin-stat is-tab" data-tab="users-all" id="adminTabUsersAll">
+          <span class="admin-stat-label">Clientes</span>
+          <strong id="adminUserAllCount">0</strong>
+        </button>
         <button type="button" class="admin-stat is-tab" data-tab="quotes" id="adminTabQuotes">
           <span class="admin-stat-label">Historial de Cotizaciones</span>
           <strong id="adminQuoteCount">0</strong>
         </button>
+        <button type="button" class="admin-stat is-tab" data-tab="quotes-client" id="adminTabQuotesClient">
+          <span class="admin-stat-label">Cotizaciones clientes</span>
+          <strong id="adminQuoteClientCount">0</strong>
+        </button>
         <button type="button" class="admin-stat is-tab" data-tab="trm" id="adminTabTrm">
           <span class="admin-stat-label">Actualizar TRM de Cotizador</span>
-          <strong id="adminTrmValue">—</strong>
+          <strong id="adminTrmValue">&#151;</strong>
+        </button>
+        <button type="button" class="admin-stat is-tab" data-tab="precios" id="adminTabPrecios">
+          <span class="admin-stat-label">Lista de precios</span>
+          <strong id="adminPreciosStatus">&#8212;</strong>
         </button>
         <button type="button" class="admin-stat is-tab" data-tab="asesores" id="adminTabAsesores">
           <span class="admin-stat-label">Asesores / Vendedores</span>
@@ -236,18 +268,30 @@
           <span class="admin-stat-label">Bitrix24</span>
           <strong id="adminBitrixStatus">Off</strong>
         </button>
+        <button type="button" class="admin-stat is-tab" data-tab="productos" id="adminTabProductos">
+          <span class="admin-stat-label">Productos creados</span>
+          <strong id="adminProductosCount">0</strong>
+        </button>
+        <button type="button" class="admin-stat is-tab" data-tab="asignar" id="adminTabAsignar">
+          <span class="admin-stat-label">Asignar vendedor</span>
+          <strong id="adminAsignarCount">0</strong>
+        </button>
       </div>
 
       <p id="adminMessage" class="auth-message" role="status"></p>
 
       <div class="admin-panel" id="adminPanelUsers">
+        <p class="admin-panel-hint" id="adminUsersHint">Clientes que los asesores han registrado en el panel del asesor.</p>
         <div class="admin-table-wrap">
           <table class="admin-table" id="adminUsersTable">
             <thead>
               <tr>
                 <th>#</th>
-                <th>Nombre</th>
+                <th>Nombre empresa</th>
                 <th>NIT</th>
+                <th>Nombre contacto</th>
+                <th>N&#250;mero contacto</th>
+                <th>Vendedor</th>
                 <th>Registro</th>
                 <th></th>
               </tr>
@@ -259,17 +303,19 @@
 
       <div class="admin-panel" id="adminPanelAsesores" hidden>
         <div class="admin-trm-box">
-          <p class="admin-trm-lead">Registra asesores con su código (V1, V2, V5, V31…) y una contraseña para iniciar sesión.</p>
+          <p class="admin-trm-lead">Registra asesores con su c&#243;digo (V1, V2, V31&#8230;) y una contrase&#241;a. Si la misma persona tiene dos perfiles Bitrix (ej. V6 y V28), pon el principal en C&#243;digo y el otro en C&#243;digos extra.</p>
           <form id="adminAsesorForm" class="admin-asesor-form" autocomplete="off" data-lpignore="true" data-1p-ignore="true">
-            <!-- Señuelos para que el navegador no meta el login del admin aquí -->
+            <!-- Se&#241;uelos para que el navegador no meta el login del admin aqu&#237; -->
             <input type="text" name="prevent_autofill_user" autocomplete="username" tabindex="-1" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0" value="">
             <input type="password" name="prevent_autofill_pass" autocomplete="current-password" tabindex="-1" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0" value="">
-            <label for="adminAsesorCodigo">Vendedor</label>
-            <input id="adminAsesorCodigo" name="asesor_codigo_nuevo" type="text" inputmode="text" placeholder="Ej: V1, V2, V31" required autocomplete="off" autocapitalize="characters" spellcheck="false" data-lpignore="true">
-            <label for="adminAsesorPassword">Contraseña</label>
-            <input id="adminAsesorPassword" name="asesor_password_nuevo" type="password" placeholder="Contraseña del asesor" required minlength="4" autocomplete="new-password" data-lpignore="true">
+            <label for="adminAsesorCodigo">C&#243;digo (login)</label>
+            <input id="adminAsesorCodigo" name="asesor_codigo_nuevo" type="text" inputmode="text" placeholder="Ej: V6" required autocomplete="off" autocapitalize="characters" spellcheck="false" data-lpignore="true">
+            <label for="adminAsesorExtras">C&#243;digos extra (opcional)</label>
+            <input id="adminAsesorExtras" name="asesor_codigos_extra" type="text" inputmode="text" placeholder="Ej: V28 (varios: V28, V27)" autocomplete="off" autocapitalize="characters" spellcheck="false" data-lpignore="true">
+            <label for="adminAsesorPassword">Contrase&#241;a</label>
+            <input id="adminAsesorPassword" name="asesor_password_nuevo" type="password" placeholder="Contrase&#241;a del asesor" required minlength="4" autocomplete="new-password" data-lpignore="true">
             <label for="adminAsesorNombre">Nombre (opcional)</label>
-            <input id="adminAsesorNombre" name="asesor_nombre_nuevo" type="text" placeholder="Ej: IZC V1 Jonathan Ramos" autocomplete="off" data-lpignore="true">
+            <input id="adminAsesorNombre" name="asesor_nombre_nuevo" type="text" placeholder="Ej: Mariana Lopez" autocomplete="off" data-lpignore="true">
             <button type="submit" class="admin-trm-save" id="adminAsesorSave">Registrar asesor</button>
           </form>
         </div>
@@ -278,7 +324,8 @@
             <thead>
               <tr>
                 <th>#</th>
-                <th>Código</th>
+                <th>C&#243;digo</th>
+                <th>Extra</th>
                 <th>Nombre</th>
                 <th>Registro</th>
                 <th></th>
@@ -290,17 +337,63 @@
       </div>
 
       <div class="admin-panel" id="adminPanelQuotes" hidden>
+        <p class="admin-panel-hint" id="adminQuotesHint">Historial completo de cotizaciones.</p>
+        <div class="admin-quotes-toolbar">
+          <p id="adminQuotesFilterMeta" class="admin-filter-meta" hidden></p>
+          <button type="button" id="adminQuotesReportBtn" class="admin-report-btn">
+            Descargar reporte Excel
+          </button>
+        </div>
         <div class="admin-table-wrap">
-          <table class="admin-table" id="adminQuotesTable">
+          <table class="admin-table admin-table-quotes" id="adminQuotesTable">
             <thead>
               <tr>
                 <th>#</th>
                 <th>Fecha</th>
+                <th class="admin-col-center">Cierre</th>
                 <th>Nombre</th>
-                <th>NIT</th>
-                <th>Productos</th>
+                <th class="admin-col-center">NIT</th>
+                <th class="admin-col-center">Empresa</th>
+                <th class="admin-col-center">Vendedor</th>
+                <th class="admin-col-center">Productos</th>
                 <th>Total</th>
                 <th></th>
+              </tr>
+              <tr class="admin-table-filter-row">
+                <th>
+                  <label class="admin-sr-only" for="adminQuoteFilterEstado">Filtrar por estado</label>
+                  <select id="adminQuoteFilterEstado" class="admin-filter-select" aria-label="Filtrar por estado">
+                    <option value="">Todos</option>
+                    <option value="cotizado">Cotizado</option>
+                    <option value="pendiente">Pendiente</option>
+                    <option value="seguimiento">Seguimiento</option>
+                    <option value="vendido">Vendido</option>
+                    <option value="perdida">Perdida</option>
+                    <option value="cerrado_modificado">Cerrado Modificado</option>
+                  </select>
+                </th>
+                <th>
+                  <label class="admin-sr-only" for="adminQuoteFilterFecha">Filtrar por fecha</label>
+                  <input id="adminQuoteFilterFecha" class="admin-filter-date" type="date" aria-label="Filtrar por fecha">
+                </th>
+                <th></th>
+                <th></th>
+                <th class="admin-col-center">
+                  <label class="admin-sr-only" for="adminQuoteFilterNit">Filtrar por NIT</label>
+                  <input id="adminQuoteFilterNit" class="admin-filter-input" type="search" inputmode="numeric" placeholder="Buscar NIT" aria-label="Filtrar por NIT">
+                </th>
+                <th class="admin-col-center"></th>
+                <th class="admin-col-center">
+                  <label class="admin-sr-only" for="adminQuoteFilterVendedor">Filtrar por vendedor</label>
+                  <select id="adminQuoteFilterVendedor" class="admin-filter-select" aria-label="Filtrar por vendedor">
+                    <option value="">Todos</option>
+                  </select>
+                </th>
+                <th class="admin-col-center"></th>
+                <th></th>
+                <th>
+                  <button type="button" id="adminQuoteFilterClear" class="admin-filter-clear">Limpiar</button>
+                </th>
               </tr>
             </thead>
             <tbody id="adminQuotesBody"></tbody>
@@ -310,7 +403,7 @@
 
       <div class="admin-panel" id="adminPanelTrm" hidden>
         <div class="admin-trm-box">
-          <p class="admin-trm-lead">Define la TRM del día (COP por 1 USD).</p>
+          <p class="admin-trm-lead">Define la TRM del d&#237;a (COP por 1 USD).</p>
           <label for="adminTrmInput">TRM (COP por 1 USD)</label>
           <div class="admin-trm-row">
             <input id="adminTrmInput" type="number" min="1" step="0.01" placeholder="Ej: 4200">
@@ -320,26 +413,90 @@
         </div>
       </div>
 
+      <div class="admin-panel" id="adminPanelPrecios" hidden>
+        <div class="admin-trm-box admin-precios-box">
+          <p class="admin-trm-lead">
+            Sube <code>lista-precios-izc.xlsb</code> y regenera precios del cotizador.
+            Los precios <strong>clientes</strong> se calculan como promedio entre LP Web y LP Interna
+            (COP y USD). Tambi&#233;n se actualizan las dem&#225;s listas (Web, Interna, Volumen, etc.),
+            inventario, productos y referencias.
+          </p>
+          <label for="adminPreciosFile">Archivo Excel (.xlsb)</label>
+          <input
+            id="adminPreciosFile"
+            type="file"
+            accept=".xlsb,application/vnd.ms-excel.sheet.binary.macroEnabled.12"
+          >
+          <div class="admin-trm-row" style="margin-top:12px">
+            <button type="button" class="admin-trm-save" id="adminPreciosUploadBtn">Actualizar Lista de precios</button>
+            <button type="button" class="admin-toolbar-btn is-secondary" id="adminPreciosSyncBtn" title="Regenera precios con el Excel ya guardado en el servidor">Solo regenerar</button>
+          </div>
+          <p id="adminPreciosMeta" class="admin-trm-meta"></p>
+          <p id="adminPreciosStatusMsg" class="auth-message" role="status"></p>
+        </div>
+      </div>
+
       <div class="admin-panel" id="adminPanelBitrix" hidden>
         <div class="admin-trm-box admin-bitrix-box">
           <p class="admin-trm-lead">
-            Conecta el cotizador con Bitrix24 (<code>vits.bitrix24.com</code>).
+            Conecta el cotizador con Bitrix24 (<code>vis.bitrix24.com</code>).
           </p>
           <label class="admin-bitrix-check">
-            <input type="checkbox" id="adminBitrixEnabled"> Activar envío a Bitrix
+            <input type="checkbox" id="adminBitrixEnabled"> Activar env&#237;o a Bitrix
           </label>
           <label for="adminBitrixWebhook">Webhook entrante (URL completa)</label>
-          <input id="adminBitrixWebhook" type="url" placeholder="https://vits.bitrix24.com/rest/1/xxxxxxxx/">
+          <input id="adminBitrixWebhook" type="url" placeholder="https://vis.bitrix24.com/rest/1/xxxxxxxx/">
           <label for="adminBitrixStage">STAGE_ID de la columna COTIZACION</label>
-          <input id="adminBitrixStage" type="text" placeholder="Ej: C14:PREPARATION">
+          <input id="adminBitrixStage" type="text" placeholder="Ej: C3:FINAL_INVOICE">
           <label for="adminBitrixCategory">CATEGORY_ID del embudo (opcional)</label>
-          <input id="adminBitrixCategory" type="text" placeholder="Ej: 14">
+          <input id="adminBitrixCategory" type="text" placeholder="Ej: 3">
           <div class="admin-trm-row">
             <button type="button" class="admin-trm-save" id="adminBitrixSave">Guardar Bitrix</button>
-            <button type="button" class="admin-bitrix-test" id="adminBitrixTest">Probar conexión</button>
+            <button type="button" class="admin-bitrix-test" id="adminBitrixTest">Probar conexi&#243;n</button>
+            <button type="button" class="admin-toolbar-btn is-secondary" id="adminSyncLocalBtn" title="Mapea deal_id y estados desde Bitrix sobre las cotizaciones existentes (no crea filas nuevas)">Mapear Bitrix &#8594; historial</button>
+            <button type="button" class="admin-trm-save" id="adminPullServerBtn" title="Copia datos del servidor al PC y luego mapea Bitrix. No modifica el servidor.">Traer datos del servidor &#8594; local</button>
           </div>
           <p id="adminBitrixMeta" class="admin-trm-meta"></p>
           <pre id="adminBitrixStages" class="admin-bitrix-stages" hidden></pre>
+        </div>
+      </div>
+
+      <div class="admin-panel" id="adminPanelProductos" hidden>
+        <p class="admin-trm-lead">Productos que los asesores crearon manualmente en el cotizador (no estaban en la lista de precios).</p>
+        <div class="admin-table-wrap">
+          <table class="admin-table" id="adminProductosTable">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Producto</th>
+                <th>Referencia</th>
+                <th>Precio unit. USD</th>
+                <th>Vendedor</th>
+                <th>Fecha y hora</th>
+              </tr>
+            </thead>
+            <tbody id="adminProductosBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="admin-panel" id="adminPanelAsignar" hidden>
+        <p class="admin-trm-lead">Clientes que cotizaron sin vendedor asignado. Al asignarles uno, salen de esta lista y sus cotizaciones llegan al panel de ese asesor.</p>
+        <div class="admin-table-wrap">
+          <table class="admin-table" id="adminAsignarTable">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Cliente</th>
+                <th>NIT</th>
+                <th>Cotizaciones</th>
+                <th>&#218;ltima cotizaci&#243;n</th>
+                <th>Asignar a</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="adminAsignarBody"></tbody>
+          </table>
         </div>
       </div>
     </div>
@@ -348,7 +505,7 @@
   <div class="admin-modal" id="quoteDetailModal" hidden>
     <div class="admin-modal-backdrop" data-modal-close></div>
     <div class="admin-modal-dialog admin-modal-dialog-wide" role="dialog" aria-modal="true" aria-labelledby="quoteDetailTitle">
-      <h3 id="quoteDetailTitle">Detalle de cotización</h3>
+      <h3 id="quoteDetailTitle">Detalle de cotizaci&#243;n</h3>
       <p id="quoteDetailMeta" class="admin-quote-meta"></p>
       <div class="admin-quote-detail-wrap" id="quoteDetailBody"></div>
       <div class="admin-modal-actions">
@@ -361,10 +518,10 @@
     <div class="admin-modal-backdrop" data-modal-close></div>
     <div class="admin-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="deleteModalTitle">
       <h3 id="deleteModalTitle">Eliminar cliente</h3>
-      <p id="deleteModalText">¿Seguro que quieres eliminar este cliente?</p>
+      <p id="deleteModalText">&#191;Seguro que quieres eliminar este cliente?</p>
       <div class="admin-modal-actions">
         <button type="button" class="admin-modal-cancel" id="deleteModalCancel" data-modal-close>No, cancelar</button>
-        <button type="button" class="admin-modal-confirm" id="deleteModalConfirm">Sí, eliminar</button>
+        <button type="button" class="admin-modal-confirm" id="deleteModalConfirm">S&#237;, eliminar</button>
       </div>
     </div>
   </div>

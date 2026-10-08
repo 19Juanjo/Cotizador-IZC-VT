@@ -8,15 +8,15 @@ document.addEventListener('DOMContentLoaded', function () {
     header.addEventListener('click', function () {
       const list = this.nextElementSibling;
       const arrow = this.querySelector('.arrow');
-      
+
       if (!list) return;
 
       if (list.style.display === 'none') {
         list.style.display = 'block';
-        if (arrow) arrow.textContent = '▲';
+        if (arrow) arrow.textContent = '\u25B2';
       } else {
         list.style.display = 'none';
-        if (arrow) arrow.textContent = '▼';
+        if (arrow) arrow.textContent = '\u25BC';
       }
     });
   });
@@ -171,6 +171,7 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         var amount = typeof entry === 'object' ? entry.amount : entry;
         if (amount == null) return null;
+        if (window.IZCMoney) return IZCMoney.formatUsd(amount);
         return '$ ' + Number(amount).toLocaleString('en-US', {
           minimumFractionDigits: 2,
           maximumFractionDigits: 2

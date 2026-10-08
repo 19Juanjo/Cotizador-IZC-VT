@@ -31,6 +31,30 @@
       .trim();
   }
 
+  /** En catálogo IZC público no navegar a marca/página SAT. */
+  function satNavBlocked(brandId, page) {
+    if (window.IZCCatalogScope && typeof IZCCatalogScope.allowSatOnCurrentPage === 'function') {
+      if (IZCCatalogScope.allowSatOnCurrentPage()) return false;
+    } else if (/valtech/i.test(String(location.pathname || ''))) {
+      return false;
+    }
+    var b = String(brandId || '').toLowerCase();
+    var p = String(page || '').toLowerCase();
+    return b === 'sat' || p === 'sat.html' || /\/sat\.html$/.test(p);
+  }
+
+  function filterSatProducts(products) {
+    var list = Array.isArray(products) ? products : [];
+    if (!list.length) return list;
+    if (window.IZCCatalogScope && typeof IZCCatalogScope.isSatProduct === 'function') {
+      if (IZCCatalogScope.allowSatOnCurrentPage()) return list;
+      return list.filter(function (p) { return !IZCCatalogScope.isSatProduct(p); });
+    }
+    return list.filter(function (p) {
+      return String(p && p.brand || '').toLowerCase() !== 'sat';
+    });
+  }
+
   function isProductCode(word) {
     var w = String(word || '');
     return /[a-z]/.test(w) && /\d/.test(w);
@@ -51,6 +75,39 @@
       if (tokens.indexOf(m[0]) === -1) tokens.push(m[0]);
     }
     return tokens;
+  }
+
+  function paddedWords(text) {
+    return ' ' + normalize(text).replace(/[^a-z0-9]+/g, ' ').replace(/\s+/g, ' ').trim() + ' ';
+  }
+
+  /** Códigos tipo N150: coincidencia exacta de token (no N1500). */
+  function textHasExactCode(text, code) {
+    var c = normalize(code);
+    if (!c) return false;
+    return paddedWords(text).indexOf(' ' + c + ' ') !== -1;
+  }
+
+  function productSearchText(product) {
+    if (!product) return '';
+    var text = [
+      product.sku,
+      product.name,
+      product.referencia,
+      product.ref,
+      product.brandName,
+      product.brand
+    ].filter(Boolean).join(' ');
+    // En IZC (clientes): no indexar "SATA" para que la búsqueda "sat" no traiga discos.
+    if (
+      window.IZCCatalogScope &&
+      !IZCCatalogScope.isValtechStore() &&
+      !IZCCatalogScope.allowSatOnCurrentPage() &&
+      typeof IZCCatalogScope.searchBlobWithoutSata === 'function'
+    ) {
+      return IZCCatalogScope.searchBlobWithoutSata(text);
+    }
+    return text;
   }
 
   function levenshtein(a, b) {
@@ -112,9 +169,15 @@
   }
 
   function expandQueryWords(query) {
+    // Permite palabras mínimas de 2 caracteres (y códigos/SKU más cortos si aplica).
     var words = tokenize(query).filter(function (w) {
       return w.length >= 2;
     });
+    // Si tokenize no capturó nada pero hay texto (ej. "n150" raro), usar el query normalizado.
+    if (!words.length) {
+      var raw = normalize(query).replace(/[^a-z0-9]+/g, ' ').trim();
+      if (raw.length >= 2) words = raw.split(/\s+/).filter(function (w) { return w.length >= 2; });
+    }
     var expanded = [];
 
     words.forEach(function (word) {
@@ -143,10 +206,10 @@
       return false;
     }
 
-    // Prefijo razonable solo en palabras de letras
+    // Prefijo / subcadena en palabras de letras (mínimo 2)
     if (/^[a-z]+$/.test(queryWord) && /^[a-z]+$/.test(targetWord)) {
-      if (queryWord.length >= 4 && targetWord.indexOf(queryWord) === 0) return true;
-      if (targetWord.length >= 4 && queryWord.indexOf(targetWord) === 0) return true;
+      if (queryWord.length >= 2 && targetWord.indexOf(queryWord) !== -1) return true;
+      if (targetWord.length >= 2 && queryWord.indexOf(targetWord) !== -1 && targetWord.length >= 3) return true;
       if (queryWord.length >= 6 && targetWord.length >= 6) {
         if (levenshtein(queryWord, targetWord) <= 1) return true;
       }
@@ -157,8 +220,17 @@
 
   function textMatchesWord(text, word) {
     if (!word) return false;
+
+    if (isProductCode(word) || isPureDigits(word)) {
+      return textHasExactCode(text, word);
+    }
+
     var tokens = tokenize(text);
     if (tokens.indexOf(word) !== -1) return true;
+
+    // Palabra mínima: subcadena en el texto completo
+    var hay = normalize(text);
+    if (word.length >= 2 && hay.indexOf(word) !== -1) return true;
 
     return tokens.some(function (targetWord) {
       return isSimilarWord(word, targetWord);
@@ -180,6 +252,9 @@
     originalWords.forEach(function (word) {
       var variants = expandWord(word);
       var exact = variants.some(function (variant) {
+        if (isProductCode(variant) || isPureDigits(variant)) {
+          return textHasExactCode(text, variant) || !!tokenSet[variant];
+        }
         return !!tokenSet[variant];
       });
       var fuzzy = !exact && variants.some(function (variant) {
@@ -189,7 +264,7 @@
       if (exact || fuzzy) {
         matchedOriginal++;
         if (exact) {
-          score += isProductCode(word) || isPureDigits(word) ? 40 : 20;
+          score += isProductCode(word) || isPureDigits(word) ? 50 : 20;
         } else {
           score += 10;
         }
@@ -199,21 +274,37 @@
     // Sinónimos solo suman extra si no son códigos
     expandedWords.forEach(function (word) {
       if (isProductCode(word) || isPureDigits(word)) return;
-      if (tokenSet[word]) score += 3;
+      if (tokenSet[word] || normalize(text).indexOf(word) !== -1) score += 3;
     });
+
+    if (matchedOriginal === 0) return 0;
 
     if (matchedOriginal === originalWords.length) {
       score += 30;
     } else if (matchedOriginal > 0) {
+      // Exigir todas las palabras de la query para códigos mixtos
+      var hasCode = originalWords.some(function (w) {
+        return isProductCode(w) || isPureDigits(w);
+      });
+      if (hasCode) return 0;
       score += matchedOriginal * 6;
     }
 
-    // Frase completa solo si todos los tokens de la query aparecen en orden de tokens
     var qNorm = normalize(query);
-    if (qNorm && tokens.join(' ').indexOf(qNorm) !== -1) {
+    if (qNorm && (tokens.join(' ').indexOf(qNorm) !== -1 || normalize(text).indexOf(qNorm) !== -1)) {
       score += 20;
     }
 
+    return score;
+  }
+
+  function scoreProductMatch(query, product) {
+    var text = productSearchText(product);
+    var score = scoreTextMatch(query, text);
+    var q = String(query || '').trim();
+    var sku = String((product && product.sku) || '');
+    if (sku && normalize(sku) === normalize(q)) score = Math.max(score, 80);
+    if (sku && isPureDigits(normalize(q)) && sku === normalize(q)) score = Math.max(score, 80);
     return score;
   }
 
@@ -244,6 +335,7 @@
     var bestScore = 0;
 
     catalog.brands.forEach(function (brand) {
+      if (satNavBlocked(brand.id, brand.page)) return;
       var candidates = [brand.name].concat(brand.keywords || []);
       var brandScore = 0;
 
@@ -274,26 +366,29 @@
     var q = normalize(query);
     var s = String(sku || '');
     if (!q || !s) return 0;
-    if (s === q) return 50;
-    if (isPureDigits(q) && s === q) return 50;
+    if (s === q) return 80;
+    if (normalize(s) === q) return 80;
+    if (isPureDigits(q) && s === q) return 80;
     // Código alfanumérico no se busca como subcadena del SKU numérico
     if (isProductCode(q)) return 0;
-    if (isPureDigits(q) && s === q) return 50;
     return 0;
   }
 
   function findProductsByName(query) {
     if (!catalog || query.length < 2) return [];
 
+    var words = expandQueryWords(query).original;
+    var isCodeQuery = words.length === 1 && (isProductCode(words[0]) || isPureDigits(words[0]));
+    var minScore = isCodeQuery ? 40 : 16;
+
     var scored = catalog.products.map(function (product) {
-      var nameScore = scoreTextMatch(query, product.name + ' ' + (product.brandName || ''));
-      var skuScore = skuMatchScore(query, product.sku);
+      var score = scoreProductMatch(query, product);
       return {
         product: product,
-        score: Math.max(nameScore, skuScore)
+        score: score
       };
     }).filter(function (item) {
-      return item.score >= 20;
+      return item.score >= minScore;
     }).sort(function (a, b) {
       return b.score - a.score;
     });
@@ -373,11 +468,23 @@
     query = String(query || '').trim();
     if (!query || !catalog) return null;
 
+    var normQ = normalize(query);
+    if ((normQ === 'sat' || normQ === 'satpcs') && satNavBlocked('sat', 'sat.html')) {
+      return null;
+    }
+
     var sku = extractSku(query);
     if (sku) {
-      var skuProducts = findProductsBySku(sku);
+      var skuProducts = filterSatProducts(findProductsBySku(sku));
       if (skuProducts.length) {
         var product = preferCurrentBrand(skuProducts, 'brand')[0];
+        if (satNavBlocked(product.brand, product.brand + '.html')) {
+          return {
+            type: 'category',
+            query: query,
+            page: 'buscar.html'
+          };
+        }
         return {
           type: 'sku',
           brand: product.brand,
@@ -421,6 +528,9 @@
     }
 
     var brand = findBrandMatch(query);
+    if (brand && satNavBlocked(brand.id, brand.page)) {
+      brand = null;
+    }
     if (brand) {
       var exactBrand = normalize(brand.name) === normalize(query) ||
         (brand.keywords || []).some(function (k) { return normalize(k) === normalize(query); });
@@ -437,27 +547,11 @@
 
     var products = findProductsByName(query);
     if (products.length) {
-      if (countDistinctBrands(products) > 1) {
-        return {
-          type: 'category',
-          query: query,
-          page: 'buscar.html'
-        };
-      }
-      products = preferCurrentBrand(products, 'brand');
-      if (products.length === 1) {
-        return {
-          type: 'sku',
-          brand: products[0].brand,
-          sku: products[0].sku,
-          page: products[0].brand + '.html'
-        };
-      }
+      // Siempre resultados globales (todas las marcas / todo el catálogo).
       return {
-        type: 'query',
-        brand: products[0].brand,
+        type: 'category',
         query: query,
-        page: products[0].brand + '.html'
+        page: 'buscar.html'
       };
     }
 
@@ -474,6 +568,9 @@
 
   function buildTargetUrl(result) {
     if (!result) return null;
+    if (satNavBlocked(result.brand, result.page)) {
+      return 'buscar.html';
+    }
     if (result.type === 'category') {
       return 'buscar.html?q=' + encodeURIComponent(result.query);
     }
@@ -569,7 +666,12 @@
 
     var result = resolveSearch(query);
     if (!result) {
-      window.alert('No se encontraron productos ni marcas que coincidan con "' + query + '".');
+      window.location.href = 'buscar.html?q=' + encodeURIComponent(query);
+      return;
+    }
+
+    if (satNavBlocked(result.brand, result.page)) {
+      window.location.href = 'buscar.html?q=' + encodeURIComponent(query);
       return;
     }
 
@@ -614,20 +716,152 @@
     });
   }
 
-  loadCatalogJson()
-    .then(function (data) {
-      catalog = data;
+  function loadOptionalJson(path) {
+    var loader = window.IZCData && typeof window.IZCData.loadJson === 'function'
+      ? window.IZCData.loadJson(path)
+      : fetch(path).then(function (response) {
+          if (!response.ok) throw new Error('not found');
+          return response.json();
+        });
+    return loader.catch(function () {
+      return {};
+    });
+  }
+
+  function enrichCatalog(baseCatalog, productosMap, referenciasMap) {
+    var data = baseCatalog && typeof baseCatalog === 'object' ? baseCatalog : { brands: [], products: [] };
+    var products = Array.isArray(data.products) ? data.products.slice() : [];
+    var bySku = {};
+    var refs = referenciasMap && typeof referenciasMap === 'object' ? referenciasMap : {};
+    var names = productosMap && typeof productosMap === 'object' ? productosMap : {};
+
+    products.forEach(function (p) {
+      if (!p || p.sku == null) return;
+      var sku = String(p.sku);
+      var copy = Object.assign({}, p);
+      if (!copy.referencia) {
+        copy.referencia = refs[sku] || refs[sku.replace(/^0+/, '')] || '';
+      }
+      bySku[sku] = copy;
+    });
+
+    Object.keys(names).forEach(function (sku) {
+      var key = String(sku);
+      if (bySku[key]) {
+        if (!bySku[key].name) bySku[key].name = String(names[key] || '');
+        if (!bySku[key].referencia) {
+          bySku[key].referencia = refs[key] || refs[key.replace(/^0+/, '')] || '';
+        }
+        return;
+      }
+      bySku[key] = {
+        sku: key,
+        name: String(names[key] || ('Producto ' + key)),
+        referencia: refs[key] || refs[key.replace(/^0+/, '')] || '',
+        brand: 'izc',
+        brandName: 'IZC',
+        brandLogo: 'iconoizc.png',
+        brandPage: 'buscar.html',
+        img: 'assets/logo/iconoizc.png',
+        category: 'otros',
+        type: 'otros',
+        subtype: '',
+        subtypes: []
+      };
+    });
+
+    // Adjuntar referencias sueltas aunque el SKU no esté en productos.
+    Object.keys(refs).forEach(function (sku) {
+      var key = String(sku);
+      if (bySku[key]) {
+        if (!bySku[key].referencia) bySku[key].referencia = String(refs[key] || '');
+        return;
+      }
+      bySku[key] = {
+        sku: key,
+        name: String(names[key] || ('Producto ' + key)),
+        referencia: String(refs[key] || ''),
+        brand: 'izc',
+        brandName: 'IZC',
+        brandLogo: 'iconoizc.png',
+        brandPage: 'buscar.html',
+        img: 'assets/logo/iconoizc.png',
+        category: 'otros',
+        type: 'otros',
+        subtype: '',
+        subtypes: []
+      };
+    });
+
+    data.products = Object.keys(bySku).map(function (k) { return bySku[k]; });
+    if (window.IZCZktecoOverlay && typeof IZCZktecoOverlay.mergeIntoCatalog === 'function') {
+      data.products = IZCZktecoOverlay.mergeIntoCatalog(data.products);
+    }
+    if (window.IZCCatalogScope) {
+      data.products = IZCCatalogScope.filterProducts(data.products);
+      data.brands = IZCCatalogScope.filterBrands(data.brands || []);
+    }
+    return data;
+  }
+
+  function loadZktecoOverlay() {
+    if (window.IZCZktecoOverlay && typeof IZCZktecoOverlay.load === 'function') {
+      return IZCZktecoOverlay.load();
+    }
+    if (window.__IZC_ZKTECO_OVERLAY_LOADING__) return window.__IZC_ZKTECO_OVERLAY_LOADING__;
+    window.__IZC_ZKTECO_OVERLAY_LOADING__ = new Promise(function (resolve) {
+      var s = document.createElement('script');
+      s.src = 'assets/js/zkteco-overlay.js?v=2';
+      s.onload = function () {
+        resolve(
+          window.IZCZktecoOverlay && IZCZktecoOverlay.load
+            ? IZCZktecoOverlay.load()
+            : null
+        );
+      };
+      s.onerror = function () { resolve(null); };
+      document.head.appendChild(s);
+    });
+    return window.__IZC_ZKTECO_OVERLAY_LOADING__;
+  }
+
+  Promise.all([
+    loadCatalogJson(),
+    loadOptionalJson('assets/files/productos.json'),
+    loadOptionalJson('assets/files/referencias.json'),
+    loadZktecoOverlay()
+  ])
+    .then(function (parts) {
+      catalog = enrichCatalog(parts[0], parts[1], parts[2]);
       init();
     })
     .catch(function () {
       init();
     });
 
+  document.addEventListener('izc:auth-changed', function () {
+    if (!window.IZCCatalogScope) return;
+    if (IZCCatalogScope.applyDomVisibility) IZCCatalogScope.applyDomVisibility();
+    try {
+      if (IZCCatalogScope.allowSatOnCurrentPage() && !IZCCatalogScope.isValtechStore()) {
+        if (!sessionStorage.getItem('izc_sat_scope_reload')) {
+          sessionStorage.setItem('izc_sat_scope_reload', '1');
+          window.location.reload();
+        }
+      } else {
+        sessionStorage.removeItem('izc_sat_scope_reload');
+      }
+    } catch (e) { /* ignore */ }
+  });
+
   window.IZCSearch = {
     resolveSearch: resolveSearch,
     applyUrlSearchFilter: applyUrlSearchFilter,
     filterProductGrid: filterProductGrid,
     scoreTextMatch: scoreTextMatch,
-    tokenize: tokenize
+    scoreProductMatch: scoreProductMatch,
+    productSearchText: productSearchText,
+    tokenize: tokenize,
+    getCatalog: function () { return catalog; }
   };
 })();
